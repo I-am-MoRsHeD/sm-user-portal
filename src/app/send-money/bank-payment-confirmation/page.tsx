@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
-import AgentAvater from '../../../../public/agent-avater.png';
+import AgentAvater from '../../../../../public/agent-avater.png';
 
 const page = () => {
     return (
@@ -13,7 +13,7 @@ const page = () => {
             <div className='bg-white min-h-[90vh] max-h-auto my-5 rounded-xl'>
                 <div className='w-[95%] lg:w-[45%] mx-auto py-4'>
                     <div className='bg-[#723eeb] py-4 text-center w-full mx-auto rounded-xl text-white'>
-                        <h2 className="text-xl font-semibold">Payment Confiration</h2>
+                        <h2 className="text-xl font-semibold">Payment Confirmation</h2>
                     </div>
 
                     <div className='text-xs'>

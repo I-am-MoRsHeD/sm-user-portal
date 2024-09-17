@@ -51,7 +51,7 @@ const WalletToWalletpage = () => {
                             </div>
                         </div>
                         <div className="relative w-full text-xs">
-                            <label className="block mb-2 font-semibold">Select Wallet</label>
+                            <label className="block mb-2 font-semibold">Select Sending Wallet</label>
                             <div onClick={() => setWalletIsOpen(!walletIsOpen)} className="mx-auto flex w-full items-center justify-between rounded-xl px-3 py-1 border ">
                                 <h1 className="font-medium text-gray-600">{walletSelectedValue}</h1>
                                 <svg className={`${walletIsOpen ? '-rotate-180' : 'rotate-0'} duration-300`} width={25} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M7 10L12 15L17 10" stroke="#4B5563" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>{' '}</g></svg>
@@ -104,4 +104,5 @@ const WalletToWalletpage = () => {
     );
 };
 
-export default WalletToWalletpage;
+export default WalletToWalletpage; 
+
