@@ -15,7 +15,7 @@ const CreateRecipientForm = () => {
                 {/* existing recipient */}
                 <div className="flex flex-row gap-3 items-end lg:w-1/2 mb-6">
                     <div className="lg:w-1/2">
-                        <label className="block mb-3 font-semibold">Search Existing Recipient</label>
+                        <label className="block mb-3 font-semibold">Search Existing Recipients</label>
                         <input
                             type="text"
                             name="firstName"
