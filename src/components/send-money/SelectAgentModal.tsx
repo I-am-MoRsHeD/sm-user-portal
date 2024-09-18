@@ -58,7 +58,7 @@ const SelectAgentModal: React.FC<SelectAgentModalProps> = ({ isOpen, onClose }) 
         </div>
         <div className="overflow-y-auto h-[500px] px-6 pt-6 pb-10">
           {agentsData.map((data: Agent) => (
-            <div key={data.id} className={`bg-white px-2 py-1 lg:px-6 lg:py-2 mb-3 rounded-2xl text-xs cursor-pointer border-b-2 ${open[data.id] ? ' shadow-md shadow-neutral-400' : ''}`}>
+            <div key={data.id} className={`bg-white px-2 py-1 lg:px-6 lg:py-2 mb-3 text-xs cursor-pointer border-b `}>
               <div onClick={() => toggleCard(data.id)} className="flex flex-row justify-between items-center w-full">
                 <div className="flex flex-row gap-3 lg:gap-2 items-start w-[85%]">
 

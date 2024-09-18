@@ -5,7 +5,7 @@ import Topbar from '@/components/Topbar';
 import Link from 'next/link';
 import React from 'react';
 
-const page = () => {
+const page = () => { 
     return (
         <div className='min-h-screen max-h-auto'>
             <Topbar>Send Money</Topbar>
