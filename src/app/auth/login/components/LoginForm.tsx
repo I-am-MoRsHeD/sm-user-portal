@@ -47,9 +47,7 @@ const LoginForm = () => {
             placeholder="name@gmail.com"
           />
           {errors.email && (
-            <p className="text-red-500 text-xs mt-1">
-              {errors.email.message}
-            </p>
+            <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>
           )}
         </div>
 
@@ -94,7 +92,7 @@ const LoginForm = () => {
         </div>
 
         {/* Login Button */}
-        <div className="mb-4">
+        <div className="">
           <button
             type="submit"
             className="w-full md:px-4 py-2.5 bg-[#723EEB] text-white text-xs rounded-3xl hover:bg-[#6129e6] duration-500"
