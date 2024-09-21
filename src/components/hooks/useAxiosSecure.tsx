@@ -1,37 +1,19 @@
-// import axios from "axios";
-
-
-// const axiosIntance = axios.create({
-//     baseURL: 'https://diasporex-api.vercel.app/api/v1',
-//     withCredentials: true,
-// })
-
-// const useAxiosSecure = () => {
-//     // return axiosIntance;
-// };
-
-// export default useAxiosSecure;
 
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
+
 const AUTH_TOKEN_KEY = 'accessToken';
 const REFRESH_TOKEN_KEY = 'refreshToken';
-let authToken: string | null = localStorage.getItem(AUTH_TOKEN_KEY);
-let refreshToken: string | null = localStorage.getItem(REFRESH_TOKEN_KEY);
+let authToken: string | null = typeof window !== "undefined" ? localStorage.getItem(AUTH_TOKEN_KEY) : null;
+let refreshToken = Cookies.get('refreshToken');
 
 export const setAuthTokens = (newAuthToken: string | null, newRefreshToken: string | null) => {
     authToken = newAuthToken;
-    refreshToken = newRefreshToken;
     if (newAuthToken) {
-        localStorage.setItem(AUTH_TOKEN_KEY, newAuthToken);
+        typeof window !== "undefined" ? localStorage.setItem(AUTH_TOKEN_KEY, newAuthToken) : null;
     } else {
-        localStorage.removeItem(AUTH_TOKEN_KEY);
-    }
-    if (newRefreshToken) {
-        localStorage.setItem(REFRESH_TOKEN_KEY, newRefreshToken);
-    } else {
-        localStorage.removeItem(REFRESH_TOKEN_KEY);
+        typeof window !== "undefined" ? localStorage.removeItem(AUTH_TOKEN_KEY) : null
     }
 };
 
@@ -56,7 +38,7 @@ const useAxiosSecure = () => {
             Cookies.set('accessToken', response?.data?.data.accessToken , { expires: 1 });
             Cookies.set('refreshToken', response?.data?.data.refreshToken);
 
-            localStorage.setItem(AUTH_TOKEN_KEY, response?.data?.data.accessToken);
+            typeof window !== "undefined" ? localStorage.setItem(AUTH_TOKEN_KEY, response?.data?.data.accessToken) : false;
             return response
         },
         async (error) => {

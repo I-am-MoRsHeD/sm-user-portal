@@ -43,7 +43,7 @@ const Topbar = ({ children }: { children: string }) => {
       if (result.isConfirmed) {
 
         router.push('/auth/login');
-        localStorage.clear();
+        typeof window !== "undefined" ? localStorage.clear() : null;
         Cookies.remove('accessToken');
         Cookies.remove('refreshToken');
         

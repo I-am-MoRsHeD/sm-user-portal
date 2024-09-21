@@ -1,5 +1,5 @@
 import React from 'react';
-import CardSubTitle from '../common/cardSubTitle/CardSubTitle';
+import CardSubTitle from '@/components/common/cardSubTitle/CardSubTitle';
 import GooglePlayImage from '../../../public/googlePlay.png';
 import Image from 'next/image';
 
