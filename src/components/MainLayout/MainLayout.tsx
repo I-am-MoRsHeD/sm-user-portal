@@ -13,7 +13,6 @@ interface LayoutProps {
 const MainLayout = ({ children }: LayoutProps) => {
     const { isNavOpen }: any = useNavigationContext();
     const user = typeof window !== "undefined" ? localStorage.getItem('user') : null;
-    console.log(user);
 
     useEffect(() => {
         if (user === null || !user) {

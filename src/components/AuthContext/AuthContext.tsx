@@ -19,7 +19,7 @@ const AuthContextProvider: React.FC<AuthContextProviderProps> = ({ children }) =
         return storedUser ? JSON.parse(storedUser) : [];
     });
 
-    console.log(user);
+
     useEffect(() => {
         if (user) {
             typeof window !== "undefined" ? localStorage.setItem('user', JSON.stringify(user)) : null;

@@ -22,8 +22,6 @@ const LoginForm = () => {
   const axiosInstance = useAxiosSecure();
   const router = useRouter();
 
-  console.log(user);
-
   const { register, handleSubmit, formState: { errors }} = useForm<FormData>();
   const [showPassword, setShowPassword] = useState(false);
 
@@ -39,14 +37,14 @@ const LoginForm = () => {
     }
 
     const res = await axiosInstance.post('/auth/login', userInfo);
-    console.log(res);
+
     if (res.status === 200) {
 
       const userData = res?.data?.data?.data;
       setUser(userData);
 
       toast("You have successfully logged in");
-      router.push('/user/dashboard');
+      router.replace('/user/dashboard');
     }
     else if(res.status === 403) {
       setError("Invalid email or passwords");
