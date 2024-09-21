@@ -6,7 +6,7 @@ import Topbar from '../../../../components/Topbar';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import UserProfile from '../../../../public/user-avater.png';
+import UserProfile from '../../../../../public/user-avater.png';
 
 const EditRecipientPage = () => {
     return (
