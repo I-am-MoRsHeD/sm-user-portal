@@ -49,7 +49,7 @@ const LoginForm = () => {
       router.push('/user/dashboard');
     }
     else if(res.status === 403) {
-      setError("Invalid email or password");
+      setError("Invalid email or passwords");
     }
   };
 
