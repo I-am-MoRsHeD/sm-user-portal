@@ -195,7 +195,7 @@ const SelectAgentModal: React.FC<SelectAgentModalProps> = ({ isOpen, onClose }) 
 
                     </div>
                     <div className="text-xs bg-[#723EEB] w-[25%] mx-auto text-center text-white p-1.5 rounded mt-5 hover:shadow-lg shadow-black">
-                      <Link href={'/send-money/bank-payment-confirmation'}>
+                      <Link href={'/user/send-money/bank-payment-confirmation'}>
                         Select
                       </Link>
                     </div>

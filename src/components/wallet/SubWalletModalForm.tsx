@@ -48,7 +48,7 @@ const SubWalletModalForm: React.FC<ModalProps> = ({ handleWithdrawIntoWallet, ha
             <div className='w-full flex flex-row justify-between items-center gap-10 my-5'>
                 <div className='w-5/6 flex flex-row gap-2 text-xs'>
 
-                    <Link href={'/send-money'} className='w-full'>
+                    <Link href={'/user/send-money'} className='w-full'>
                         <button
                             className="text-xs bg-[#723EEB] text-white w-full p-1.5 rounded">Send Remittance
                         </button>

@@ -27,7 +27,7 @@ const SendMoneyLog = () => {
             <div className='flex justify-between'>
                 <h2 className='text-sm font-semibold'>Send Money Log</h2>
                 <button className='bg-[#723EEB] hover:bg-[#6125ec] duration-500 rounded-3xl lg:text-base font-bold text-white text-xs px-3 lg:px-5 py-2'>
-                    <Link href={'/transactions'}>
+                    <Link href={'/user/transactions'}>
                         View More
                     </Link>
                 </button>
