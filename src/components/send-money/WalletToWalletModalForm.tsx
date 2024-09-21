@@ -39,7 +39,7 @@ const WalletToWalletModalForm = () => {
                     </svg>
                 </span>
             </div>
-            <Link href={'/send-money/payment-confirmation'} className="w-full ">
+            <Link href={'/user/send-money/payment-confirmation'} className="w-full ">
                 <button className="bg-[#723EEB] text-white w-full text-max px-4 py-1 text-xs rounded transition-all duration-300 ease-in-out hover:bg-[#5c31c0]">Confirm</button>
             </Link>
         </div>

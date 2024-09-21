@@ -153,7 +153,7 @@ const PrimaryKycForm = () => {
                 </div>
             </div>
             <div className='pt-3 pb-5'>
-                <Link href={'/recipients'} className="w-full">
+                <Link href={'/user/recipients'} className="w-full">
                     <button className="bg-[#723EEB] text-white w-full text-max px-4 py-1 text-xs rounded">Confirm</button>
                 </Link>
             </div>

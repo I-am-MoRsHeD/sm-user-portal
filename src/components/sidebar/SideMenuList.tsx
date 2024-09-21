@@ -44,7 +44,7 @@ const SideMenuList: React.FC<StateProps> = ({ toggleNavigation, isNavOpen }) => 
                         sideMenu.map((item) => (
                             <Link href={`/${item?.link}`}
                                 key={item?.id}
-                                className={` lg:flex gap-2 items-center h-full py-3 rounded-[10px] duration-300 ${isNavOpen ? ' lg:px-2.5 mx-2' : 'lg:px-2 lg:w-10 mx-auto'} ${pathName === `/${item.link}` && `${isNavOpen ? 'bg-gray-200 xl:w-[93%] ' : 'bg-gray-200'}`} cursor-pointer hidden lg:block`}
+                                className={` lg:flex gap-2 items-center h-full py-3 rounded-[10px] duration-300 ${isNavOpen ? ' lg:px-2.5 mx-2' : 'lg:px-2 lg:w-10 mx-auto'} ${pathName === `/${item.link}` && `${isNavOpen ? 'bg-gray-200 xl:w-[93%] ' : 'bg-gray-200'}`} cursor-pointer hidden lg:block text-black`}
                             >
                                 <div className='flex items-center gap-2 duration-300 hover:scale-y-110 hover:scale-x-105 w-full'>
 

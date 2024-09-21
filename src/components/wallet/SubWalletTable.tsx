@@ -104,7 +104,7 @@ const SubWalletTable: React.FC<ModalProps> = ({ handleMakeMainWallet, isSubWalle
                     </tbody>
                 </table>
 
-                <Link href={'/send-money'} className=''>
+                <Link href={'/user/send-money'} className=''>
                     <div className='w-[95%] mx-auto text-xs text-white p-1.5 bg-[#723EEB] text-center my-5 rounded'>
                         Send Now
                     </div>
