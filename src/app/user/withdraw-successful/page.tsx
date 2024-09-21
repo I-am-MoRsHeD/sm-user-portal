@@ -33,7 +33,7 @@ const page = () => {
                             </svg>
                         </div>
                     </div>
-                    <Link href={"/wallet"} className='w-[50%] lg:w-[45%]'>
+                    <Link href={"/user/wallet"} className='w-[50%] lg:w-[45%]'>
                         <button className="text-xs bg-[#723EEB] text-white w-full p-2 lg:p-3 rounded-full font-semibold">Got To Wallet</button>
                     </Link>
                 </div>
