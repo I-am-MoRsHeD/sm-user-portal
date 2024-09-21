@@ -61,7 +61,7 @@ const RecipientsCards = () => {
                     </div>
                 ))
             }
-            <Link href={"/send-money/wallet-payment-confirmation-card"} className='w-[50%] lg:w-[100%]'>
+            <Link href={"/user/send-money/wallet-payment-confirmation-card"} className='w-[50%] lg:w-[100%]'>
                 <button className="text-sm bg-[#723EEB] text-white w-full p-2.5 rounded-xl font-semibold">Next</button>
             </Link>
         </>

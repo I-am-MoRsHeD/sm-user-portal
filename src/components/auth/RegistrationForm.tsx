@@ -3,16 +3,21 @@ import { useState } from "react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { SocialLogin } from "@/app/auth/login/components";
+import useAxiosSecure from "../hooks/useAxiosSecure";
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from "react-toastify";
 
 interface FormData {
   fullName: string;
   email: string;
   password: string;
+  repassword: string;
 }
 
 const RegistrationForm = () => {
-  const [showPassword, setShowPassword] = useState(false);
   const [isChecked, setIsChecked] = useState(false); // State for checkbox
+  const axiosIntance = useAxiosSecure();
+  const baseURL = process.env.BASE_URL;
 
   const {
     register,
@@ -20,9 +25,24 @@ const RegistrationForm = () => {
     formState: { errors },
   } = useForm<FormData>();
 
-  const onSubmit = (data: FormData) => {
-    console.log(data);
-    // Handle registration logic here
+  const onSubmit = async (data: FormData) => {
+
+    if (data.password !== data.repassword) {
+      console.log("Please fill the correct password");
+    } else {
+      const userInfo = {
+        name: data.fullName,
+        email: data.email,
+        password: data.password,
+      };
+      console.log(userInfo);
+      const res = await axiosIntance.post('/auth/register', userInfo);
+      if (res.status === 200) {
+        toast("You have successfully registered");
+      }
+      console.log(res);
+    };
+
   };
 
   // Toggle the checkbox state
@@ -41,16 +61,19 @@ const RegistrationForm = () => {
             type="text"
             {...register("fullName", {
               required: "Name is required",
+              minLength: 3
             })}
-            className={`border border-gray-300 text-gray-900 focus:outline-none text-xs rounded-full block w-full py-2.5 px-4 dark:border-gray-600 bg-white mt-1 ${
-              errors.fullName ? "border-red-500" : "border-gray-300"
-            }`}
+            className={`border border-gray-300 text-gray-900 focus:outline-none text-xs rounded-full block w-full py-2.5 px-4 dark:border-gray-600 bg-white mt-1 ${errors.fullName ? "border-red-500" : "border-gray-300"
+              }`}
             placeholder="Enter Full Name"
           />
           {errors.fullName && (
             <span className="text-red-500 text-xs mt-1">
               {errors.fullName.message}
             </span>
+          )}
+          {errors.fullName?.type == "minLength" && (
+            <span className='text-red-600 -mt-5'>Name must be atleast 3 characters</span>
           )}
         </div>
 
@@ -66,9 +89,8 @@ const RegistrationForm = () => {
                 message: "Enter a valid email address",
               },
             })}
-            className={`border border-gray-300 text-gray-900 focus:outline-none text-xs rounded-full block w-full py-2.5 px-4 dark:border-gray-600 bg-white mt-1 ${
-              errors.email ? "border-red-500" : "border-gray-300"
-            }`}
+            className={`border border-gray-300 text-gray-900 focus:outline-none text-xs rounded-full block w-full py-2.5 px-4 dark:border-gray-600 bg-white mt-1 ${errors.email ? "border-red-500" : "border-gray-300"
+              }`}
             placeholder="Enter Email Address"
           />
           {errors.email && (
@@ -83,48 +105,58 @@ const RegistrationForm = () => {
           <div className="w-full">
             <div className="relative">
               <input
-                type={showPassword ? "text" : "password"}
+                type="password"
                 {...register("password", {
                   required: "Password is required",
-                  minLength: {
-                    value: 6,
-                    message: "Password must be at least 6 characters long",
-                  },
+                  minLength: 8,
+                  maxLength: 20,
+                  pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/
                 })}
-                className={`border border-gray-300 text-gray-900 focus:outline-none text-xs rounded-full block w-full py-2.5 px-4 dark:border-gray-600 bg-white mt-1 ${
-                  errors.password ? "border-red-500" : "border-gray-300"
-                }`}
+                className={`border border-gray-300 text-gray-900 focus:outline-none text-xs rounded-full block w-full py-2.5 px-4 dark:border-gray-600 bg-white mt-1 ${errors.password ? "border-red-500" : "border-gray-300"
+                  }`}
                 placeholder="Enter Password..."
               />
             </div>
-            {errors.password && (
-              <p className="text-red-500 text-xs mt-1">
-                {errors.password.message}
-              </p>
+            {errors.password?.type == "required" && (
+              <span className='text-red-600 -mt-5'>Password is required</span>
+            )}
+            {errors.password?.type == "minLength" && (
+              <span className='text-red-600 -mt-5'>Password must be atleast 8 characters</span>
+            )}
+            {errors.password?.type == "maxLength" && (
+              <span className='text-red-600 -mt-5'>Password must be maximum 20 characters</span>
+            )}
+            {errors.password?.type == "pattern" && (
+              <span className='text-red-600 -mt-5'>Password must have atleast one uppercase,one lowercase and one special character</span>
             )}
           </div>
 
           <div className="w-full">
             <div className="relative">
               <input
-                type={showPassword ? "text" : "password"}
-                {...register("password", {
+                type="password"
+                {...register("repassword", {
                   required: "Password is required",
-                  minLength: {
-                    value: 6,
-                    message: "Password must be at least 6 characters long",
-                  },
+                  minLength: 8,
+                  maxLength: 20,
+                  pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/
                 })}
-                className={`border border-gray-300 text-gray-900 focus:outline-none text-xs rounded-full block w-full py-2.5 px-4 dark:border-gray-600 bg-white mt-1 ${
-                  errors.password ? "border-red-500" : "border-gray-300"
-                }`}
-                placeholder="Re-enter Password..."
+                className={`border border-gray-300 text-gray-900 focus:outline-none text-xs rounded-full block w-full py-2.5 px-4 dark:border-gray-600 bg-white mt-1 ${errors.repassword ? "border-red-500" : "border-gray-300"
+                  }`}
+                placeholder="Enter Password..."
               />
             </div>
-            {errors.password && (
-              <p className="text-red-500 text-xs mt-1">
-                {errors.password.message}
-              </p>
+            {errors.repassword?.type == "required" && (
+              <span className='text-red-600 -mt-5'>Password is required</span>
+            )}
+            {errors.repassword?.type == "minLength" && (
+              <span className='text-red-600 -mt-5'>Password must be atleast 8 characters</span>
+            )}
+            {errors.repassword?.type == "maxLength" && (
+              <span className='text-red-600 -mt-5'>Password must be maximum 20 characters</span>
+            )}
+            {errors.repassword?.type == "pattern" && (
+              <span className='text-red-600 -mt-5'>Password must have atleast one uppercase,one lowercase and one special character</span>
             )}
           </div>
         </div>
@@ -205,23 +237,21 @@ const RegistrationForm = () => {
           <span>
             I have agreed with{" "}
             <Link href="/terms" className="underline ml-1 text-[#723EEB]">
-             Terms Of Use & Privacy Policy
+              Terms Of Use & Privacy Policy
             </Link>{" "}
             {" "}
-            
-            </span>
-            </div>
+
+          </span>
+        </div>
 
         {/* Registration Button */}
         <div className="">
-             <Link href="/dashboard" passHref>
-              <button
-              type="submit"
-              className="w-full md:px-4 py-2.5 bg-[#723EEB] text-white text-xs rounded-3xl hover:bg-[#6129e6] duration-500">
-                Register
-                </button>
-                </Link>
-                </div>
+          <button
+            type="submit"
+            className="w-full md:px-4 py-2.5 bg-[#723EEB] text-white text-xs rounded-3xl hover:bg-[#6129e6] duration-500">
+            Register
+          </button>
+        </div>
 
 
         <SocialLogin />
