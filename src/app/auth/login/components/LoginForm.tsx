@@ -39,19 +39,17 @@ const LoginForm = () => {
     const res = await axiosInstance.post('/auth/login', userInfo);
 
     if (res.status === 200) {
-
       const userData = res?.data?.data?.data;
       setUser(userData);
-
-      toast("You have successfully logged in");
-      router.replace('/user/dashboard');
+      toast.success(res?.data?.data.message);
+      router.push('/user/dashboard');
+     
     }
     else if(res.status === 403) {
       setError("Invalid email or passwords");
     }
   };
 
-  console.log(error)
 
   return (
     <div className="bg-white rounded-xl shadow-lg px-6 py-6 max-w-xl w-full">

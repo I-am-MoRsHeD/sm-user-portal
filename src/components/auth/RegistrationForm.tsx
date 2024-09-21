@@ -35,12 +35,11 @@ const RegistrationForm = () => {
         email: data.email,
         password: data.password,
       };
-      console.log(userInfo);
       const res = await axiosIntance.post('/auth/register', userInfo);
       if (res.status === 200) {
-        toast("You have successfully registered");
+        console.log(res.status)
+        toast.success("You have successfully registered");
       }
-      console.log(res);
     };
 
   };
