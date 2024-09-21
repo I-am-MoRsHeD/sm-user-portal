@@ -15,14 +15,14 @@ export const AuthContext = createContext<AuthContextType | null>(null);
 const AuthContextProvider: React.FC<AuthContextProviderProps> = ({ children }) => {
     // const [user, setUser] = useState('');
     const [user, setUser] = useState(() => {
-        const storedUser = localStorage.getItem('user');
+        const storedUser = typeof window !== "undefined" ? localStorage.getItem('user') : null;
         return storedUser ? JSON.parse(storedUser) : [];
     });
 
     console.log(user);
     useEffect(() => {
         if (user) {
-            localStorage.setItem('user', JSON.stringify(user));
+            typeof window !== "undefined" ? localStorage.setItem('user', JSON.stringify(user)) : null;
         }
     }, [user]);
 

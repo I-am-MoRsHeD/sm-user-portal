@@ -1,7 +1,8 @@
 import React from 'react';
 import Image from 'next/image';
 
-import CardSubTitle from '../common/cardSubTitle/CardSubTitle';
+
+import CardSubTitle from '@/components/common/cardSubTitle/CardSubTitle';
 import QRcodeImage from '../../../public/qrcode.png';
 
 const TwoFactor = () => {

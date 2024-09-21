@@ -2,7 +2,7 @@
 import GoogleAuthenticator from '@/components/2fa-security/Google-Authenticator';
 import TwoFactor from '@/components/2fa-security/Two-factor';
 import Topbar from '@/components/Topbar';
-import React from 'react';
+
 
 const page = () => {
     return (
