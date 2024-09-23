@@ -1,7 +1,7 @@
 "use client"
 import MainLayout from '@/components/MainLayout/MainLayout';
 import '.././../styles/globals.css';
-import NavigationContextProvider from '@/components/NavigationContext/NavigationContext';
+import { ToastContainer } from 'react-toastify';
 
 
 export default function RootLayout({
@@ -11,13 +11,11 @@ export default function RootLayout({
 }) {
     return (
         <section>
-           
 
-                <MainLayout>
-                    {children}
-                </MainLayout>
-           
-     
+            <MainLayout>
+                {children}
+            </MainLayout>
+
         </section>
 
     );
