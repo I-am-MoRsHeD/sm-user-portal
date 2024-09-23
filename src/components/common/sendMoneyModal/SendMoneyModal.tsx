@@ -9,7 +9,6 @@ interface ModalProps {
 }
 
 const SendMoneyModal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
-    // if (!isOpen) return null;
     return (
         <div>
             <div className={`fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-[999] ${isOpen ? 'opacity-1 visible' : 'invisible opacity-0'}`}>

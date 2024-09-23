@@ -44,7 +44,7 @@ const page = () => {
                             </span>
                         </div>
                         <Link href={'/send-money/payment-confirmation'} className="w-full ">
-                            <button className="bg-[#723EEB] text-white w-full text-max px-4 py-2 text-xs rounded-full">Confirm Payment</button>
+                            <button className="bg-[#723EEB] text-white w-full text-max px-4 py-2 text-xs rounded-full  transition-all duration-300 ease-in-out transform  hover:bg-indigo-600">Confirm Payment</button>
                         </Link>
                     </div>
                 </div>

@@ -34,7 +34,7 @@ const currencyOptions: CurrencyOption[] = [
   { code: 'USD', name: 'United States dollar', icon: 'usa-flag.png' },
   { code: 'CAD', name: 'Canadian dollar', icon: 'canada-flag.png' },
   { code: 'NGN', name: 'Nigerian naira', icon: 'nigeria-flag.png' },
-//   { code: 'INR', name: 'Indian rupee', icon: 'india-flag.png' },
+
 ];
 
 // Reusable Dropdown component
@@ -51,9 +51,9 @@ const Dropdown: React.FC<DropdownProps> = ({ label, options, selectedValue, setS
         <h1 className="font-medium">{selectedValue}</h1>
         <svg className={`${isOpen ? '-rotate-180' : 'rotate-0'} duration-300`} width={25} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M7 10L12 15L17 10" stroke="#4B5563" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>{' '}</g></svg>
       </div>
-      {/* {isOpen && ( */}
+      
         
-            {/* <div className="absolute z-10 w-full mt-1 bg-white border rounded-xl shadow-lg"> */}
+           
             <div className={`${isOpen ? 'visible top-12 bg-white opacity-100' : 'invisible -top-4 opacity-0'} absolute mx-auto my-4 w-full z-50 rounded-xl py-4 border duration-300`}>
             {options.map((option, idx) => (
             <div 
@@ -68,7 +68,6 @@ const Dropdown: React.FC<DropdownProps> = ({ label, options, selectedValue, setS
             </div>
           ))}
         </div>
-      {/* )} */}
     </div>
   );
 };
@@ -86,7 +85,7 @@ const CurrencyDropdown: React.FC<CurrencyDropdownProps> = ({ label, options, sel
   return (
     <div className="relative w-full text-xs">
       <label className="block mb-2 font-semibold">{label}</label>
-      <div className="border rounded-l-xl flex">
+      <div className="border rounded-xl flex">
         <div className="mx-auto flex w-full items-center justify-between px-3 py-1 cursor-pointer bg-gray-200 rounded-l-xl">
           {selectedValue && (
             <div className="relative w-5 h-5 mr-2">
@@ -180,7 +179,7 @@ const WalletToBankPage: React.FC = () => {
       {/* <main className="container mx-auto px-4 py-8"> */}
         <CardSubTitle title="Send Money" />
         <SendMoneyCard title="Wallet To Bank Transfer">
-          <div className='w-[95%] lg:w-[45%] mx-auto space-y-5 my-5'>
+          <div className='w-[95%] lg:w-[45%] mx-auto space-y-5 mt-5'>
             <Dropdown
               label="Select Transfer Type"
               options={transferOptions}

@@ -33,7 +33,7 @@ const WalletToWalletpage = () => {
             <div>
                 <SendMoneyCard title='Wallet To Wallet Transfer'>
                     {/* form */}
-                    <div className='w-[95%] lg:w-[45%] mx-auto space-y-5 my-5'>
+                    <div className='w-[95%] lg:w-[45%] mx-auto space-y-5 mt-5'>
                         <div className="relative w-full text-xs">
                             <label className="block mb-2 font-semibold">Select Transfer Type</label>
                             <div onClick={() => setTransferIsOpen(!transferIsOpen)} className="mx-auto flex w-full items-center justify-between rounded-xl px-3 py-1 border ">
