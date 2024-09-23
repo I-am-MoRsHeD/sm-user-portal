@@ -3,7 +3,6 @@
 import { ReactNode, useEffect } from 'react';
 import '../styles/globals.css'
 import NavigationContextProvider from '@/components/NavigationContext/NavigationContext';
-import MainLayout from '@/components/MainLayout/MainLayout';
 import AuthContextProvider from '@/components/AuthContext/AuthContext';
 
 
@@ -19,10 +18,10 @@ const Layout = ({ children }: LayoutProps) => {
       <body>
         <AuthContextProvider>
           <NavigationContextProvider>
-            <MainLayout>
-                {children}
-            </MainLayout>
+
+            {children}
           </NavigationContextProvider>
+
         </AuthContextProvider>
       </body>
     </html>

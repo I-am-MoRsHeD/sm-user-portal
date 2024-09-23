@@ -1,4 +1,4 @@
-import '../../styles/globals.css';
+import '.././../styles/globals.css';
 
 export const metadata = {
   title: 'Next.js',
@@ -11,12 +11,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <head>
-        <title>{metadata.title}</title>
-        <meta name="description" content={metadata.description} />
-      </head>
-      <body>{children}</body>
-    </html>
+    <section>
+      
+      {children}
+    </section>
+  
   );
 }

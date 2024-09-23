@@ -1,7 +1,8 @@
 import React from 'react';
-import { BackToHome } from '../login/components';
+
 import RegistrationForm from '@/components/auth/RegistrationForm';
 import Image from 'next/image';
+import { BackToHome } from '../login/components';
 
 const Page = () => {
     return (
