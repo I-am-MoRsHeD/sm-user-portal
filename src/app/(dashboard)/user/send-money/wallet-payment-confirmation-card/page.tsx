@@ -7,7 +7,7 @@ const page = () => {
     return (
         <>
             <Topbar>Payment Confirmation</Topbar>
-            <div className='bg-white min-h-[90vh] max-h-auto my-5 rounded-xl'>
+            <div className='bg-white min-h-[80vh] max-h-auto flex justify-center items-center my-5 rounded-xl'>
                 <div className='w-[95%] lg:w-[45%] mx-auto py-4'>
                     <div className='bg-[#723eeb] py-4 text-center w-full mx-auto rounded-xl text-white'>
                         <h2 className="text-xl font-semibold">Payment Confirmation</h2>
@@ -44,7 +44,7 @@ const page = () => {
                             </span>
                         </div>
                         <Link href={'/user/send-money/payment-confirmation'} className="w-full ">
-                            <button className="bg-[#723EEB] text-white w-full text-max px-4 py-2 text-xs rounded-full">Confirm Payment</button>
+                            <button className="bg-[#723EEB] hover:bg-indigo-600 text-white w-full text-max px-4 py-2 text-xs rounded-full">Confirm Payment</button>
                         </Link>
                     </div>
                 </div>
