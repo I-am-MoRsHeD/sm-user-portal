@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
-import AgentAvater from '../../../../../public/agent-avater.png';
+import AgentAvater from '../../../../../../public/agent-avater.png';
 
 const page = () => {
     return (
