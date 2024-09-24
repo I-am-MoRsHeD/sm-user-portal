@@ -43,8 +43,8 @@ const LoginForm = () => {
       const userData = res?.data?.data?.data;
       setUser(userData);
 
-      toast.success(res?.data?.data.message);
-      // toast("You have successfully logged in");
+      // toast.success(res?.data?.data.message);
+      toast("You have successfully logged in");
       router.push('/user/dashboard');
      
 
@@ -63,7 +63,7 @@ const LoginForm = () => {
 
 
   return (
-    <div className="bg-white rounded-xl shadow-lg px-6 py-6 max-w-xl w-full">
+    <div className="bg-white rounded-xl shadow-lg px-2 lg:px-6 py-6 my-10 lg-my-0 max-w-xl w-full">
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* Email Field */}
         <div className="mb-4">
