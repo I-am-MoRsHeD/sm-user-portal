@@ -7,8 +7,8 @@ import { BackToHome } from '../login/components';
 const Page = () => {
     return (
         <div className="bg-gradient-to-r from-pink-200 to-blue-200 min-h-screen w-full flex items-center justify-center">
-            <div className="px-4 sm:container">
-                <div className="lg:flex items-center justify-center gap-10 pt-16">
+            <div className="px-2 lg:px-4 sm:container">
+                <div className="lg:flex items-center justify-center gap-10">
                     <div className="hidden lg:block">
                         {/* BackToHome component */}
                         {/* <BackToHome /> */}

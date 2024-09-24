@@ -50,7 +50,7 @@ const RegistrationForm = () => {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-lg px-6 py-6 my-20 lg-my-0 w-full">
+    <div className="bg-white rounded-xl shadow-lg px-2 lg:px-6 py-6 my-5 lg:my-10 w-full">
       <h3 className="text-base font-semibold text-[#000000]">Register</h3>
 
       <form className="space-y-7" onSubmit={handleSubmit(onSubmit)}>
