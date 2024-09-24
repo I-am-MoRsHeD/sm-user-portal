@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
 import SocialLogin from "./SocialLogin";
@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { toast, ToastContainer } from "react-toastify";
 import { redirect, useRouter } from "next/navigation";
 import useAuthContext from "@/components/AuthContext/useAuthContext";
+
 
 
 interface FormData {
@@ -22,9 +23,7 @@ const LoginForm = () => {
   const axiosInstance = useAxiosSecure();
   const router = useRouter();
 
-  console.log(user);
-
-  const { register, handleSubmit, formState: { errors }} = useForm<FormData>();
+  const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -41,22 +40,30 @@ const LoginForm = () => {
     const res = await axiosInstance.post('/auth/login', userInfo);
     console.log(res);
     if (res.status === 200) {
-
       const userData = res?.data?.data?.data;
       setUser(userData);
 
+      // toast.success(res?.data?.data.message);
       toast("You have successfully logged in");
       router.push('/user/dashboard');
+     
+
+      // window.location.href = '/user/dashboard';
+
+      // router.push('/user/dashboard');
+      // router.replace('/user/dashboard');
+
+      // router.prefetch('/user/dashboard');
+
     }
-    else if(res.status === 403) {
+    else if (res.status === 403) {
       setError("Invalid email or passwords");
     }
   };
 
-  console.log(error)
 
   return (
-    <div className="bg-white rounded-xl shadow-lg px-6 py-6 max-w-xl w-full">
+    <div className="bg-white rounded-xl shadow-lg px-2 lg:px-6 py-6 my-10 lg-my-0 max-w-xl w-full">
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* Email Field */}
         <div className="mb-4">

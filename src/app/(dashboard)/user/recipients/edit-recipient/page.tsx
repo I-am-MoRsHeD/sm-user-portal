@@ -1,12 +1,12 @@
 'use client'
 import React from 'react';
 
-import Topbar from '../../../../components/Topbar';
 
 import Image from 'next/image';
 import Link from 'next/link';
 
-import UserProfile from '../../../../../public/user-avater.png';
+import UserProfile from '../../../../../../public/user-avater.png';
+import Topbar from '@/components/Topbar';
 
 const EditRecipientPage = () => {
     return (

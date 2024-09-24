@@ -1,23 +1,24 @@
 import React from 'react';
-import { BackToHome } from '../login/components';
+
 import RegistrationForm from '@/components/auth/RegistrationForm';
 import Image from 'next/image';
+import { BackToHome } from '../login/components';
 
 const Page = () => {
     return (
-        <div className="bg-gradient-to-r from-pink-200 to-blue-200 min-h-screen w-full">
-            <div className="container mx-auto px-4">
-                <div className="lg:flex items-center justify-center gap-10 pt-16">
+        <div className="bg-gradient-to-r from-pink-200 to-blue-200 min-h-screen w-full flex items-center justify-center">
+            <div className="px-2 lg:px-4 sm:container">
+                <div className="lg:flex items-center justify-center gap-10">
                     <div className="hidden lg:block">
                         {/* BackToHome component */}
-                        <BackToHome />
+                        {/* <BackToHome /> */}
                         
                         {/* Registration Background Image */}
-                        <div className="relative">
+                        <div className="lg:block -mt-10">
                             <Image
                                 src="/auth/register_bg.png"
-                                width={500}
-                                height={500}
+                                width={ 489}
+                                height={463}
                                 alt="Registration background image"
                                 className="object-contain"
                             />

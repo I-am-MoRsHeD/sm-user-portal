@@ -1,9 +1,11 @@
 "use client"
 import dynamic from 'next/dynamic'
-import SendMoneyLog from '../../../components/dashboard/SendMoneyLog/SendMoneyLog'
-import TotalTransactionsChart from '../../../components/dashboard/TotalTransactionsChart/TotalTransactionsChart'
-import Wallet from '../../../components/dashboard/Wallet/Wallet'
+
 import Topbar from '@/components/Topbar'
+
+import TotalTransactionsChart from '@/components/dashboard/TotalTransactionsChart/TotalTransactionsChart'
+import SendMoneyLog from '@/components/dashboard/SendMoneyLog/SendMoneyLog'
+import Wallet from '@/components/dashboard/Wallet/Wallet'
 
 const page = () => {
     return (

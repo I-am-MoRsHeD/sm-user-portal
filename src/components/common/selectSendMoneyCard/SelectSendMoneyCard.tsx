@@ -7,7 +7,7 @@ type CardProps = {
 
 const SelectSendMoneyCard: React.FC<CardProps> = ({ title, desc }) => {
     return (
-        <div className='p-4 text-white cursor-pointer border-4 border-gray-300 transparent bg-gradient-to-t from-[#c051f2] to-[#9867f9] hover:from-[#a733dc] hover:to-[#7241d2] hover:border-[#c5c5c5] hover:shadow-[0_4px_15px_rgba(0,0,0,0.25)] transition-all ease-in-out duration-300 w-64 h-40 rounded-xl transform hover:scale-105'>
+        <div className='p-4 text-white cursor-pointer border-4 border-gray-300 transparent bg-gradient-to-t from-[#c051f2] to-[#9867f9] hover:from-[#a733dc] hover:to-[#7241d2] hover:border-[#c5c5c5] hover:shadow-[0_4px_15px_rgba(0,0,0,0.25)] transition-all ease-in-out duration-500 w-64 h-40 rounded-xl transform hover:scale-105'>
 
             <h3 className="font-semibold h-6">{title}</h3>
             <div className='flex justify-between items-end h-[90px]'>

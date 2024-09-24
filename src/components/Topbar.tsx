@@ -33,12 +33,11 @@ const Topbar = ({ children }: { children: string }) => {
     setProfileDropdown(false);
     Swal.fire({
       title: "Are you sure?",
-      text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!"
+      confirmButtonText: "Yes, logged out!"
     }).then((result) => {
       if (result.isConfirmed) {
 
@@ -48,8 +47,8 @@ const Topbar = ({ children }: { children: string }) => {
         Cookies.remove('refreshToken');
         
         Swal.fire({
-          title: "Deleted!",
-          text: "Your file has been deleted.",
+          title: "Done",
+          text: "You have successfully logged out.",
           icon: "success"
         });
       }
