@@ -23,7 +23,7 @@ const SendMoneyLog = () => {
         setId(id);
     }
     return (
-        <div className='mt-28 lg:mt-20'>
+        <div className='mt-28 lg:mt-0'>
             <div className='flex justify-between'>
                 <h2 className='text-sm font-semibold'>Send Money Log</h2>
                 <button className='bg-[#723EEB] hover:bg-[#6125ec] duration-500 rounded-3xl lg:text-base font-bold text-white text-xs px-3 lg:px-5 py-2'>
@@ -33,13 +33,14 @@ const SendMoneyLog = () => {
                 </button>
             </div>
 
-            <div className={`${open[id] ? 'h-auto' : 'h-24'} transition-all duration-500 ease-in-out overflow-y-scroll scroll-smooth my-2`}>
+            <div className={`${open[id] ? 'h-auto' : 'h-36'} transition-all duration-500 ease-in-out overflow-y-scroll scroll-smooth my-2 custom-scrollbar`}>
                 {
                     sendMoneyLogData.map((data: SendMoneyLogDataType) => (
                         <div key={data.id}
-                            onClick={() => toggleCard(data.id)}
                             className={`bg-white my-2 px-2 py-2 lg:px-6 lg:py-4 mb-5 rounded-2xl cursor-pointer ${open[data.id] ? ' shadow-md shadow-neutral-400' : ''}`}>
-                            <div className='flex flex-row justify-between items-center'>
+                            <div
+                                onClick={() => toggleCard(data.id)}
+                                className='flex flex-row justify-between items-center'>
                                 <div className="flex items-center">
                                     <div className="bg-[#F3F2F2] p-2 rounded-full mr-4">
                                         <GoArrowUp className="text-base sm:text-2xl" />
