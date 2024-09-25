@@ -6,22 +6,30 @@ import Topbar from '@/components/Topbar'
 import TotalTransactionsChart from '@/components/dashboard/TotalTransactionsChart/TotalTransactionsChart'
 import SendMoneyLog from '@/components/dashboard/SendMoneyLog/SendMoneyLog'
 import Wallet from '@/components/dashboard/Wallet/Wallet'
+import { decodedUser } from '@/components/hooks/useUser'
 
-const page = () => {
+
+const Page = () => {
+    const user = decodedUser;
+
+    console.log(user);
+
     return (
         <div className='min-h-screen max-h-full'>
             <Topbar>Dashboard</Topbar>
-            <Wallet />
-            <div className='flex flex-col lg:flex-row items-start w-full gap-5'>
+            <div className='flex flex-col lg:flex-row items-start w-full gap-5 mt-8'>
                 <div className='lg:flex-1 w-full lg:w-3/5'>
-                    <TotalTransactionsChart />
+                    <Wallet />
                 </div>
-                <div className='-mt-10 lg:w-2/5 w-full'>
+                <div className='lg:w-2/5 w-full'>
                     <SendMoneyLog />
                 </div>
+            </div>
+            <div >
+                <TotalTransactionsChart />
             </div>
         </div>
     )
 }
 
-export default page
+export default Page;

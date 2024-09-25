@@ -43,9 +43,9 @@ const Topbar = ({ children }: { children: string }) => {
 
         router.push('/auth/login');
         typeof window !== "undefined" ? localStorage.clear() : null;
-        Cookies.remove('accessToken');
-        Cookies.remove('refreshToken');
-        
+        Cookies.remove('accessToken', { path: '/' });
+        Cookies.remove('refreshToken', { path: '/' });
+
         Swal.fire({
           title: "Done",
           text: "You have successfully logged out.",
@@ -102,7 +102,7 @@ const Topbar = ({ children }: { children: string }) => {
           />
         </Link> */}
         <div>
-          <div onClick={() => setProfileDropdown(!profileDropdown)} className='border-[2px] border-gray-300 rounded px-2 cursor-pointer flex justify-center items-center'>
+          <div onClick={() => setProfileDropdown(!profileDropdown)} className='border-[2px] border-gray-300 rounded lg:px-2 cursor-pointer flex justify-center items-center'>
             <Image
               src="/user-avater.png"
               alt="Profile"
@@ -113,7 +113,7 @@ const Topbar = ({ children }: { children: string }) => {
             <svg className={`${profileDropdown ? '-rotate-180' : 'rotate-0'} duration-300`} width={25} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M7 10L12 15L17 10" stroke="#4B5563" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>{' '}</g></svg>
           </div>
           {/* profile dropdown options  */}
-          <div className={`${profileDropdown ? 'visible top-16 p-2 bg-white opacity-100' : 'invisible -top-4 opacity-0'} absolute mx-auto w-[76px] z-50 rounded border duration-300 cursor-pointer`}>
+          <div className={`${profileDropdown ? 'visible top-16 p-2 bg-white opacity-100' : 'invisible -top-4 opacity-0'} absolute mx-auto right-2 lg:right-0 w-[76px] z-50 rounded border duration-300 cursor-pointer`}>
 
             <Link href={'/user/user-profile'} >
               <div onClick={() => setProfileDropdown(!profileDropdown)} className="text-black hover:scale-110 duration-500">Profile</div>
