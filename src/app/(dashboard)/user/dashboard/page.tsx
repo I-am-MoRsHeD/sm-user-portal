@@ -6,13 +6,9 @@ import Topbar from '@/components/Topbar'
 import TotalTransactionsChart from '@/components/dashboard/TotalTransactionsChart/TotalTransactionsChart'
 import SendMoneyLog from '@/components/dashboard/SendMoneyLog/SendMoneyLog'
 import Wallet from '@/components/dashboard/Wallet/Wallet'
-import { decodedUser } from '@/components/hooks/useUser'
 
 
 const Page = () => {
-    const user = decodedUser;
-
-    console.log(user);
 
     return (
         <div className='min-h-screen max-h-full'>

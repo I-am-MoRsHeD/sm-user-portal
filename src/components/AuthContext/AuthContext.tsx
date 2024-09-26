@@ -1,8 +1,7 @@
 'use client'
 import { createContext, ReactNode, useEffect, useState } from "react"
-import Cookies from 'js-cookie';
-import { jwtDecode } from "jwt-decode";
-import { useSession } from "next-auth/react";
+import { decodedUser } from "../hooks/useUser";
+
 
 interface AuthContextType {
     user: string;
@@ -19,14 +18,18 @@ const AuthContextProvider: React.FC<AuthContextProviderProps> = ({ children }) =
     // const [user, setUser] = useState('');
     const [user, setUser] = useState(() => {
         const storedUser = typeof window !== "undefined" ? localStorage.getItem('user') : null;
-        return storedUser ? JSON.parse(storedUser) : [];
+        return storedUser ? JSON.parse(storedUser) : {};
     });
 
 
     useEffect(() => {
         if (user) {
             typeof window !== "undefined" ? localStorage.setItem('user', JSON.stringify(user)) : null;
-        } 
+        }
+        if(decodedUser){
+            typeof window !== "undefined" ? localStorage.setItem('user', JSON.stringify(decodedUser)) : null;
+        }
+        
     }, [user]);
 
 

@@ -1,5 +1,6 @@
 import NextAuth, { NextAuthOptions } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
+import Cookies from "js-cookie"
 import { cookies } from 'next/headers';
 
 // export const authOptions: NextAuthOptions = ({
@@ -80,6 +81,8 @@ import { cookies } from 'next/headers';
 // });
 
 
+
+
 export const authOptions: NextAuthOptions = {
     providers: [
         GoogleProvider({
@@ -89,20 +92,20 @@ export const authOptions: NextAuthOptions = {
     ],
     callbacks: {
         async session({ token, session }) {
+            // Enrich session with token data
             if (token) {
                 session.user = {
                     ...session.user,
                     id: token.id as string,
                     name: token.name as string,
                     email: token.email as string,
-                }
+                };
                 session.accessToken = token.accessToken as string | undefined;
                 session.refreshToken = token.refreshToken as string | undefined;
             }
             return session;
         },
-        async signIn({ user, credentials, account }) {
-            // console.log(user)
+        async signIn({ user }) {
             try {
                 const response = await fetch('https://diasporex-api.vercel.app/api/v1/auth/social-login', {
                     method: 'POST',
@@ -115,25 +118,24 @@ export const authOptions: NextAuthOptions = {
                 });
 
                 const { data } = await response.json();
-                console.log('response ache' , response.ok);
+
+                // Validate response and set cookies
                 if (response.ok && data.accessToken && data.refreshToken) {
-                    user.id = data.user.id
-                    // typeof window !== "undefined" ? localStorage.setItem('accessToken', data.accessToken) : false;
-                    // typeof window !== "undefined" ? localStorage.setItem('user', JSON.stringify(user)) : null;
+                    user.id = data.user.id;
                     user.accessToken = data.accessToken;
-                    user.refreshToken = data.refreshToken;
-                    cookies().set('accessToken', data.accessToken, { path: '/', httpOnly: true });
-                    cookies().set('refreshToken', data.refreshToken, { path: '/', httpOnly: true });
-                    return true;
+                    user.refreshToken = data.refreshToken
+                    cookies().set('accessToken', data.accessToken )
+                    cookies().set('refreshToken', data.refreshToken )
+                    return true; 
                 } else {
-                    return false;
+                    return false; // Deny sign-in
                 }
             } catch (error) {
-                return false;
+                console.error('Error during sign-in:', error);
+                return false; //
             }
         },
-        async jwt({ token, user, account }) {
-
+        async jwt({ token, user }) {
             if (user) {
                 token.id = user.id;
                 token.name = user.name;
@@ -141,19 +143,20 @@ export const authOptions: NextAuthOptions = {
                 token.accessToken = user.accessToken;
                 token.refreshToken = user.refreshToken;
             }
-
+          
             return token;
         },
     },
     session: {
         strategy: 'jwt',
-    },
-    jwt: {
-        secret: process.env.NEXTAUTH_SECRET,
+         // Use JWT for session management
     },
     pages: {
-        signIn: '/auth/login',
-        signOut: '/auth/login'
+        signIn: '/auth/login', 
+       
     },
-    secret: process.env.NEXTAUTH_SECRET as string,
+    jwt:{
+        secret: process.env.NEXTAUTH_SECRET,
+    },
+    secret: process.env.NEXTAUTH_SECRET as string, // Secret for JWT
 };

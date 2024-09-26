@@ -3,7 +3,7 @@ import { Minus } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import React from "react";
-import { usePathname } from "next/navigation";
+import { usePathname} from "next/navigation";
 import { signIn } from "next-auth/react";
 
 const SocialLogin = () => {
@@ -27,7 +27,7 @@ const SocialLogin = () => {
         />
       </div>
       <button
-        onClick={() => signIn('google', { callbackUrl: "/user/dashboard" })}
+        onClick={() => signIn('google', { callbackUrl:'http://localhost:3000/user/dashboard',redirect:false})}
         className="border border-[#FF3D00] w-full flex justify-center">
         <div className="flex items-center ">
           <div className="w-6 h-6">

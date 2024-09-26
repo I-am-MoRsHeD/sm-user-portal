@@ -38,14 +38,13 @@ const LoginForm = () => {
     }
 
     const res = await axiosInstance.post('/auth/login', userInfo);
-    console.log(res);
     if (res.status === 200) {
       const userData = res?.data?.data?.data;
       setUser(userData);
 
       // toast.success(res?.data?.data.message);
-      toast("You have successfully logged in");
       router.push('/user/dashboard');
+      toast("You have successfully logged in");
      
 
       // window.location.href = '/user/dashboard';

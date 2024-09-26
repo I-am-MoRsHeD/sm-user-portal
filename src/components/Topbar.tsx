@@ -7,6 +7,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import useNavigationContext from './NavigationContext/useNavigationContext';
 import Swal from 'sweetalert2';
 import Cookies from 'js-cookie';
+import { signOut, useSession } from 'next-auth/react';
 
 
 const Topbar = ({ children }: { children: string }) => {
@@ -14,6 +15,7 @@ const Topbar = ({ children }: { children: string }) => {
   const { toggleNavigation }: any = useNavigationContext();
   const pathName = usePathname();
   const router = useRouter();
+  const {data:session} = useSession();
 
   const selectOptions = ['English', 'Hindi', 'Spanish'];
 
@@ -29,7 +31,7 @@ const Topbar = ({ children }: { children: string }) => {
     return () => document.removeEventListener('mousedown', close)
   }, [dropdown]);
 
-  const handleLogout = () => {
+  const handleLogout =  () => {
     setProfileDropdown(false);
     Swal.fire({
       title: "Are you sure?",
@@ -40,12 +42,17 @@ const Topbar = ({ children }: { children: string }) => {
       confirmButtonText: "Yes, logged out!"
     }).then((result) => {
       if (result.isConfirmed) {
-
-        router.push('/auth/login');
+        Cookies.remove('accessToken');
+        Cookies.remove('refreshToken');
         typeof window !== "undefined" ? localStorage.clear() : null;
-        Cookies.remove('accessToken', { path: '/' });
-        Cookies.remove('refreshToken', { path: '/' });
-
+        router.push('/auth/login');
+        if(session?.user){
+          signOut()
+          fetch('/api/auth/logout', {
+            method: 'POST',
+          }).then();
+       
+        }
         Swal.fire({
           title: "Done",
           text: "You have successfully logged out.",
