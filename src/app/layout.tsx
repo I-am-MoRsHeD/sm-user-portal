@@ -4,6 +4,7 @@ import { ReactNode, useEffect } from 'react';
 import '../styles/globals.css'
 import NavigationContextProvider from '@/components/NavigationContext/NavigationContext';
 import AuthContextProvider from '@/components/AuthContext/AuthContext';
+import { SessionProvider } from 'next-auth/react';
 
 
 
@@ -16,13 +17,15 @@ const Layout = ({ children }: LayoutProps) => {
   return (
     <html data-theme="light">
       <body>
-        <AuthContextProvider>
-          <NavigationContextProvider>
+        <SessionProvider>
+          <AuthContextProvider>
+            <NavigationContextProvider>
 
-            {children}
-          </NavigationContextProvider>
+              {children}
 
-        </AuthContextProvider>
+            </NavigationContextProvider>
+          </AuthContextProvider>
+        </SessionProvider>
       </body>
     </html>
   );

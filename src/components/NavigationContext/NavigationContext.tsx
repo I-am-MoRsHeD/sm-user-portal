@@ -4,6 +4,8 @@ import { createContext, ReactNode, useState } from "react"
 interface NavigationContextType {
     isNavOpen?: boolean;
     toggleNavigation?: () => void;
+    openForgetPassword: boolean;
+    setOpenForgetPassword: (value: boolean) => void;
 };
 
 interface NavigationContextProviderProps {
@@ -15,6 +17,7 @@ export const NavigationContext = createContext<NavigationContextType | null>(nul
 
 const NavigationContextProvider: React.FC<NavigationContextProviderProps> = ({children}) => {
     const [navOpen, setNavOpen] = useState(true);
+    const [openForgetPassword, setOpenForgetPassword] = useState(false);
 
     const toggleNavigation = () =>{
         setNavOpen(!navOpen);
@@ -22,7 +25,9 @@ const NavigationContextProvider: React.FC<NavigationContextProviderProps> = ({ch
 
     const info: NavigationContextType = {
         isNavOpen: navOpen,
-        toggleNavigation
+        toggleNavigation,
+        openForgetPassword, 
+        setOpenForgetPassword
     };
 
     return <NavigationContext.Provider value={info}>
