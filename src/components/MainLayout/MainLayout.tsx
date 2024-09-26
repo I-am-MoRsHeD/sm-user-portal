@@ -23,11 +23,11 @@ const MainLayout = ({ children }: LayoutProps) => {
         </div>
     }
 
-    useEffect(() => {
-        if (user === null || !user) {
-            redirect('/auth/login');
-        }
-    }, [user]);
+    // useEffect(() => {
+    //     if (user === null || !user) {
+    //         redirect('/auth/login');
+    //     }
+    // }, [user]);
 
     return (
         <div>

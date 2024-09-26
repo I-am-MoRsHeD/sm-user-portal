@@ -9,7 +9,7 @@ const ForgetPassword = () => {
             <h1 className=" font-semibold">Forgot Password?</h1>
             <form className='space-y-8 mt-5'>
                 <div className='flex flex-col space-y-3'>
-                    <label className='text-xs'>Enter your email and we'll send you a link to reset your password.</label>
+                    <label className='text-xs'>Enter your email and we will send you a link to reset your password.</label>
                     <input
                         type="email"
                         name=""
