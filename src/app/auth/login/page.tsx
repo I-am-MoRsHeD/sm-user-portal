@@ -5,7 +5,7 @@ import LoginForm from './components/LoginForm';
 import useNavigationContext from '@/components/NavigationContext/useNavigationContext';
 import ForgetPassword from '@/components/forgetPassword/ForgetPassword';
 
-const page = () => {
+const LoginPage = () => {
   const {openForgetPassword }: any = useNavigationContext();
 
   return (
@@ -33,4 +33,4 @@ const page = () => {
   );
 }
 
-export default page
+export default LoginPage
