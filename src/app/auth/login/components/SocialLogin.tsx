@@ -4,16 +4,17 @@ import Link from "next/link";
 import Image from "next/image";
 import React from "react";
 import { usePathname } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 const SocialLogin = () => {
   const route = usePathname();
+
   return (
     <>
       {/* <div className='flex flex-col items-center '> */}
       <div
-        className={`flex justify-between items-center overflow-hidden ${
-          route === `/auth/login` ? "my-4" : ""
-        }`}
+        className={`flex justify-between items-center overflow-hidden ${route === `/auth/login` ? "my-4" : ""
+          }`}
       >
         <hr
           className={`w-20 sm:w-32 md:36 lg:w-44 xl:w-52 h-px bg-black border-0`}
@@ -25,7 +26,9 @@ const SocialLogin = () => {
           className={`w-20 sm:w-32 md:36 lg:w-44 xl:w-52 h-px bg-black border-0`}
         />
       </div>
-      <button className="border border-[#FF3D00] w-full flex justify-center">
+      <button
+        onClick={() => signIn('google', { callbackUrl: "/user/dashboard" })}
+        className="border border-[#FF3D00] w-full flex justify-center">
         <div className="flex items-center ">
           <div className="w-6 h-6">
             <Image

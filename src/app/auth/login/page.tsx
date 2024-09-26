@@ -1,40 +1,35 @@
+'use client'
 import Image from 'next/image';
 import { BackToHome } from './components';
 import LoginForm from './components/LoginForm';
+import useNavigationContext from '@/components/NavigationContext/useNavigationContext';
+import ForgetPassword from '@/components/forgetPassword/ForgetPassword';
 
 const page = () => {
+  const {openForgetPassword }: any = useNavigationContext();
+
   return (
     <div className='bg-gradient-to-r from-pink-200 to-blue-200 min-h-screen w-full flex items-center justify-center'>
       <div className='px-2 lg:px-4 sm:container'>
-        <div className='lg:flex items-center justify-center lg:pt-16'>
-          <div className='relative lg:block xl:mr-5'>
-            <div className=''>
-            {/* <BackToHome /> */}
-
-            </div>
-            <div className='hidden lg:block -mt-20'>
+        <div className='lg:flex items-center justify-center gap-5'>
+          <div className='relative lg:block'>
+            <div className='hidden lg:block h-full mt-3'>
               <Image
                 src="/auth/login_bg.png"
-                width={489}
-                height={463}
+                width={530}
+                height={460}
                 alt="Picture of the author"
-                
-
               />
             </div>
           </div>
           <div className='grid justify-items-center '>
-            
-            {/* <div
-              className="w-[550px] h-[417px] bg-white rounded-[10px] shadow-lg flex items-center justify-center"
-              style={{ boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)" }}
-            > */}
-            <LoginForm /> 
-            </div>
+            {openForgetPassword ? <ForgetPassword /> : (
+              <LoginForm />
+            )}
           </div>
         </div>
       </div>
-    // </div>
+    </div>
   );
 }
 

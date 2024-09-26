@@ -4,6 +4,7 @@ import TheSidebar from '../shared/TheSidebar';
 import useNavigationContext from '../NavigationContext/useNavigationContext';
 import { ToastContainer } from 'react-toastify';
 import { redirect } from 'next/navigation';
+import useAuthContext from '../AuthContext/useAuthContext';
 
 interface LayoutProps {
     children: ReactNode;
@@ -11,8 +12,16 @@ interface LayoutProps {
 
 
 const MainLayout = ({ children }: LayoutProps) => {
+    const { loading }: any = useAuthContext();
     const { isNavOpen }: any = useNavigationContext();
     const user = typeof window !== "undefined" ? localStorage.getItem('user') : null;
+
+    if (loading) {
+        console.log('hit');
+        return <div className="flex justify-center items-center h-[100vh] z-50 backdrop-brightness-90">
+            <h1>Loading .....</h1>
+        </div>
+    }
 
     useEffect(() => {
         if (user === null || !user) {
