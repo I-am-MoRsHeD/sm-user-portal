@@ -117,14 +117,14 @@ export const authOptions: NextAuthOptions = {
                 const { data } = await response.json();
                 console.log('response ache' , response.ok);
                 if (response.ok && data.accessToken && data.refreshToken) {
+
                     user.id = data.user.id
-                    // typeof window !== "undefined" ? localStorage.setItem('accessToken', data.accessToken) : false;
-                    // typeof window !== "undefined" ? localStorage.setItem('user', JSON.stringify(user)) : null;
                     user.accessToken = data.accessToken;
                     user.refreshToken = data.refreshToken;
-                    cookies().set('accessToken', data.accessToken, { path: '/', httpOnly: true });
-                    cookies().set('refreshToken', data.refreshToken, { path: '/', httpOnly: true });
+                    cookies().set('accessToken', data.accessToken);
+                    cookies().set('refreshToken', data.refreshToken);
                     return true;
+                    
                 } else {
                     return false;
                 }

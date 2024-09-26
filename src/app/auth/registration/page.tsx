@@ -10,14 +10,10 @@ const Page = () => {
             <div className="px-2 lg:px-4 sm:container">
                 <div className="lg:flex items-center justify-center gap-10">
                     <div className="hidden lg:block">
-                        {/* BackToHome component */}
-                        {/* <BackToHome /> */}
-                        
-                        {/* Registration Background Image */}
-                        <div className="lg:block -mt-10">
+                        <div className="lg:block">
                             <Image
                                 src="/auth/register_bg.png"
-                                width={ 489}
+                                width={593}
                                 height={463}
                                 alt="Registration background image"
                                 className="object-contain"

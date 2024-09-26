@@ -51,9 +51,9 @@ const RegistrationForm = () => {
 
   return (
     <div className="bg-white rounded-xl shadow-lg px-2 lg:px-6 py-6 my-5 lg:my-10 w-full">
-      <h3 className="text-base font-semibold text-[#000000]">Register</h3>
+      <h3 className="text-base font-semibold text-black">Register</h3>
 
-      <form className="space-y-7" onSubmit={handleSubmit(onSubmit)}>
+      <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
         {/* Full Name Field */}
         <div className="mt-7">
           <input
@@ -72,7 +72,7 @@ const RegistrationForm = () => {
             </span>
           )}
           {errors.fullName?.type == "minLength" && (
-            <span className='text-red-600 -mt-5'>Name must be atleast 3 characters</span>
+            <span className='text-red-600 text-xs -mt-5'>Name must be atleast 3 characters</span>
           )}
         </div>
 
@@ -117,16 +117,16 @@ const RegistrationForm = () => {
               />
             </div>
             {errors.password?.type == "required" && (
-              <span className='text-red-600 -mt-5'>Password is required</span>
+              <span className='text-red-600 text-xs -mt-5'>Password is required</span>
             )}
             {errors.password?.type == "minLength" && (
-              <span className='text-red-600 -mt-5'>Password must be atleast 8 characters</span>
+              <span className='text-red-600 text-xs -mt-5'>Password must be atleast 8 characters</span>
             )}
             {errors.password?.type == "maxLength" && (
-              <span className='text-red-600 -mt-5'>Password must be maximum 20 characters</span>
+              <span className='text-red-600 text-xs -mt-5'>Password must be maximum 20 characters</span>
             )}
             {errors.password?.type == "pattern" && (
-              <span className='text-red-600 -mt-5'>Password must have atleast one uppercase,one lowercase and one special character</span>
+              <span className='text-red-600 text-xs -mt-5'>Password must have atleast one uppercase,one lowercase and one special character</span>
             )}
           </div>
 
@@ -142,26 +142,26 @@ const RegistrationForm = () => {
                 })}
                 className={`border border-gray-300 text-gray-900 focus:outline-none text-xs rounded-full block w-full py-2.5 px-4 dark:border-gray-600 bg-white mt-1 ${errors.repassword ? "border-red-500" : "border-gray-300"
                   }`}
-                placeholder="Enter Password..."
+                placeholder="Re-enter Password..."
               />
             </div>
             {errors.repassword?.type == "required" && (
-              <span className='text-red-600 -mt-5'>Password is required</span>
+              <span className='text-red-600 text-xs -mt-5'>Password is required</span>
             )}
             {errors.repassword?.type == "minLength" && (
-              <span className='text-red-600 -mt-5'>Password must be atleast 8 characters</span>
+              <span className='text-red-600 text-xs -mt-5'>Password must be atleast 8 characters</span>
             )}
             {errors.repassword?.type == "maxLength" && (
-              <span className='text-red-600 -mt-5'>Password must be maximum 20 characters</span>
+              <span className='text-red-600 text-xs -mt-5'>Password must be maximum 20 characters</span>
             )}
             {errors.repassword?.type == "pattern" && (
-              <span className='text-red-600 -mt-5'>Password must have atleast one uppercase,one lowercase and one special character</span>
+              <span className='text-red-600 text-xs -mt-5'>Password must have atleast one uppercase,one lowercase and one special character</span>
             )}
           </div>
         </div>
 
-        <div className="border-[1.5px] border-[#723EEB] w-full p-2 rounded-full">
-          <h4 className="text-[#723EEB] text-xs px-2">
+        <div className="border-[1.5px] border-[#9747FF] w-full p-2 rounded-full">
+          <h4 className="text-[#9747FF] text-xs px-2">
             You Are Referred By Abdul Karim
           </h4>
         </div>

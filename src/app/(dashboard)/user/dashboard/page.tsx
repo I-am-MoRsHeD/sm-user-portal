@@ -10,9 +10,6 @@ import { decodedUser } from '@/components/hooks/useUser'
 
 
 const Page = () => {
-    const user = decodedUser;
-
-    console.log(user);
 
     return (
         <div className='min-h-screen max-h-full'>
