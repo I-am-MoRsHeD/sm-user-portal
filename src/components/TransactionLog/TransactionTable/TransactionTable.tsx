@@ -33,7 +33,7 @@ const TransactionTable = () => {
 
     return (
         <div>
-            <table className="min-w-full bg-white text-nowrap ">
+            <table className="min-w-full bg-white text-nowrap overflow-x-auto">
                 <thead>
                     <tr className="">
                         <th className="px-4 py-2 text-left text-gray-700">Time</th>
