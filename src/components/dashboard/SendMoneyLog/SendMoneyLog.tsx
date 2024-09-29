@@ -23,17 +23,17 @@ const SendMoneyLog = () => {
         setId(id);
     }
     return (
-        <div className='mt-28 lg:mt-0'>
-            <div className='flex justify-between'>
+        <div className='lg:mt-0 lg:h-[70vh] overflow-auto custom-scrollbar scroll-smooth w-full '>
+            <div className='flex justify-between mb-5'>
                 <h2 className='text-sm font-semibold'>Send Money Log</h2>
-                <button className='bg-[#723EEB] hover:bg-[#6125ec] duration-500 rounded-3xl lg:text-base font-bold text-white text-xs px-3 lg:px-5 py-2'>
+                {/* <button className='bg-[#723EEB] hover:bg-[#6125ec] duration-500 rounded-3xl lg:text-base font-bold text-white text-xs px-3 lg:px-5 py-2'>
                     <Link href={'/user/transactions'}>
                         View More
                     </Link>
-                </button>
+                </button> */}
             </div>
 
-            <div className={`${open[id] ? 'h-auto' : 'h-36'} transition-all duration-500 ease-in-out overflow-y-scroll scroll-smooth my-2 custom-scrollbar`}>
+            <div className={` transition-all duration-500 ease-in-out my-2`}>
                 {
                     sendMoneyLogData.map((data: SendMoneyLogDataType) => (
                         <div key={data.id}
@@ -81,6 +81,13 @@ const SendMoneyLog = () => {
                         </div>
                     ))
                 }
+                <div className="flex lg:pt-10 items-end justify-end">
+                    <button className='bg-[#723EEB] hover:bg-[#6125ec] duration-500 rounded-3xl lg:text-base font-bold text-white text-xs px-3 lg:px-5 py-2'>
+                        <Link href={'/user/transactions'}>
+                            View More
+                        </Link>
+                    </button>
+                </div>
             </div>
         </div >
     )

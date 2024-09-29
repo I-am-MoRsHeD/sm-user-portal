@@ -5,22 +5,25 @@ import WithdrawIntoWalletModal from './WithdrawIntoWalletModal';
 import EditWalletModal from './EditWalletModal';
 import ForgetPINModal from '../common/ForgetPINModal/ForgetPINModal';
 import Link from 'next/link';
+import useCurrency from '../hooks/useCurrency';
 
 interface ModalProps {
     handleWithdrawIntoWallet: () => void;
-    handleChangePIN: () => void;
+    handleChangePIN: (value: any) => void;
     handleForgetPIN: () => void;
     handleEditWallet: () => void;
+    subWalletData: any;
 }
 
-const SubWalletModalForm: React.FC<ModalProps> = ({ handleWithdrawIntoWallet, handleChangePIN, handleForgetPIN, handleEditWallet }) => {
+const SubWalletModalForm: React.FC<ModalProps> = ({ handleWithdrawIntoWallet, handleChangePIN, handleForgetPIN, handleEditWallet, subWalletData }) => {
+    const [currency] = useCurrency();
 
     return (
         <div className='relative'>
 
             <div className='-mt-1 mb-2'>
                 <div className=" text-xs flex flex-row items-center">Wallet ID :
-                    <span className='border border-gray-400 px-[3px]'>IND***** ** ***</span>
+                    <span className='border border-gray-400 px-[3px]'>{subWalletData?.walletId}</span>
                     <div className='border border-gray-300 p-[3px]'>
                         <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M0 0V8.33333H2.91667V7.5H0.833333V0.833333H5.83333V1.25H6.66667V0H0ZM3.33333 1.66667V10H10V1.66667H3.33333ZM4.16667 2.5H9.16667V9.16667H4.16667V2.5Z" fill="#723EEB" />
@@ -35,15 +38,15 @@ const SubWalletModalForm: React.FC<ModalProps> = ({ handleWithdrawIntoWallet, ha
             </div>
             <div className='absolute -top-7 left-72'>
                 <button
-                    onClick={() => handleChangePIN()}
+                    onClick={() => handleChangePIN(subWalletData)}
                     className='border-[1.5px] text-[#723EEB] text-xs p-1 border-[#723EEB]'>Change PIN</button>
             </div>
             <div className='my-1'>
                 <h3 className="font-semibold">Balance</h3>
-                <p className="text-xs text-gray-500">Today, 25 APR 2024</p>
+                <p className="text-xs text-gray-500">Today, {new Date().toISOString().slice(0, 10)}</p>
             </div>
             <div className='mt-5 mb-3'>
-                <h2 className="font-semibold">$ <span className='text-5xl'>00.0</span>INR</h2>
+                <h2 className="font-semibold">$ <span className='text-5xl'>{subWalletData?.balance}.0</span>{subWalletData?.currency?.code}</h2>
             </div>
             <div className='w-full flex flex-row justify-between items-center gap-10 my-5'>
                 <div className='w-5/6 flex flex-row gap-2 text-xs'>
@@ -85,13 +88,15 @@ const SubWalletModalForm: React.FC<ModalProps> = ({ handleWithdrawIntoWallet, ha
                         <input
                             type="number"
                             name="wallet"
-                            className="w-[90%] px-3 py-1  border border-gray-400 rounded-l-full focus:outline-none"
+                            className="w-[90%] px-3 border border-gray-400 rounded-l-full focus:outline-none"
                             placeholder="Enter Amount"
                         />
-                        <select className="flex-1 px-3 border border-gray-400 rounded-r-full bg-[#723EEB] text-white focus:outline-none select select-sm">
-                            <option>INR</option>
-                            <option>USD</option>
-                            <option>BDT</option>
+                        <select className="flex-1 px-2 border border-gray-400 rounded-r-full bg-[#723EEB] text-white focus:outline-none select select-sm">
+                            {currency?.map((data: any) => (
+                                <option value={data?.name} key={data._id}>
+                                    {data?.name}
+                                </option>
+                            ))}
                         </select>
                     </div>
                 </div>
@@ -101,13 +106,15 @@ const SubWalletModalForm: React.FC<ModalProps> = ({ handleWithdrawIntoWallet, ha
                         <input
                             type="number"
                             name="converting"
-                            className="w-[90%] px-3 py-1  border border-gray-400 rounded-l-full focus:outline-none"
+                            className="w-[90%] px-3 border border-gray-400 rounded-l-full focus:outline-none"
                             placeholder="Enter Amount"
                         />
-                        <select className="flex-1 px-3 border border-gray-400 rounded-r-full bg-[#723EEB] text-white focus:outline-none select select-sm ">
-                            <option>INR</option>
-                            <option>USD</option>
-                            <option>BDT</option>
+                        <select className="flex-1 px-2 border border-gray-400 rounded-r-full bg-[#723EEB] text-white focus:outline-none select select-sm">
+                            {currency?.map((data: any) => (
+                                <option value={data?.name} key={data._id}>
+                                    {data?.name}
+                                </option>
+                            ))}
                         </select>
                     </div>
                 </div>

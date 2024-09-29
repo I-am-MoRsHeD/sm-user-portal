@@ -24,7 +24,6 @@ const axiosInstance = axios.create({
 const useAxiosSecure = () => {
     axiosInstance.interceptors.request.use(
         (config) => {
-            // console.log(config.headers['Authorization']);
             if (authToken) {
                 config.headers['Authorization'] = `${authToken}`;
             }
@@ -35,7 +34,7 @@ const useAxiosSecure = () => {
     axiosInstance.interceptors.response.use(
         (response) => {
 
-            Cookies.set('accessToken', response?.data?.data.accessToken , { expires: 1 });
+            Cookies.set('accessToken', response?.data?.data.accessToken, { expires: 1 });
             Cookies.set('refreshToken', response?.data?.data.refreshToken);
 
             typeof window !== "undefined" ? localStorage.setItem(AUTH_TOKEN_KEY, response?.data?.data.accessToken) : false;

@@ -1,7 +1,7 @@
 const SearchField = () => {
     return (
         <div>
-            <form className="w-72">
+            <form className="w-72 ">
                 <label
                     htmlFor="default-search"
                     className="text-sm font-medium text-gray-900 sr-only dark:text-white"
@@ -29,7 +29,7 @@ const SearchField = () => {
                     <input
                         type="search"
                         id="default-search"
-                        className="block w-full py-1.5 pl-9 text-sm text-gray-900 border border-gray-400 rounded-xl bg-transparent focus:ring-0 focus:outline-0 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white  dark:focus:border-blue-500"
+                        className="block w-full py-1.5 pl-9 text-sm text-gray-900 border border-gray-400 rounded-[10px] bg-transparent focus:ring-0 focus:outline-0 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white  dark:focus:border-blue-500"
                         placeholder="Search..."
                     />
                 </div>

@@ -5,6 +5,10 @@ import '../styles/globals.css'
 import NavigationContextProvider from '@/components/NavigationContext/NavigationContext';
 import AuthContextProvider from '@/components/AuthContext/AuthContext';
 import { SessionProvider } from 'next-auth/react';
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
+
 
 
 
@@ -21,7 +25,9 @@ const Layout = ({ children }: LayoutProps) => {
           <AuthContextProvider>
             <NavigationContextProvider>
 
-              {children}
+              <QueryClientProvider client={queryClient}>
+                {children}
+              </QueryClientProvider>
 
             </NavigationContextProvider>
           </AuthContextProvider>
