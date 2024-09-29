@@ -52,7 +52,7 @@ const SideMenuList: React.FC<StateProps> = ({ toggleNavigation, isNavOpen }) => 
                                         {item.icon}
                                     </div>
                                     <div
-                                        className={` text-sm font-semibold capitalize transition-transform transform ${pathName === `/${item.link}` && 'font-bold'} ${isNavOpen ? 'lg:block hidden' : 'hidden'}`}
+                                        className={` text-sm capitalize transition-transform transform ${pathName === `/${item.link}` && 'font-semibold'} ${isNavOpen ? 'lg:block hidden' : 'hidden'}`}
                                     >
                                         {item?.name}
                                     </div>

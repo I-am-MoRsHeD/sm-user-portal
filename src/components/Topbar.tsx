@@ -68,10 +68,11 @@ const Topbar = ({ children }: { children: string }) => {
         <span className='text-[9px] lg:text-[11px]'>{children}</span>
       </div>
       <div className='flex items-center justify-end gap-1 lg:gap-4'>
-        <div>
+        <div className=''>
           {
             pathName === '/user/transaction' ? <SearchField /> : ''
           }
+          {/* <SearchField />  */}
         </div>
         <div className="relative w-24 text-xs">
           <div onClick={() => setDropdown(!dropdown)} className="mx-auto flex w-full items-center justify-between rounded px-3 py-0.5 border-[1.5px] border-gray-300 cursor-pointer">
@@ -113,7 +114,7 @@ const Topbar = ({ children }: { children: string }) => {
             <svg className={`${profileDropdown ? '-rotate-180' : 'rotate-0'} duration-300`} width={25} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M7 10L12 15L17 10" stroke="#4B5563" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>{' '}</g></svg>
           </div>
           {/* profile dropdown options  */}
-          <div className={`${profileDropdown ? 'visible top-16 p-2 bg-white opacity-100' : 'invisible -top-4 opacity-0'} absolute mx-auto right-2 lg:right-0 w-[76px] z-50 rounded border duration-300 cursor-pointer`}>
+          <div className={`${profileDropdown ? 'visible top-16 p-2 bg-white opacity-100' : 'invisible -top-4 opacity-0'} absolute mx-auto right-2 w-[76px] z-50 rounded border duration-300 cursor-pointer`}>
 
             <Link href={'/user/user-profile'} >
               <div onClick={() => setProfileDropdown(!profileDropdown)} className="text-black hover:scale-110 duration-500">Profile</div>

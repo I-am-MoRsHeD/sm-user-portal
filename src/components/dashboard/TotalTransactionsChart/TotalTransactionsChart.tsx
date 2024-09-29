@@ -195,7 +195,7 @@ const TotalTransactionsChart = () => {
     return (
         <div>
 
-            <div className="bg-white mt-10 pt-6 ">
+            <div className="bg-white pt-6 ">
                 <h1 className="font-semibold pl-4">Total Transaction Chart</h1>
                 <div className="hidden lg:block">
                     <ResponsiveContainer width="99%" height="50%" aspect={4}>

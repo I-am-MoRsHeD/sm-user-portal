@@ -5,7 +5,8 @@ import UserProfile from '../../../public/user-avater.png';
 
 const UserUpdateForm = () => {
     return (
-        <div className='my-6 bg-white rounded-xl lg:h-[90%] xl:h-[86vh] 2xl:h-[87vh] 3xl:h-[70vh] 4xl:h-[65vh] 5xl:h-[58vh]'>
+        <div className='my-6 bg-white rounded-xl border border-red-600 h-[150vh] lg:h-[90%] xl:h-[86vh] 2xl:h-[87vh] 3xl:h-[70vh] 4xl:h-[65vh] 5xl:h-[58vh]'>
+
             <div className='w-full h-40 relative rounded-t-xl overflow-hidden'>
                 <Image
                     src={UserCover}
@@ -15,7 +16,7 @@ const UserUpdateForm = () => {
                 />
             </div>
             <div className='mx-7'>
-                <div className='flex flex-row gap-4 absolute -mt-2'>
+                <div className='flex flex-row gap-4 absolute lg:-mt-2'>
                     <div>
                         <label className='block cursor-pointer'>
                             <input className='hidden' type="file" name="" id="" />
@@ -101,6 +102,7 @@ const UserUpdateForm = () => {
                     </div>
                 </form>
             </div>
+
         </div>
     );
 };

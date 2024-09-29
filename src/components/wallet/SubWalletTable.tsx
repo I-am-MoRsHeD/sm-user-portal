@@ -7,15 +7,20 @@ import WithdrawIntoWalletModal from './WithdrawIntoWalletModal';
 import ChangePINForm from './ChangePINForm';
 import ForgetPINModal from '../common/ForgetPINModal/ForgetPINModal';
 import EditWalletModal from './EditWalletModal';
+import useSubWallets from '../hooks/useSubWallets';
 
 interface ModalProps {
     isSubWalletModalOpen: boolean;
     setSubWalletModalOpen: (value: boolean) => void;
     handleMakeMainWallet: () => void;
-    handleSubWallet: () => void;
+    handleSubWallet: (value: any) => void;
+    data: any;
 }
 
-const SubWalletTable: React.FC<ModalProps> = ({ handleMakeMainWallet, isSubWalletModalOpen, setSubWalletModalOpen, handleSubWallet }) => {
+const SubWalletTable: React.FC<ModalProps> = ({ handleMakeMainWallet, isSubWalletModalOpen, setSubWalletModalOpen, handleSubWallet, data }) => {
+    const [subWallets] = useSubWallets();
+    const [subWalletData, setSubWalletData] = useState({});
+
     const [isWithdrawIntoWalletModalOpen, setWithdrawIntoWalletModalOpen] = useState(false);
     const [isChangePINModalOpen, setChangePINModalOpen] = useState(false);
     const [isForgetPINModalOpen, setForgetPINModalOpen] = useState(false);
@@ -30,11 +35,12 @@ const SubWalletTable: React.FC<ModalProps> = ({ handleMakeMainWallet, isSubWalle
         setSubWalletModalOpen(false);
     };
 
-    const handleChangePIN = () => {
+    const handleChangePIN = (data: any) => {
+        setSubWalletData(data);
         setSubWalletModalOpen(false);
         setChangePINModalOpen(true);
     };
-
+console.log(subWalletData);
     const handleEditWallet = () => {
         setEditWalletModalOpen(true);
         setSubWalletModalOpen(false);
@@ -57,13 +63,15 @@ const SubWalletTable: React.FC<ModalProps> = ({ handleMakeMainWallet, isSubWalle
                 <Modal
                     isOpen={isSubWalletModalOpen}
                     onClose={handleCloseModal}
-                    title="Wallet Name : Indian"
+                    // title="Wallet Name : Indian"
+                    title={`Wallet Name : ${data?.walletName}`}
                 >
                     <SubWalletModalForm
                         handleWithdrawIntoWallet={handleWithdrawIntoWallet}
                         handleChangePIN={handleChangePIN}
                         handleForgetPIN={handleForgetPIN}
                         handleEditWallet={handleEditWallet}
+                        subWalletData={data}
                     />
                 </Modal>
 
@@ -81,17 +89,17 @@ const SubWalletTable: React.FC<ModalProps> = ({ handleMakeMainWallet, isSubWalle
                     </thead>
                     <tbody>
                         {
-                            WalletTableData.map((data) => (
+                            subWallets?.map((data: any) => (
                                 <tr
                                     className='bg-[#f4f8fb] hover:bg-[#daeaf5] border-b border-gray-400 font-semibold cursor-pointer'
                                     key={data.id}>
                                     <span className='py-3'>
                                         <td
-                                            onClick={handleSubWallet} className='w-[40%]'>{data.wallet}</td>
+                                            onClick={() => handleSubWallet(data)} className='w-[40%]'>{data?.walletName}</td>
                                         <td
-                                            onClick={handleSubWallet} className='w-72'>{data.currency}</td>
+                                            onClick={() => handleSubWallet(data)} className='w-72'>{data?.currency?.name}</td>
                                         <td
-                                            onClick={handleSubWallet} className='w-[30%]'>{data.balance}</td>
+                                            onClick={() => handleSubWallet(data)} className='w-[30%]'>{data?.balance}.0 {data?.currency?.code}</td>
                                     </span>
                                     <td onClick={handleMakeMainWallet} className='w-14'>
                                         <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -130,7 +138,10 @@ const SubWalletTable: React.FC<ModalProps> = ({ handleMakeMainWallet, isSubWalle
                 onClose={handleCloseModal}
                 title="Change PIN"
             >
-                <ChangePINForm handleForgetPIN={handleForgetPIN} />
+                <ChangePINForm
+                    handleForgetPIN={handleForgetPIN}
+                    setChangePINModalOpen={setChangePINModalOpen}
+                    subWalletData={subWalletData} />
             </Modal>
 
 
