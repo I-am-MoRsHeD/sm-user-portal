@@ -219,7 +219,7 @@ const ChangePINForm: React.FC<ModalProps> = ({ handleForgetPIN, mainWallet, subW
                         <p className="text-red-500 text-xs">Pin must be at least 4 numbers</p>
                     )}
                 </div>
-                {/* create now Button */}
+                {/* confirm Button */}
                 <div className="w-full mx-auto py-5 ">
                     <button
                         type="submit"
