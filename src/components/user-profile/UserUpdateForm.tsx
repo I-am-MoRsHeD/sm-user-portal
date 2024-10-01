@@ -3,6 +3,9 @@ import Image from 'next/image';
 import UserCover from '../../../public/user-cover.png';
 import UserProfile from '../../../public/user-avater.png';
 import { useForm } from 'react-hook-form';
+import useUserProfile from '../hooks/useUserProfile';
+import { useEffect } from 'react';
+import useAxiosSecure from '../hooks/useAxiosSecure';
 
 interface FormData {
     country: string;
@@ -11,13 +14,39 @@ interface FormData {
     city: string;
     state: string;
     zipCode: string;
-}
+    image: File;
+};
+
+// const image_hosing_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
 const UserUpdateForm = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
+    const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm<FormData>();
+    const [user] = useUserProfile();
+    const axiosInstance = useAxiosSecure();
+    const { city, address, phoneNumber, state, zipcode, country } = user;
 
+    useEffect(() => {
+
+        setValue('country',user?.country);
+        setValue('address',user?.address);
+        setValue('phone',user?.phoneNumber);
+        setValue('city',user?.city);
+        setValue('state',user?.state);
+        setValue('zipCode',user?.zipcode);
+
+    }, [user, setValue]);
+    console.log(user);
     const onSubmit = async (data: FormData) => {
-        console.log(data);
+        const userUpdateInfo = {
+            country: data.country,
+            phoneNumber: data.phone,
+            address: data.address,
+            city: data.city,
+            state: data.state,
+            zipcode: data.zipCode,
+        }
+        const res = await axiosInstance.post('/user/profile', userUpdateInfo);
+        console.log(res);
     }
 
     return (
@@ -35,7 +64,13 @@ const UserUpdateForm = () => {
                 <div className='flex flex-row gap-4 absolute lg:-mt-2'>
                     <div>
                         <label className='block cursor-pointer'>
-                            <input className='hidden' type="file" name="" id="" />
+                            {/* <input className='hidden' type="file" name="" id="" /> */}
+                            <input
+                                {...register("image", { required: false })}
+                                type="file"
+                                // placeholder="Select Image"
+                                className="text-sm cursor-pointer w-52 hidden"
+                            />
                             <Image className='rounded-full' src={UserProfile} width={60} height={40} alt='profileImage'></Image>
                             <div className='absolute ml-12 -mt-7'>
                                 <svg width="18" height="18" className='bg-[#723EEB] p-1 rounded-full' viewBox="0 0 7 7" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -59,36 +94,22 @@ const UserUpdateForm = () => {
                             <input
                                 type="text"
                                 {...register("country", {
-                                    required: "Country is required",
                                 })}
                                 className={`mt-1 w-full px-3 py-1 text-sm border border-gray-300 rounded-xl focus:outline-none`}
                                 placeholder="Enter Country..."
+                                defaultValue={country}
                             />
-                            {errors.country && (
-                                <span className="text-red-500 text-xs mt-1">
-                                    {errors.country.message}
-                                </span>
-                            )}
                         </div>
                         <div className="lg:w-1/2">
                             <label className="text-gray-600 font-semibold text-sm">Phone</label>
                             <input
                                 type="text"
                                 {...register("phone", {
-                                    required: "Phone is required",
-                                    minLength: 3
                                 })}
                                 className={`mt-1 w-full px-3 py-1 text-sm border border-gray-300 rounded-xl focus:outline-none`}
                                 placeholder="Enter Phone..."
+                                defaultValue={phoneNumber}
                             />
-                            {errors.phone && (
-                                <span className="text-red-500 text-xs mt-1">
-                                    {errors.phone.message}
-                                </span>
-                            )}
-                            {errors.phone?.type == "minLength" && (
-                                <span className='text-red-600 text-xs -mt-5'>Phone must be atleast 11 characters</span>
-                            )}
                         </div>
                     </div>
                     <div className="flex flex-col lg:flex-row w-full gap-4 my-3">
@@ -97,32 +118,22 @@ const UserUpdateForm = () => {
                             <input
                                 type="text"
                                 {...register("address", {
-                                    required: "Address is required",
                                 })}
                                 className={`mt-1 w-full px-3 py-1 text-sm border border-gray-300 rounded-xl focus:outline-none`}
                                 placeholder="Enter Address..."
+                                defaultValue={address}
                             />
-                            {errors.address && (
-                                <span className="text-red-500 text-xs mt-1">
-                                    {errors.address.message}
-                                </span>
-                            )}
                         </div>
                         <div className="lg:w-1/2">
                             <label className="text-gray-600 font-semibold text-sm">City</label>
                             <input
                                 type="text"
                                 {...register("city", {
-                                    required: "City is required",
                                 })}
                                 className={`mt-1 w-full px-3 py-1 text-sm border border-gray-300 rounded-xl focus:outline-none`}
                                 placeholder="Enter City..."
+                                defaultValue={city}
                             />
-                            {errors.city && (
-                                <span className="text-red-500 text-xs mt-1">
-                                    {errors.city.message}
-                                </span>
-                            )}
                         </div>
                     </div>
                     <div className="flex flex-col lg:flex-row w-full gap-4 my-3">
@@ -131,32 +142,22 @@ const UserUpdateForm = () => {
                             <input
                                 type="text"
                                 {...register("state", {
-                                    required: "State is required",
                                 })}
                                 className={`mt-1 w-full px-3 py-1 text-sm border border-gray-300 rounded-xl focus:outline-none`}
                                 placeholder="Enter State..."
+                                defaultValue={state}
                             />
-                            {errors.state && (
-                                <span className="text-red-500 text-xs mt-1">
-                                    {errors.state.message}
-                                </span>
-                            )}
                         </div>
                         <div className="lg:w-1/2">
                             <label className="text-gray-600 font-semibold text-sm">Zip Code</label>
                             <input
                                 type="text"
                                 {...register("zipCode", {
-                                    required: "Zip Code is required",
                                 })}
                                 className={`mt-1 w-full px-3 py-1 text-sm border border-gray-300 rounded-xl focus:outline-none`}
                                 placeholder="Enter Zip..."
+                                defaultValue={zipcode}
                             />
-                            {errors.zipCode && (
-                                <span className="text-red-500 text-xs mt-1">
-                                    {errors.zipCode.message}
-                                </span>
-                            )}
                         </div>
                     </div>
                     <div className="w-3/4 mx-auto pb-3 lg:pb-0 lg:mt-5">
