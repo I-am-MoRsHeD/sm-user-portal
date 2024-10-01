@@ -2,10 +2,26 @@ import Image from 'next/image';
 
 import UserCover from '../../../public/user-cover.png';
 import UserProfile from '../../../public/user-avater.png';
+import { useForm } from 'react-hook-form';
+
+interface FormData {
+    country: string;
+    phone: string;
+    address: string;
+    city: string;
+    state: string;
+    zipCode: string;
+}
 
 const UserUpdateForm = () => {
+    const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
+
+    const onSubmit = async (data: FormData) => {
+        console.log(data);
+    }
+
     return (
-        <div className='my-6 bg-white rounded-xl border border-red-600 h-[150vh] lg:h-[90%] xl:h-[86vh] 2xl:h-[87vh] 3xl:h-[70vh] 4xl:h-[65vh] 5xl:h-[58vh]'>
+        <div className='my-6 bg-white rounded-xl h-[90%]'>
 
             <div className='w-full h-40 relative rounded-t-xl overflow-hidden'>
                 <Image
@@ -36,69 +52,119 @@ const UserUpdateForm = () => {
                         <p className='text-[8px] text-gray-400 mt-4'>khalilcherry@gmail.com</p>
                     </div>
                 </div>
-                <form className='pt-20'>
+                <form onSubmit={handleSubmit(onSubmit)} className='pt-20'>
                     <div className="flex flex-col lg:flex-row w-full gap-4 my-3">
                         <div className="lg:w-1/2">
-                            <label className="block mb-2 text-gray-600 font-semibold text-sm">Country*</label>
+                            <label className="text-gray-600 font-semibold text-sm">Country*</label>
                             <input
                                 type="text"
-                                name="country"
-                                className="w-full px-3 py-1 text-sm border border-gray-300 rounded-xl focus:outline-none"
-                                placeholder="Enter Country...."
+                                {...register("country", {
+                                    required: "Country is required",
+                                })}
+                                className={`mt-1 w-full px-3 py-1 text-sm border border-gray-300 rounded-xl focus:outline-none`}
+                                placeholder="Enter Country..."
                             />
+                            {errors.country && (
+                                <span className="text-red-500 text-xs mt-1">
+                                    {errors.country.message}
+                                </span>
+                            )}
                         </div>
                         <div className="lg:w-1/2">
-                            <label className="block mb-2 text-gray-600 font-semibold text-sm">Phone</label>
+                            <label className="text-gray-600 font-semibold text-sm">Phone</label>
                             <input
                                 type="text"
-                                name="phone"
-                                className="w-full px-3 py-1 text-sm border border-gray-300 rounded-xl focus:outline-none"
-                                placeholder="Enter Number...."
+                                {...register("phone", {
+                                    required: "Phone is required",
+                                    minLength: 3
+                                })}
+                                className={`mt-1 w-full px-3 py-1 text-sm border border-gray-300 rounded-xl focus:outline-none`}
+                                placeholder="Enter Phone..."
                             />
+                            {errors.phone && (
+                                <span className="text-red-500 text-xs mt-1">
+                                    {errors.phone.message}
+                                </span>
+                            )}
+                            {errors.phone?.type == "minLength" && (
+                                <span className='text-red-600 text-xs -mt-5'>Phone must be atleast 11 characters</span>
+                            )}
                         </div>
                     </div>
                     <div className="flex flex-col lg:flex-row w-full gap-4 my-3">
                         <div className="lg:w-1/2">
-                            <label className="block mb-2 text-gray-600 font-semibold text-sm">Address</label>
+                            <label className="text-gray-600 font-semibold text-sm">Address</label>
                             <input
                                 type="text"
-                                name="address"
-                                className="w-full px-3 py-1 text-sm border border-gray-300 rounded-xl focus:outline-none"
-                                placeholder="Enter Address...."
+                                {...register("address", {
+                                    required: "Address is required",
+                                })}
+                                className={`mt-1 w-full px-3 py-1 text-sm border border-gray-300 rounded-xl focus:outline-none`}
+                                placeholder="Enter Address..."
                             />
+                            {errors.address && (
+                                <span className="text-red-500 text-xs mt-1">
+                                    {errors.address.message}
+                                </span>
+                            )}
                         </div>
                         <div className="lg:w-1/2">
-                            <label className="block mb-2 text-gray-600 font-semibold text-sm">City</label>
+                            <label className="text-gray-600 font-semibold text-sm">City</label>
                             <input
                                 type="text"
-                                name="city"
-                                className="w-full px-3 py-1 text-sm border border-gray-300 rounded-xl focus:outline-none"
-                                placeholder="Enter City...."
+                                {...register("city", {
+                                    required: "City is required",
+                                })}
+                                className={`mt-1 w-full px-3 py-1 text-sm border border-gray-300 rounded-xl focus:outline-none`}
+                                placeholder="Enter City..."
                             />
+                            {errors.city && (
+                                <span className="text-red-500 text-xs mt-1">
+                                    {errors.city.message}
+                                </span>
+                            )}
                         </div>
                     </div>
                     <div className="flex flex-col lg:flex-row w-full gap-4 my-3">
                         <div className="lg:w-1/2">
-                            <label className="block mb-2 text-gray-600 font-semibold text-sm">State</label>
+                            <label className="text-gray-600 font-semibold text-sm">State</label>
                             <input
                                 type="text"
-                                name="state"
-                                className="w-full px-3 py-1 text-sm border border-gray-300 rounded-xl focus:outline-none"
-                                placeholder="Enter State...."
+                                {...register("state", {
+                                    required: "State is required",
+                                })}
+                                className={`mt-1 w-full px-3 py-1 text-sm border border-gray-300 rounded-xl focus:outline-none`}
+                                placeholder="Enter State..."
                             />
+                            {errors.state && (
+                                <span className="text-red-500 text-xs mt-1">
+                                    {errors.state.message}
+                                </span>
+                            )}
                         </div>
                         <div className="lg:w-1/2">
-                            <label className="block mb-2 text-gray-600 font-semibold text-sm">Zip Code</label>
+                            <label className="text-gray-600 font-semibold text-sm">Zip Code</label>
                             <input
                                 type="text"
-                                name="zip"
-                                className="w-full px-3 py-1 text-sm border border-gray-300 rounded-xl focus:outline-none"
-                                placeholder="Enter Zip...."
+                                {...register("zipCode", {
+                                    required: "Zip Code is required",
+                                })}
+                                className={`mt-1 w-full px-3 py-1 text-sm border border-gray-300 rounded-xl focus:outline-none`}
+                                placeholder="Enter Zip..."
                             />
+                            {errors.zipCode && (
+                                <span className="text-red-500 text-xs mt-1">
+                                    {errors.zipCode.message}
+                                </span>
+                            )}
                         </div>
                     </div>
-                    <div className='w-3/4 mx-auto pb-3 lg:pb-0 lg:mt-5'>
-                        <input className='w-full bg-[#723EEB] text-white p-1 rounded-[5px] text-sm' type="submit" value="Update" />
+                    <div className="w-3/4 mx-auto pb-3 lg:pb-0 lg:mt-5">
+                        <button
+                            type="submit"
+                            className="w-full cursor-pointer bg-[#723EEB] text-white p-1 rounded-[5px] text-sm">
+                            Update
+                        </button>
                     </div>
                 </form>
             </div>

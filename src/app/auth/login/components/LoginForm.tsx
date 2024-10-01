@@ -11,6 +11,8 @@ import { useRouter } from "next/navigation";
 import useAuthContext from "@/components/AuthContext/useAuthContext";
 import Link from "next/link";
 import useNavigationContext from "@/components/NavigationContext/useNavigationContext";
+import api from "@/components/hooks/useAxiosSecure";
+import Cookies from 'js-cookie';
 
 
 
@@ -20,7 +22,7 @@ interface FormData {
 }
 
 const LoginForm = () => {
-  const {setOpenForgetPassword} : any = useNavigationContext();
+  const { setOpenForgetPassword }: any = useNavigationContext();
   const [serverError, setServerError] = useState('');
   const { user, setUser, loading, setLoading }: any = useAuthContext();
   const axiosInstance = useAxiosSecure();
@@ -49,6 +51,11 @@ const LoginForm = () => {
         const userData = res?.data?.data?.data;
         setUser(userData);
 
+        const { accessToken, refreshToken } = res?.data?.data;
+        Cookies.set('accessToken', accessToken);
+        Cookies.set('refreshToken', refreshToken);
+
+        
         // toast.success(res?.data?.data.message);
         toast("You have successfully logged in");
 
