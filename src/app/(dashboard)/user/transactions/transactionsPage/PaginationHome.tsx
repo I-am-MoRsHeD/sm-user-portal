@@ -4,7 +4,7 @@ const PaginationHome = () => {
     return (
         <div>
             <nav aria-label="">
-                <ul className="flex items-center -space-x-px h-8 text-sm font-medium">
+                <ul className="flex items-center -space-x-px h-8 text-sm font-medium w-[40%] border border-blue-600">
                     <li>
                         <a href="#" aria-current="page" className="z-10 flex items-center justify-center px-3 h-8 border border-[#723EEB] bg-[#723EEB] text-white">1</a>
                     </li>
