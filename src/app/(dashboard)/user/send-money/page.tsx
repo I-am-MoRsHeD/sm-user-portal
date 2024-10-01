@@ -3,13 +3,12 @@ import CardSubTitle from '@/components/common/cardSubTitle/CardSubTitle';
 import SelectSendMoneyCard from '@/components/common/selectSendMoneyCard/SelectSendMoneyCard';
 import Topbar from '@/components/Topbar';
 import Link from 'next/link';
-import React from 'react';
 
-const page = () => { 
+const page = () => {
     return (
         <div className='min-h-screen max-h-auto'>
             <Topbar>Send Money</Topbar>
-            <CardSubTitle title='Select Send Money Option' />
+            <CardSubTitle fontSize='1rem' title='Select Send Money Option' />
             <div className='bg-white rounded-xl lg:h-[340px] mt-5 py-2 lg:py-0'>
                 <h2 className="text-xl font-semibold text-center py-4">Select An Option</h2>
 

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import ProgressPayment from '../ProgressPayment/ProgressPayment';
-import ProcessingPayment from '../ProgressPayment/ProcessingPayment';
 import CompletePayment from '../ProgressPayment/CompletePayment';
+import ProcessingPayment from '../ProgressPayment/ProcessingPayment';
 
 interface Transaction {
     id: number;
@@ -32,8 +31,8 @@ const TransactionTable = () => {
     };
 
     return (
-        <div>
-            <table className="min-w-full bg-white text-nowrap overflow-x-auto">
+        <div className='w-full overflow-auto'>
+            <table className="w-full  bg-white text-nowrap overflow-hidden">
                 <thead>
                     <tr className="">
                         <th className="px-4 py-2 text-left text-gray-700">Time</th>

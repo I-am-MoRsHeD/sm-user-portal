@@ -1,5 +1,4 @@
-import React from "react";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
 const data = [
     {
@@ -195,7 +194,7 @@ const TotalTransactionsChart = () => {
     return (
         <div>
 
-            <div className="bg-white pt-6 ">
+            <div className="bg-white pt-6 rounded-xl">
                 <h1 className="font-semibold pl-4">Total Transaction Chart</h1>
                 <div className="hidden lg:block">
                     <ResponsiveContainer width="99%" height="50%" aspect={4}>

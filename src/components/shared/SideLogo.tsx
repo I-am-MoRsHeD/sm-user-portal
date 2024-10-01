@@ -1,12 +1,11 @@
 import Image from 'next/image';
-import React from 'react';
 import logo from '../../../public/SidebarLogo.png';
 
 
 const SideLogo = () => {
     return (
-        <div className='px-5 py-3'>
-            <Image src={logo} width={110} height={100} alt='notfound' />
+        <div className='px-5 py-3 lg:w-[75%] w-[100%]'>
+            <Image src={logo} className='w-[100%]' alt='notfound' />
         </div>
     );
 };

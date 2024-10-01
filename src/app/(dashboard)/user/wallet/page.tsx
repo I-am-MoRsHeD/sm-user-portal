@@ -12,9 +12,8 @@ import MakeMainWalletModal from '@/components/wallet/MakeMainWalletModal';
 import SubWalletTable from '@/components/wallet/SubWalletTable';
 import WithdrawModal from '@/components/wallet/WithdrawModal';
 import { walletLogData } from '@/utils/data/walletLogData';
-import { WalletTableData } from '@/utils/data/walletTableData';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 const WalletPage = () => {
     const [mainWallet] = useMainWallet();
@@ -67,7 +66,7 @@ const WalletPage = () => {
             </Modal>
 
             <Topbar>Wallet Balance</Topbar>
-            <CardSubTitle title='Wallet Balance' />
+            <CardSubTitle fontSize='1rem' title='Wallet Balance' />
             <div className='w-full my-5 flex flex-col lg:flex-row gap-5'>
                 {mainWallet?.userId && (
                     <div className='bg-white rounded-xl w-full lg:w-3/5'>
@@ -120,7 +119,7 @@ const WalletPage = () => {
                                         setSubWalletModalOpen={setSubWalletModalOpen}
                                         handleMakeMainWallet={handleMakeMainWallet}
                                         handleSubWallet={handleSubWallet}
-                                        data = {subWalletData}
+                                        data={subWalletData}
                                     />
                                 ) : (
                                     <div className='flex justify-center items-center h-32'>
@@ -144,21 +143,21 @@ const WalletPage = () => {
                 </div>
             </div>
             <div className='flex flex-row justify-between items-center my-10'>
-                <h1 className='font-bold text-xs'>Wallet Log</h1>
+                <h1 className='font-bold text-xs lg:text-base'>Wallet Log</h1>
                 <Link href={`/user/wallet/walletLog`}>
-                    <button className=" bg-[#723EEB] text-white w-20 lg:w-28 p-2 rounded-full text-xs lg:text-base font-semibold">View More</button>
+                    <button className=" bg-[#723EEB] text-white text-xs w-20 lg:w-28 p-2 rounded-full lg:text-sm font-semibold">View More</button>
                 </Link>
             </div>
             <div>
                 <div>
                     {
                         walletLogData.map((data, ind) => (
-                            <div key={data.id} className="bg-white px-2 lg:px-6 py-2 lg:py-4 mb-5 rounded-2xl cursor-pointer">
+                            <div key={data.id} className="bg-white px-2 lg:px-6 py-2 lg:py-4 mb-5 rounded-2xl cursor-pointer group">
                                 <div className="flex flex-row justify-between items-center">
                                     <div className="flex flex-row gap-2 lg:gap-6 items-start">
-                                        <div className="bg-gray-200 rounded-[50%] p-2 hover:bg-[#723EEB] hover:stroke-white">
+                                        <div className="bg-gray-200 rounded-[50%] p-2 duration-300 group-hover:text-white text-black group-hover:fill-white group-hover:bg-[#723EEB] ">
                                             <svg width="15" height="15" viewBox="0 0 16 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M8 0L7.37627 0.59661L0 7.97288L1.24746 9.22034L7.1322 3.33559V20.7458H8.8678V3.33559L14.7525 9.22034L16 7.97288L8.62373 0.59661L8 0Z" fill="black" />
+                                                <path d="M8 0L7.37627 0.59661L0 7.97288L1.24746 9.22034L7.1322 3.33559V20.7458H8.8678V3.33559L14.7525 9.22034L16 7.97288L8.62373 0.59661L8 0Z" fill='currentColor' />
                                             </svg>
                                         </div>
                                         <div className="w-36 xxs:w-24">
