@@ -201,6 +201,7 @@ const WalletPage = () => {
             <ForgetPINModal
                 setForgetPINModalOpen={setForgetPINModalOpen}
                 isForgetPINModalOpen={isForgetPINModalOpen}
+                mainWallet = {mainWallet}
             />
         </div>
     );

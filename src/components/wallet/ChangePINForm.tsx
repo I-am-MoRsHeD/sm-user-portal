@@ -81,36 +81,6 @@ const ChangePINForm: React.FC<ModalProps> = ({ handleForgetPIN, mainWallet, subW
                 });
             }
         }
-
-        // if (newPin !== confirmNewPin) {
-        //     Swal.fire({
-        //         position: "center",
-        //         icon: "error",
-        //         title: "New Pin doesn't match",
-        //         showConfirmButton: false,
-        //         timer: 1500
-        //     });
-        // } else {
-        //     const res = await axiosInstance.put('/wallet/change-pin', changedPinInfo)
-        //     if (res?.status === 200) {
-        //         Swal.fire({
-        //             position: "center",
-        //             icon: "success",
-        //             title: "Pin has been changed",
-        //             showConfirmButton: false,
-        //             timer: 1500
-        //         });
-        //     }
-        //     //  else {
-        //     //     Swal.fire({
-        //     //         position: "center",
-        //     //         icon: "error",
-        //     //         title: "Current Pin is wrong",
-        //     //         showConfirmButton: false,
-        //     //         timer: 1500
-        //     //     });
-        //     // }
-        // }
     }
 
     return (
