@@ -1,9 +1,9 @@
 'use client'
+import Link from "next/link";
+import { useState } from "react";
 import { GoDotFill } from "react-icons/go";
 import { recipientsData } from "../../utils/data/recipientsData";
 import RecipientsTable from "./RecipientsTable";
-import { useState } from "react";
-import Link from "next/link";
 
 
 const RecipientsCards = () => {
@@ -20,10 +20,10 @@ const RecipientsCards = () => {
         <>
             {
                 recipientsData.map((data, ind) => (
-                    <div key={data.id} className={`bg-white px-2 py-2 lg:px-6 lg:py-4 mb-5 rounded-2xl cursor-pointer ${open[data.id] ? ' shadow-md shadow-neutral-400' : ''}`}>
+                    <div key={data.id} className={`bg-white px-2 py-2 lg:px-6 lg:py-4 mb-5 group rounded-2xl cursor-pointer ${open[data.id] ? ' shadow-md shadow-neutral-400' : ''}`}>
                         <div onClick={() => toggleCard(data.id)} className="flex flex-row justify-between items-center">
                             <div className="flex flex-row gap-3 lg:gap-4 items-start">
-                                <div className={`${open[data.id] ? 'rotate-0' : '-rotate-180'} duration-500 bg-gray-200 rounded-[50%] w-6 lg:w-9 h-6 lg:h-9 flex justify-center items-center hover:bg-[#723EEB] hover:stroke-white`}>
+                                <div className={`${open[data.id] ? 'rotate-0' : '-rotate-180'} duration-500 bg-gray-200 rounded-[50%] w-6 lg:w-9 h-6 lg:h-9 flex justify-center items-center group-hover:bg-[#723EEB] text-black group-hover:text-white`}>
                                     {data.icon}
                                 </div>
                                 <div className="lg:w-36 w-24">
