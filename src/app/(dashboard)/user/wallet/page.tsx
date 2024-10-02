@@ -52,7 +52,7 @@ const WalletPage = () => {
 
 
     return (
-        <div className=''>
+        <div className='min-h-[calc(100vh-100px)]'>
             <Modal
                 isOpen={isChangePINModalOpen}
                 onClose={handleCloseModal}
@@ -200,6 +200,7 @@ const WalletPage = () => {
             <ForgetPINModal
                 setForgetPINModalOpen={setForgetPINModalOpen}
                 isForgetPINModalOpen={isForgetPINModalOpen}
+                mainWallet = {mainWallet}
             />
         </div>
     );

@@ -31,8 +31,8 @@ const TransactionTable = () => {
     };
 
     return (
-        <div className='w-full overflow-auto'>
-            <table className="w-full  bg-white text-nowrap overflow-hidden">
+        <div className="w-full">
+            <table className="bg-white text-nowrap w-full">
                 <thead>
                     <tr className="">
                         <th className="px-4 py-2 text-left text-gray-700">Time</th>

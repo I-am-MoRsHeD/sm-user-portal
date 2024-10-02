@@ -9,26 +9,28 @@ const TheSidebar = () => {
     return (
         <div>
             {/* responsive */}
-            <div className={` duration-300 ease-in-out overflow-y-auto ${isNavOpen ? "translate-x-0" : "-translate-x-20"} lg:hidden`}>
+            <div className={` duration-300 ease-in-out overflow-y-auto ${isNavOpen ? "translate-x-0 md:w-40 w-[2.85rem]" : "w-[2.85rem]"} h-full  lg:hidden`} >
                 <div className=''>
-                    <div className='flex justify-center items-center w-full'>
-                        {/* <SideLogo /> */}
+                    <div className='flex justify-center items-center w-full pt-3'>
+                        {
+                            isNavOpen ? <SideLogo /> : null
+                        }
                     </div>
-                    <div className='mt-12 mb-3'>
+                    <div className={`${isNavOpen ? 'mt-3 mb-3' : 'h-[100vh] flex flex-col items-center justify-center'} h-[81vh] overflow-y-auto duration-300`}>
                         <SideMenuList isNavOpen={isNavOpen}
                             toggleNavigation={toggleNavigation} />
                     </div>
                 </div>
             </div>
             {/* desktop */}
-            <div className={` duration-300 ease-in-out overflow-y-auto ${isNavOpen ? "translate-x-0 " : ""} hidden lg:block`}>
+            <div className={` duration-300  ease-in-out overflow-y-auto ${isNavOpen ? "translate-x-0 w-44 xl:w-60" : "w-[3.5rem]"} hidden lg:block`}>
                 <div className=''>
-                    <div className={`p-4  flex flex-row justify-center items-center`}>
+                    <div className={`p-4 flex flex-row justify-center items-center`}>
                         {
                             isNavOpen ? <SideLogo /> : null
                         }
                     </div>
-                    <div className={`${isNavOpen ? 'mt-3 mb-3 duration-300' : 'xl:mt-12 lg:pb-12 xl:pb-0 mb-3 duration-300'} h-[81vh] overflow-y-auto`}>
+                    <div className={`${isNavOpen ? 'mt-3 mb-3' : 'h-[100vh] flex flex-col items-center justify-center'} h-[81vh] overflow-y-auto duration-300`}>
                         <SideMenuList isNavOpen={isNavOpen}
                             toggleNavigation={toggleNavigation} />
                     </div>

@@ -7,7 +7,7 @@ const Wallet = () => {
         <div>
             <div className=" lg:flex items-center justify-center">
                 <div className="w-full flex flex-col xl:flex-row gap-4 lg:gap-3 font-semibold">
-                    <Link href={'/user/wallet'} className="bg-gradient-to-r xl:max-w-[250px]  from-[#CD83FD] to-[#B37AFE]  text-white rounded p-4 shadow-lg w-full grid content-between">
+                    <Link href={'/user/wallet'} className="bg-gradient-to-r xl:max-w-[300px]  from-[#CD83FD] to-[#B37AFE]  text-white rounded p-4 shadow-lg w-full grid content-between">
                         <div>
                             <h2 className="text-base ">My Wallet</h2>
                             <p className="mt-2 text-[10px]  ">26 APR 2024</p>

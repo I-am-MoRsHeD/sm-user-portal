@@ -30,7 +30,7 @@ const MainLayout = ({ children }: LayoutProps) => {
 
     return (
         <div>
-            <div className='flex lg:flex-row w-full bg-gradient-to-tl from-cyan-200 to-pink-200 h-auto text-black'>
+            {/* <div className='flex lg:flex-row w-full bg-gradient-to-tl from-cyan-200 to-pink-200 h-auto text-black'>
                 <div className={`${isNavOpen ? 'w-[11%] xxs:w-[7%] sm:w-[6%] md:w-[16%] 2xl:w-60' : 'w-0 lg:w-[4%]'} fixed h-full xl:h-[100vh] bg-white custom-scrollbar duration-500 overflow-hidden`}>
                     <TheSidebar />
                 </div>
@@ -40,18 +40,18 @@ const MainLayout = ({ children }: LayoutProps) => {
                     </div>
                 </div>
                 <ToastContainer />
-            </div>
-            {/* <div className='flex w-full bg-gradient-to-tl from-cyan-200 to-pink-200 h-auto text-black'>
-                <div className={`${isNavOpen ? 'w-[11%] xxs:w-[7%] sm:w-[6%] md:w-auto' : 'w-0 lg:w-[4%]'} h-screen bg-white duration-500 overflow-auto`}>
+            </div> */}
+            <div className='flex w-full bg-gradient-to-tl from-cyan-200 to-pink-200 h-auto text-black'>
+                <div className={`h-screen bg-white duration-500 overflow-auto`}>
                     <TheSidebar />
                 </div>
-                <div className={`${isNavOpen ? 'ml-[11%] xxs:ml-[7%] sm:ml-[6%] md:ml-0 w-full' : 'w-full lg:w-[100%] lg:ml-[4%]'} h-screen custom-scrollbar overflow-auto flex-1`}>
-                    <div className='h-screen py-2 lg:pl-4 pl-2 pr-2'>
+                <div className={`h-screen  flex-1`}>
+                    <div className='h-full custom-scrollbar overflow-y-auto overflow-x-hidden py-2 lg:pl-4 pl-2 pr-2'>
                         {children}
                     </div>
                 </div>
                 <ToastContainer />
-            </div> */}
+            </div>
         </div>
     );
 };

@@ -40,7 +40,7 @@ import Wallet from '@/components/dashboard/Wallet/Wallet'
 
 const Page = () => {
     return (
-        <div className='min-h-screen max-h-full'>
+        <div className='min-h-[calc(100vh-100px)]'>
             <Topbar>Dashboard</Topbar>
             <div className='grid grid-cols-12 gap-5 mt-2 lg:mt-8 w-full '>
                 {/* First column */}

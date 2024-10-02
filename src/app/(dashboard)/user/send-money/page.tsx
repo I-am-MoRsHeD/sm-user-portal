@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 const page = () => {
     return (
-        <div className='min-h-screen max-h-auto'>
+        <div className='min-h-[calc(100vh-100px)]'>
             <Topbar>Send Money</Topbar>
             <CardSubTitle fontSize='1rem' title='Select Send Money Option' />
             <div className='bg-white rounded-xl lg:h-[340px] mt-5 py-2 lg:py-0'>
