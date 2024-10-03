@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
-import useCurrency from '../hooks/useCurrency';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FaEye, FaEyeSlash } from 'react-icons/fa6';
 import useAxiosSecure from '../hooks/useAxiosSecure';
+import useCurrency from '../hooks/useCurrency';
 import useMainWallet from '../hooks/useMainWallet';
-import { toast } from 'react-toastify';
 import useSubWallets from '../hooks/useSubWallets';
 
 interface FormData {
@@ -19,7 +18,7 @@ interface FormData {
 const CreateNewWalletForm = () => {
     const [currency] = useCurrency();
     const [mainWallet] = useMainWallet();
-    const [ , refetch] = useSubWallets();
+    const [, refetch] = useSubWallets();
     const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
     const [pin, setPin] = useState(false);
     const axiosInstance = useAxiosSecure();
@@ -62,17 +61,17 @@ const CreateNewWalletForm = () => {
 
     return (
         <>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <h3 className="font-semibold">Create New Wallet</h3>
+            <form className='text-[10px] sm:text-sm' onSubmit={handleSubmit(onSubmit)}>
+                <h3 className="font-semibold pb-3 text-base">Create New Wallet</h3>
                 {/* wallet name Field */}
                 <div className="mb-3">
-                    <label className="text-gray-600  text-[10px] font-semibold">Wallet Name</label>
+                    <label className="text-gray-600  font-semibold">Wallet Name</label>
                     <input
                         type="text"
                         {...register("walletName", {
                             required: "Wallet Name is required",
                         })}
-                        className={`w-full px-3 py-1 text-[10px] border border-gray-400 rounded-[10px] focus:outline-none`}
+                        className={`w-full px-3 py-1  border border-gray-400 rounded-[10px] focus:outline-none`}
                         placeholder="Enter Wallet Name....."
                     />
                     {errors.walletName?.type === 'required' && (
@@ -81,13 +80,13 @@ const CreateNewWalletForm = () => {
                 </div>
                 {/* Email Field */}
                 <div className="mb-3">
-                    <label className="text-gray-600  text-[10px] font-semibold">Email</label>
+                    <label className="text-gray-600  font-semibold">Email</label>
                     <input
                         type="text"
                         {...register("email", {
                             required: "Email is required",
                         })}
-                        className={`w-full px-3 py-1 text-[10px] border border-gray-400 rounded-[10px] focus:outline-none`}
+                        className={`w-full px-3 py-1 border border-gray-400 rounded-[10px] focus:outline-none`}
                         placeholder="Enter Wallet Email....."
                     />
                     {errors.email?.type === 'required' && (
@@ -96,9 +95,9 @@ const CreateNewWalletForm = () => {
                 </div>
                 {/* currency */}
                 <div className="mb-3 w-full">
-                    <label className="text-gray-600  text-[10px] font-semibold">Select Currency*</label>
+                    <label className="text-gray-600  font-semibold">Select Currency*</label>
                     <select
-                        className="w-full px-3 py-[5px] text-[10px] border border-gray-400 rounded-[10px] cursor-pointer focus:outline-none"
+                        className="w-full px-3 py-[5px] border border-gray-400 rounded-[10px] cursor-pointer focus:outline-none"
                         {...register("currency", {
                             required: 'Please select a currency'
                         })}
@@ -116,13 +115,13 @@ const CreateNewWalletForm = () => {
                 </div>
                 {/* security question Field */}
                 <div className="mb-3">
-                    <label className="text-gray-600  text-[10px] font-semibold">Enter a Security Question</label>
+                    <label className="text-gray-600   font-semibold">Enter a Security Question</label>
                     <input
                         type="text"
                         {...register("securityQuestion", {
                             required: "Security Question is required",
                         })}
-                        className={`w-full px-3 py-1 text-[10px] border border-gray-400 rounded-[10px] focus:outline-none`}
+                        className={`w-full px-3 py-1 border border-gray-400 rounded-[10px] focus:outline-none`}
                         placeholder="Enter a Security Question....."
                     />
                     {errors.securityQuestion?.type === 'required' && (
@@ -131,13 +130,13 @@ const CreateNewWalletForm = () => {
                 </div>
                 {/* Answer Field */}
                 <div className="mb-3">
-                    <label className="text-gray-600  text-[10px] font-semibold">Answer</label>
+                    <label className="text-gray-600  font-semibold">Answer</label>
                     <input
                         type="text"
                         {...register("answer", {
                             required: "Answer is required",
                         })}
-                        className={`w-full px-3 py-1 text-[10px] border border-gray-400 rounded-[10px] focus:outline-none`}
+                        className={`w-full px-3 py-1 border border-gray-400 rounded-[10px] focus:outline-none`}
                         placeholder="Enter Answer....."
                     />
                     {errors.answer?.type === 'required' && (
@@ -146,7 +145,7 @@ const CreateNewWalletForm = () => {
                 </div>
                 {/* Pin Field */}
                 <div className="mb-3">
-                    <label className="text-gray-600  text-[10px] font-semibold">Create New PIN</label>
+                    <label className="text-gray-600  font-semibold">Create New PIN</label>
                     <div className="relative">
                         <input
                             type={'number'}
@@ -154,7 +153,7 @@ const CreateNewWalletForm = () => {
                                 required: "Pin is required",
                                 minLength: 4,
                             })}
-                            className={`w-full px-3 py-1 text-[10px] border border-gray-400 rounded-[10px] focus:outline-none`}
+                            className={`w-full px-3 py-1 border border-gray-400 rounded-[10px] focus:outline-none`}
                             placeholder="Enter PIN...."
                         />
                         <button
@@ -178,7 +177,7 @@ const CreateNewWalletForm = () => {
                 <div className="w-full mx-auto mt-3 ">
                     <button
                         type="submit"
-                        className="w-full bg-[#723EEB] text-white cursor-pointer p-1 rounded text-[10px]"
+                        className="w-full bg-[#723EEB] text-white cursor-pointer px-1 py-[6px] rounded text-[10px] sm:text-sm"
                     >
                         Create Now
                     </button>

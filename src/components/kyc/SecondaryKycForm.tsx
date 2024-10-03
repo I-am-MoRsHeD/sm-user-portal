@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import React from 'react';
 import profile from '../../../public/user-avater.png';
 
 const SecondaryKycForm = () => {
@@ -97,8 +96,8 @@ const SecondaryKycForm = () => {
                             <label htmlFor="checkbox" className='font-semibold ml-1'>Confirm that i uploaded valid government-issued photo ID.This ID include my picture, signature,name,date of birth and address.</label>
                         </div>
                     </div>
-                    <div className='w-full pt-5 pb-7'>
-                        <input className='w-full bg-[#723EEB] text-white p-1 rounded-[5px]' type="submit" value="Apply" />
+                    <div className='w-full pt-5 pb-7 '>
+                        <input className='w-full bg-[#723EEB] lg:text-sm text-white px-1 py-[6px] rounded-[5px]' type="submit" value="Apply" />
                     </div>
                 </form>
             </div>
