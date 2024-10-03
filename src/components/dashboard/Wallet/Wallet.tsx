@@ -12,7 +12,7 @@ const Wallet = () => {
                             <h2 className="text-base ">My Wallet</h2>
                             <p className="mt-2 text-[10px]  ">26 APR 2024</p>
                         </div>
-                        <p className=" text-xs  text-end">214 *** *** ***</p>
+                        <p className=" text-xs  text-end">214 *** *** **</p>
                         <div>
                             <p className=" text-[10px] ">Wallet Balance</p>
                             <p className="mt-1 text-base ">0.00$</p>
