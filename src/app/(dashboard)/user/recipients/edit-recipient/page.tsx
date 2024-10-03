@@ -1,12 +1,11 @@
 'use client'
-import React from 'react';
 
 
 import Image from 'next/image';
 import Link from 'next/link';
 
-import UserProfile from '../../../../../../public/user-avater.png';
 import Topbar from '@/components/Topbar';
+import UserProfile from '../../../../../../public/user-avater.png';
 
 const EditRecipientPage = () => {
     return (
@@ -74,7 +73,7 @@ const EditRecipientPage = () => {
                     </div>
                 </div>
                 <Link href={'/recipients'} className="w-full ">
-                    <button className="bg-[#723EEB] text-white w-full text-max px-4 py-1 text-xs rounded">Confirm</button>
+                    <button className="bg-[#723EEB] text-white w-full text-max px-4 py-[6px] lg:text-sm text-xs rounded">Confirm</button>
                 </Link>
             </div>
         </div>
