@@ -1,5 +1,4 @@
 'use client'
-import React from 'react';
 import Link from 'next/link';
 import Topbar from '../Topbar';
 import CardSubTitle from '../common/cardSubTitle/CardSubTitle';
@@ -11,7 +10,7 @@ const CreateRecipientForm = () => {
         <div className=''>
             <Topbar>Create Recipient</Topbar>
             <CardSubTitle title='Create Recipient' />
-            <div className='bg-white px-2 lg:px-6 py-10 rounded-2xl text-xs my-5'>
+            <div className='bg-white px-2 lg:px-6 py-10 rounded-2xl lg:text-sm text-xs my-5'>
                 {/* existing recipient */}
                 <div className="flex flex-row gap-3 items-end lg:w-1/2 mb-6">
                     <div className="lg:w-1/2">
@@ -71,7 +70,7 @@ const CreateRecipientForm = () => {
                     </div>
                 </div>
                 <Link href={'/recipients'} className="w-full ">
-                    <button className="bg-[#723EEB] text-white w-full text-max px-4 py-1 text-xs rounded">Confirm</button>
+                    <button className="bg-[#723EEB] text-white w-full text-max px-4 py-[6px] lg:text-sm text-xs rounded">Confirm</button>
                 </Link>
             </div>
         </div>

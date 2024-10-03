@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import useUserProfile from '../hooks/useUserProfile';
 import { useEffect } from 'react';
 import useAxiosSecure from '../hooks/useAxiosSecure';
+import Swal from 'sweetalert2';
 
 interface FormData {
     country: string;
@@ -22,7 +23,7 @@ interface FormData {
 
 const UserUpdateForm = () => {
     const { register, handleSubmit, formState: { errors }, setValue } = useForm<FormData>();
-    const [user] = useUserProfile();
+    const [user, refetch] = useUserProfile();
     console.log(user);
     const axiosInstance = useAxiosSecure();
     const { city, address, phoneNumber, state, zipCode, country } = user;
@@ -57,7 +58,15 @@ const UserUpdateForm = () => {
                 'Content-Type': 'multipart/form-data',
             },
         });
-        console.log(res);
+        if (res.status === 200) {
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Your information has been updated",
+                showConfirmButton: false,
+                timer: 1500
+            });
+        }
     }
 
     return (
@@ -71,7 +80,7 @@ const UserUpdateForm = () => {
                     alt='cover-photo'
                 />
             </div>
-            <div className='mx-7'>
+            <div className='mx-7 relative'>
                 <div className='flex flex-row gap-4 absolute lg:-mt-2'>
                     <div>
                         <label className='block cursor-pointer'>
