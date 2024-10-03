@@ -138,7 +138,7 @@ const WalletPage = () => {
                 )}
 
                 {/* new wallet form */}
-                <div className='bg-white p-4 rounded-xl lg:w-2/5 mx-auto w-full h-full'>
+                <div className='bg-white p-4 rounded-xl xl:w-3/5 mx-auto w-full h-full'>
                     <CreateNewWalletForm />
                 </div>
             </div>
@@ -200,7 +200,7 @@ const WalletPage = () => {
             <ForgetPINModal
                 setForgetPINModalOpen={setForgetPINModalOpen}
                 isForgetPINModalOpen={isForgetPINModalOpen}
-                mainWallet = {mainWallet}
+                mainWallet={mainWallet}
             />
         </div>
     );

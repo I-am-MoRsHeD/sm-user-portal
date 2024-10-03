@@ -6,11 +6,13 @@ const TheSidebar = () => {
     const { isNavOpen, toggleNavigation }: any = useNavigationContext();
 
 
+    // md:w-40 w-[2.85rem],w-[2.85rem]
+    // w-44 xl:w-60, w-[3.5rem]
     return (
         <div>
             {/* responsive */}
-            <div className={` duration-300 ease-in-out overflow-y-auto ${isNavOpen ? "translate-x-0 md:w-40 w-[2.85rem]" : "w-[2.85rem]"} h-full  lg:hidden`} >
-                <div className=''>
+            <div className={` duration-300 ease-in-out overflow-y-auto w-full ${isNavOpen ? "translate-x-0 " : ""} h-full  lg:hidden`} >
+                <div className='w-full'>
                     <div className='flex justify-center items-center w-full pt-3'>
                         {
                             isNavOpen ? <SideLogo /> : null
@@ -23,9 +25,9 @@ const TheSidebar = () => {
                 </div>
             </div>
             {/* desktop */}
-            <div className={` duration-300  ease-in-out overflow-y-auto ${isNavOpen ? "translate-x-0 w-44 xl:w-60" : "w-[3.5rem]"} hidden lg:block`}>
+            <div className={` duration-300  ease-in-out overflow-y-auto ${isNavOpen ? "translate-x-0" : ""} hidden lg:block`}>
                 <div className=''>
-                    <div className={`p-4 flex flex-row justify-center items-center`}>
+                    <div className={`p-2 flex flex-row justify-center items-center`}>
                         {
                             isNavOpen ? <SideLogo /> : null
                         }
