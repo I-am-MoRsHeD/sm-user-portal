@@ -57,7 +57,7 @@ const Topbar = ({ children }: { children: string }) => {
 
   return (
     <div>
-      <div className="flex justify-between items-center py-4 ">
+      <div className="flex justify-between items-center py-4 flex-wrap">
         <div className="flex flex-row items-center gap-[6px]"><h3 className='flex items-center gap-2 text-sm font-semibold'>
           <div className='cursor-pointer' onClick={toggleNavigation}>
             <svg width="12" height="11" viewBox="0 0 12 11" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -68,7 +68,7 @@ const Topbar = ({ children }: { children: string }) => {
           <span className='text-xs lg:text-base'>Dashboard</span>  </h3><span className='mb-[2px]'>{'>'}</span>
           <span className='text-xs lg:text-sm'>{children}</span>
         </div>
-        <div className='flex items-center justify-end gap-1 lg:gap-4'>
+        <div className='flex items-center flex-wrap justify-end gap-1 lg:gap-4'>
           <div className=''>
             {
               pathName === '/user/transaction' ? <SearchField /> : ''

@@ -41,11 +41,11 @@ const MainLayout = ({ children }: LayoutProps) => {
                 </div>
                 <ToastContainer />
             </div> */}
-            <div className='flex w-full bg-gradient-to-tl from-cyan-200 to-pink-200 h-auto text-black'>
-                <div className={`h-screen bg-white duration-500 overflow-auto`}>
+            <div className='grid grid-cols-20 w-full bg-gradient-to-tl from-cyan-200 to-pink-200 h-auto text-black'>
+                <div className={`h-screen ${isNavOpen ? 'col-span-2 md:col-span-4 lg:col-span-3 5xl:col-span-2' : 'col-span-2 md:col-span-1'} w-full bg-white duration-500 overflow-auto`}>
                     <TheSidebar />
                 </div>
-                <div className={`h-screen  flex-1`}>
+                <div className={`h-screen ${isNavOpen ? 'col-span-18 md:col-span-16 lg:col-span-17 5xl:col-span-18' : 'col-span-18 md:col-span-19'} w-full`}>
                     <div className='h-full custom-scrollbar overflow-y-auto overflow-x-hidden py-2 lg:pl-4 pl-2 pr-2'>
                         {children}
                     </div>
