@@ -131,11 +131,11 @@ const LoginForm = () => {
           )}
 
           <div className="flex justify-end">
-            <div>
-              <p onClick={() => setOpenForgetPassword(true)} className="text-end text-[#723EEB] text-xs font-medium cursor-pointer py-4">
+            <Link href={'/auth/forget-password'}>
+              <p className="text-end text-[#723EEB] text-xs font-medium cursor-pointer py-4">
                 Forget Password?
               </p>
-            </div>
+            </Link>
           </div>
         </div>
 

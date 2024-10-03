@@ -7,7 +7,7 @@ import ForgetPassword from '@/components/forgetPassword/ForgetPassword';
 import Link from 'next/link';
 
 const LoginPage = () => {
-  const { openForgetPassword, message, setMessage }: any = useNavigationContext();
+  const { message, setMessage }: any = useNavigationContext();
 
   return (
     <div className='bg-gradient-to-r from-pink-200 to-blue-200 min-h-screen w-full flex items-center justify-center'>
@@ -38,9 +38,7 @@ const LoginPage = () => {
               </div>
             </div>
             <div className='grid justify-items-center '>
-              {openForgetPassword ? <ForgetPassword /> : (
-                <LoginForm />
-              )}
+              <LoginForm />
             </div>
           </div>
         )}

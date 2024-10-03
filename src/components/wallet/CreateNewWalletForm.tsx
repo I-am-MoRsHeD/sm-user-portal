@@ -71,7 +71,7 @@ const CreateNewWalletForm = () => {
                         {...register("walletName", {
                             required: "Wallet Name is required",
                         })}
-                        className={`w-full px-3 py-1  border border-gray-400 rounded-[10px] focus:outline-none`}
+                        className={`mt-1 w-full px-3 py-1  border border-gray-400 rounded-[10px] focus:outline-none placeholder:text-xs`}
                         placeholder="Enter Wallet Name....."
                     />
                     {errors.walletName?.type === 'required' && (
@@ -86,7 +86,7 @@ const CreateNewWalletForm = () => {
                         {...register("email", {
                             required: "Email is required",
                         })}
-                        className={`w-full px-3 py-1 border border-gray-400 rounded-[10px] focus:outline-none`}
+                        className={`mt-1 w-full px-3 py-1 border border-gray-400 rounded-[10px] focus:outline-none placeholder:text-xs`}
                         placeholder="Enter Wallet Email....."
                     />
                     {errors.email?.type === 'required' && (
@@ -94,17 +94,17 @@ const CreateNewWalletForm = () => {
                     )}
                 </div>
                 {/* currency */}
-                <div className="mb-3 w-full">
+                <div className="mb-3 mt-1 w-full">
                     <label className="text-gray-600  font-semibold">Select Currency*</label>
                     <select
-                        className="w-full px-3 py-[5px] border border-gray-400 rounded-[10px] cursor-pointer focus:outline-none"
+                        className="mt-1 w-full px-3 py-[5px] border border-gray-400 rounded-[10px] cursor-pointer focus:outline-none placeholder:text-xs"
                         {...register("currency", {
                             required: 'Please select a currency'
                         })}
                     // value={filter}
                     >
                         {currency?.map((data: any) => (
-                            <option value={data?.name} key={data._id}>
+                            <option className='text-xs' value={data?.name} key={data._id}>
                                 {data?.name}
                             </option>
                         ))}
@@ -121,7 +121,7 @@ const CreateNewWalletForm = () => {
                         {...register("securityQuestion", {
                             required: "Security Question is required",
                         })}
-                        className={`w-full px-3 py-1 border border-gray-400 rounded-[10px] focus:outline-none`}
+                        className={`mt-1 w-full px-3 py-1 border border-gray-400 rounded-[10px] focus:outline-none placeholder:text-xs`}
                         placeholder="Enter a Security Question....."
                     />
                     {errors.securityQuestion?.type === 'required' && (
@@ -136,7 +136,7 @@ const CreateNewWalletForm = () => {
                         {...register("answer", {
                             required: "Answer is required",
                         })}
-                        className={`w-full px-3 py-1 border border-gray-400 rounded-[10px] focus:outline-none`}
+                        className={`mt-1 w-full px-3 py-1 border border-gray-400 rounded-[10px] focus:outline-none placeholder:text-xs`}
                         placeholder="Enter Answer....."
                     />
                     {errors.answer?.type === 'required' && (
@@ -145,7 +145,7 @@ const CreateNewWalletForm = () => {
                 </div>
                 {/* Pin Field */}
                 <div className="mb-3">
-                    <label className="text-gray-600  font-semibold">Create New PIN</label>
+                    <label className="text-gray-600   font-semibold">Create New PIN</label>
                     <div className="relative">
                         <input
                             type={'number'}
@@ -153,7 +153,7 @@ const CreateNewWalletForm = () => {
                                 required: "Pin is required",
                                 minLength: 4,
                             })}
-                            className={`w-full px-3 py-1 border border-gray-400 rounded-[10px] focus:outline-none`}
+                            className={`mt-1 w-full px-3 py-1 border border-gray-400 rounded-[10px] focus:outline-none placeholder:text-xs`}
                             placeholder="Enter PIN...."
                         />
                         <button
@@ -177,7 +177,7 @@ const CreateNewWalletForm = () => {
                 <div className="w-full mx-auto mt-3 ">
                     <button
                         type="submit"
-                        className="w-full bg-[#723EEB] text-white cursor-pointer px-1 py-[6px] rounded text-[10px] sm:text-sm"
+                        className="mt-1 w-full bg-[#723EEB] text-white cursor-pointer px-1 py-[6px] rounded text-[10px] sm:text-sm"
                     >
                         Create Now
                     </button>

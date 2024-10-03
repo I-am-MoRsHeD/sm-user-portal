@@ -6,7 +6,8 @@ import { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 import useNavigationContext from './NavigationContext/useNavigationContext';
 import SearchField from './common/searchField/SearchField';
-import BellIcon from './icons/Icon';
+import { BellIcon } from './icons/Icon';
+
 
 
 const Topbar = ({ children }: { children: string }) => {
