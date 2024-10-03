@@ -32,7 +32,7 @@ const TheSidebar = () => {
                             isNavOpen ? <SideLogo /> : null
                         }
                     </div>
-                    <div className={`${isNavOpen ? 'mt-3 mb-3' : 'h-[100vh] flex flex-col items-center justify-center'} h-[81vh] overflow-y-auto duration-300`}>
+                    <div className={`${isNavOpen ? 'mt-7' : 'h-[100vh] flex flex-col items-center justify-center'} h-[80vh] overflow-y-auto duration-300`}>
                         <SideMenuList isNavOpen={isNavOpen}
                             toggleNavigation={toggleNavigation} />
                     </div>

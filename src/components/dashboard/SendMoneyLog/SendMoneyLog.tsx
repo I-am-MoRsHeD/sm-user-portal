@@ -23,7 +23,7 @@ const SendMoneyLog = () => {
         setId(id);
     }
     return (
-        <div className='lg:mt-0 lg:h-[70vh] overflow-auto custom-scrollbar scroll-smooth w-full '>
+        <div className='lg:mt-0 lg:h-[69vh] overflow-auto custom-scrollbar scroll-smooth w-full '>
             <div className='flex justify-between mb-5'>
                 <h2 className='text-sm lg:text-base font-semibold'>Send Money Log</h2>
                 <button className='bg-[#723EEB] hover:bg-[#6125ec] duration-500 rounded-3xl lg:text-base font-bold text-white text-xs px-3 lg:px-5 py-1'>
@@ -43,7 +43,7 @@ const SendMoneyLog = () => {
                                 className='flex flex-row justify-between items-center'>
                                 <div className="flex items-center">
                                     <div className="bg-[#F3F2F2] group-hover:bg-red-400 duration-200 group-hover:text-white p-2 rounded-full mr-4">
-                                        <GoArrowUp className="text-base  sm:text-2xl" />
+                                        <GoArrowUp className={`text-base  sm:text-2xl ${open[data.id] ? 'rotate-0' : '-rotate-180'} transition-all duration-300`} />
                                     </div>
                                     <div>
                                         <h2 className="text-sm sm:text-base font-semibold">{data.name} </h2>

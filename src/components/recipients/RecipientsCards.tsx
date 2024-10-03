@@ -3,23 +3,25 @@ import Link from "next/link";
 import { useState } from "react";
 import { GoDotFill } from "react-icons/go";
 import { recipientsData } from "../../utils/data/recipientsData";
+import useRecipients from "../hooks/useRecipients";
 import RecipientsTable from "./RecipientsTable";
 
 
 const RecipientsCards = () => {
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState<Record<string, boolean>>({});
+    const [recipients, refetch, isPending] = useRecipients();
 
-    const toggleCard = (id) => {
-        setOpen(prevState => ({
+    const toggleCard = (id: string) => {
+        setOpen((prevState) => ({
             ...prevState,
-            [id]: !prevState[id]
+            [id]: !prevState[id],
         }));
     };
 
     return (
         <>
             {
-                recipientsData.map((data, ind) => (
+                recipients?.map((data : any) => (
                     <div key={data.id} className={`bg-white px-2 py-2 lg:px-6 lg:py-4 mb-5 group rounded-2xl cursor-pointer ${open[data.id] ? ' shadow-md shadow-neutral-400' : ''}`}>
                         <div onClick={() => toggleCard(data.id)} className="flex flex-row justify-between items-center">
                             <div className="flex flex-row gap-3 lg:gap-4 items-start">
@@ -62,3 +64,5 @@ const RecipientsCards = () => {
 };
 
 export default RecipientsCards;
+
+

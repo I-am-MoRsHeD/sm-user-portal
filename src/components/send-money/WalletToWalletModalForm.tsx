@@ -1,7 +1,11 @@
 import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
 
-const WalletToWalletModalForm = () => {
+interface Props {
+    transferInfo : any;
+}
+
+const WalletToWalletModalForm:React.FC<Props> = ({ transferInfo }) => {
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
