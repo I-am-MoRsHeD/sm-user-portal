@@ -1,9 +1,8 @@
 'use client'
-import useAxiosSecure from '@/components/hooks/useAxiosSecure';
 import axios from 'axios';
 import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
-import React, { useState } from 'react';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
+import React, { Suspense, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { LiaEyeSlashSolid, LiaEyeSolid } from 'react-icons/lia';
 import Swal from 'sweetalert2';
@@ -17,10 +16,12 @@ const Page = () => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>();
     const [newPassword, setNewPassword] = useState(false);
     const [confirmNewPassword, setConfirmNewPassword] = useState(false);
-    const axiosInstance = useAxiosSecure();
     const router = useRouter();
     const searchParams = useSearchParams();
-    const token = searchParams.get('token');
+    const params = useParams();
+    console.log(searchParams)
+    console.log(params);
+    const token = searchParams?.get('token');
 
     const onSubmit = async (data: FormData) => {
         const password = data.newPassword;
@@ -55,12 +56,14 @@ const Page = () => {
                     router.push('/auth/login');
                 }
             }
-        } catch (error : any) {
+        } catch (error: any) {
             console.log(error);
         }
     }
 
     return (
+        // <Suspense fallback={<div>Loading reset password page...</div>}>
+        // </Suspense>
         <div className='flex items-center bg-gradient-to-r from-pink-200 to-blue-200 min-h-screen w-full  justify-center'>
             <div className='px-4 max-w-[1200px] mx-auto p-5 bg-white rounded'>
                 <h1 className="font-semibold ">Reset Your Password</h1>
