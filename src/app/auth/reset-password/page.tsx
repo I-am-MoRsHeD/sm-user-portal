@@ -13,7 +13,7 @@ interface FormData {
     confirmNewPassword: string;
 };
 
-const page = () => {
+const Page = () => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>();
     const [newPassword, setNewPassword] = useState(false);
     const [confirmNewPassword, setConfirmNewPassword] = useState(false);
@@ -165,4 +165,4 @@ const page = () => {
     );
 };
 
-export default page;
+export default Page;
