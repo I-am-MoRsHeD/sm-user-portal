@@ -1,3 +1,4 @@
+'use client'
 import Image from 'next/image';
 
 import UserCover from '../../../public/user-cover.png';
@@ -14,38 +15,48 @@ interface FormData {
     city: string;
     state: string;
     zipCode: string;
-    image: File;
+    image?: File;
 };
 
 // const image_hosing_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
 const UserUpdateForm = () => {
-    const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm<FormData>();
+    const { register, handleSubmit, formState: { errors }, setValue } = useForm<FormData>();
     const [user] = useUserProfile();
+    console.log(user);
     const axiosInstance = useAxiosSecure();
-    const { city, address, phoneNumber, state, zipcode, country } = user;
+    const { city, address, phoneNumber, state, zipCode, country } = user;
 
     useEffect(() => {
 
-        setValue('country',user?.country);
-        setValue('address',user?.address);
-        setValue('phone',user?.phoneNumber);
-        setValue('city',user?.city);
-        setValue('state',user?.state);
-        setValue('zipCode',user?.zipcode);
+        setValue('country', user?.country);
+        setValue('address', user?.address);
+        setValue('phone', user?.phoneNumber);
+        setValue('city', user?.city);
+        setValue('state', user?.state);
+        setValue('zipCode', user?.zipCode);
 
     }, [user, setValue]);
-    console.log(user);
+
     const onSubmit = async (data: FormData) => {
+        const formData = new FormData();
+
         const userUpdateInfo = {
             country: data.country,
             phoneNumber: data.phone,
             address: data.address,
             city: data.city,
             state: data.state,
-            zipcode: data.zipCode,
-        }
-        const res = await axiosInstance.post('/user/profile', userUpdateInfo);
+            zipCode: parseInt(data.zipCode),
+        };
+
+        formData.append('data', JSON.stringify(userUpdateInfo));
+
+        const res = await axiosInstance.post('/user/profile', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
         console.log(res);
     }
 
@@ -151,12 +162,12 @@ const UserUpdateForm = () => {
                         <div className="lg:w-1/2">
                             <label className="text-gray-600 font-semibold text-sm">Zip Code</label>
                             <input
-                                type="text"
+                                type="string"
                                 {...register("zipCode", {
                                 })}
                                 className={`mt-1 w-full px-3 py-1 text-sm border border-gray-300 rounded-xl focus:outline-none`}
                                 placeholder="Enter Zip..."
-                                defaultValue={zipcode}
+                                defaultValue={zipCode}
                             />
                         </div>
                     </div>
