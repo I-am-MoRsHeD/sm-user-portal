@@ -47,7 +47,7 @@ const SideMenuList: React.FC<StateProps> = ({ toggleNavigation, isNavOpen }) => 
                             >
                                 <div className='flex items-center gap-2 duration-200 hover:scale-y-110 hover:scale-x-105 origin-left w-full'>
 
-                                    <div className={`flex justify-center items-center ${pathName.includes(item.link) ? 'bg-[#723EEB] w-6 h-6 stroke-white rounded-[30%]' : 'w-6 h-6 bg-[#ebe6fa] rounded-[30%]'}`}>
+                                    <div className={`flex justify-center scale-110 items-center ${pathName.includes(item.link) ? 'bg-[#723EEB] w-6 h-6 stroke-white rounded-[30%]' : 'w-6 h-6 bg-[#ebe6fa] rounded-[30%]'}`}>
                                         {item.icon}
                                     </div>
                                     <div

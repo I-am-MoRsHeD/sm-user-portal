@@ -31,7 +31,7 @@ const TransactionTable = () => {
     };
 
     return (
-        <div className="w-full overflow-auto">
+        <div className="w-full overflow-auto custom-scrollbar">
             <table className="bg-white text-nowrap w-full">
                 <thead>
                     <tr className="">
