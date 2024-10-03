@@ -16,7 +16,7 @@ const PasswordChangeForm = () => {
     const [newPassword, setNewPassword] = useState(false);
     const [confirmPassword, setConfirmPassword] = useState(false);
     const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>();
-    const axiosIntance = useAxiosSecure();
+    const axiosInstance = useAxiosSecure();
 
     const onSubmit = async (data: FormData) => {
         const oldPassword = data.currentPassword;
@@ -39,7 +39,7 @@ const PasswordChangeForm = () => {
                 });
             }
             else {
-                const res = await axiosIntance.post('/auth/change-password', changedPasswordInfo);
+                const res = await axiosInstance.post('/auth/change-password', changedPasswordInfo);
                 if (res?.status === 200) {
                     reset();
 
@@ -134,7 +134,7 @@ const PasswordChangeForm = () => {
                         <p className="text-red-500 text-xs">Password must be at least 8 characters</p>
                     )}
                     {errors.newPassword?.type == "maxLength" && (
-                        <span className='text-red-600 text-xs -mt-5'>Password must be maximum 10 characters</span>
+                        <span className='text-red-600 text-xs -mt-5'>Password must be maximum 15 characters</span>
                     )}
                     {errors.newPassword?.type == "pattern" && (
                         <span className='text-red-600 text-xs -mt-5'>Password must have atleast one uppercase,one lowercase and one special character</span>
@@ -171,7 +171,7 @@ const PasswordChangeForm = () => {
                         <p className="text-red-500 text-xs">Password must be at least 8 numbers</p>
                     )}
                     {errors.confirmNewPassword?.type == "maxLength" && (
-                        <span className='text-red-600 text-xs -mt-5'>Password must be maximum 10 characters</span>
+                        <span className='text-red-600 text-xs -mt-5'>Password must be maximum 15 characters</span>
                     )}
                     {errors.confirmNewPassword?.type == "pattern" && (
                         <span className='text-red-600 text-xs -mt-5'>Password must have atleast one uppercase,one lowercase and one special character</span>

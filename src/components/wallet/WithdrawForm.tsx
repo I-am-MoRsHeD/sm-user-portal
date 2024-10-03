@@ -19,17 +19,17 @@ const WithdrawForm: React.FC<ModalProps> = ({ handleForgetPIN }) => {
             </div>
             <div className='space-y-5'>
                 <div className="w-full">
-                    <label className="block mb-1">Enter Your Amount</label>
+                    <label className="block mb-1 text-[14px]">Enter Your Amount</label>
                     <input
                         type="text"
                         name="amount"
-                        className="w-full px-3 py-1 border border-gray-400 rounded-full focus:outline-none font-semibold"
+                        className="w-full px-3 py-1 border border-gray-400 rounded-full focus:outline-none font-semibold text-[14px]"
                         placeholder="Enter Amount Here....."
                     />
                 </div>
                 <div className=" w-full">
-                    <label className="block mb-2">Select Your Bank</label>
-                    <select className="w-full px-3 border border-gray-400 rounded-full focus:outline-none select select-sm font-semibold">
+                    <label className="block mb-2 text-[14px]">Select Your Bank</label>
+                    <select className="w-full px-3 border border-gray-400 rounded-full focus:outline-none select select-sm font-semibold text-[14px]">
                         <option disabled>Select Your Bank</option>
                         <option>Bank of America</option>
                         <option>Wells Fargo</option>
@@ -37,20 +37,20 @@ const WithdrawForm: React.FC<ModalProps> = ({ handleForgetPIN }) => {
                     </select>
                 </div>
                 <div className="w-full">
-                    <label className="block mb-1 ">Enter Your Bank Account Number</label>
+                    <label className="block mb-1 text-[14px]">Enter Your Bank Account Number</label>
                     <input
                         type="text"
                         name="securityQuestion"
-                        className="w-full px-3 py-1 border border-gray-400 rounded-full focus:outline-none font-semibold"
+                        className="w-full px-3 py-1 border border-gray-400 rounded-full focus:outline-none font-semibold text-[14px]"
                         placeholder="Enter Account Number....."
                     />
                 </div>
                 <div className="w-full relative">
-                    <label className="block mb-1 ">Enter Your PIN</label>
+                    <label className="block mb-1 text-[14px]">Enter Your PIN</label>
                     <input
                         type="password"
                         name="pin"
-                        className="w-full px-3 py-1 border border-gray-400 rounded-full focus:outline-none font-semibold"
+                        className="w-full px-3 py-1 border border-gray-400 rounded-full focus:outline-none font-semibold text-[14px]"
                         placeholder="Enter PIN....."
                     />
                     <span className='absolute right-3 mt-2.5'>

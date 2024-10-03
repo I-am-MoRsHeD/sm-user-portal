@@ -2,6 +2,7 @@
 import CardSubTitle from '@/components/common/cardSubTitle/CardSubTitle';
 import ForgetPINModal from '@/components/common/ForgetPINModal/ForgetPINModal';
 import Modal from '@/components/common/Modal/Modal';
+import SecondModal from '@/components/common/Modal/SecondModal';
 import useMainWallet from '@/components/hooks/useMainWallet';
 import useSubWallets from '@/components/hooks/useSubWallets';
 import Topbar from '@/components/Topbar';
