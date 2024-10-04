@@ -2,6 +2,7 @@
 
 import { ReactNode, useEffect } from 'react';
 import '../styles/globals.css'
+import 'react-toastify/dist/ReactToastify.css';
 import NavigationContextProvider from '@/components/NavigationContext/NavigationContext';
 import AuthContextProvider from '@/components/AuthContext/AuthContext';
 import { SessionProvider } from 'next-auth/react';
