@@ -16,7 +16,7 @@ const TwoFactor = () => {
     const axiosInstance = useAxiosSecure();
 
     // 2fa Data
-    const { data, isError, isLoading } = useQuery({
+    const { data, isError: isTwoAuthError, isLoading } = useQuery({
         queryKey: ['2fa'],
         queryFn: async () => {
             const res = await axiosInstance.get(`/user/two-factor/generate`);
@@ -24,13 +24,14 @@ const TwoFactor = () => {
         },
     });
     // user Data
-    const { data: userData, } = useQuery({
+    const { data: userData, refetch } = useQuery({
         queryKey: ['userData'],
         queryFn: async () => {
             const res = await axiosInstance.get(`/user/profile`);
             return res?.data?.data;
         },
     });
+
 
     // Verify 2fa
     const { data: verifyData, isSuccess, isPending, isError: verifyError, mutate } = useMutation({
@@ -44,6 +45,7 @@ const TwoFactor = () => {
             queryClient.invalidateQueries({ queryKey: ['2fa'] })
         },
     });
+
 
     const handleEnable = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -69,10 +71,14 @@ const TwoFactor = () => {
             toast.error('Invalid code');
         }
         if (isSuccess) {
+            refetch();
             toast.success('Two-factor authentication enabled');
             setIsOpenWithCodeModal(false);
         }
-    }, [isSuccess, verifyError]);
+        if (isTwoAuthError) {
+            toast.error('Something went wrong');
+        }
+    }, [isSuccess, verifyError, refetch, isTwoAuthError]);
 
     return (
         <div>
