@@ -1,4 +1,3 @@
-
 import axios, { AxiosResponse } from 'axios';
 import Cookies from 'js-cookie';
 const BASE_API = 'https://diasporex-api.vercel.app/api/v1';
