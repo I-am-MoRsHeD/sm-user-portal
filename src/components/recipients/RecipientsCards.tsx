@@ -14,7 +14,6 @@ const RecipientsCards = () => {
     const [open, setOpen] = useState<Record<string, boolean>>({});
     const [recipients, isPending] = useRecipients();
     const {deleteRecipient, isDeleting} = useDeleteRecipient();
-    console.log(recipients);
    
     const toggleCard = (id: string) => {
         setOpen((prevState) => ({

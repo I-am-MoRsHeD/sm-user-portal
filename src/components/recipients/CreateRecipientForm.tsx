@@ -143,12 +143,7 @@ const CreateRecipientForm: React.FC = () => {
                   <option key={country.id} value={country.name}>{country.name}</option>
                 )) 
               }
-                {/* <option value="">Select Country</option>
-                <option value="USA">United States</option>
-                <option value="UK">United Kingdom</option>
-                <option value="Canada">Canada</option>
-                <option value="Nigeria">Nigeria</option> 
-                <option value = "Bangladesh">Bangladesh</option> */}
+                
               </select>
               {errors.country && <div className="text-red-500 text-xs mt-1">{errors.country.message}</div>}
             </div>

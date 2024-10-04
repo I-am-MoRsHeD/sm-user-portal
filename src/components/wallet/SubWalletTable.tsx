@@ -40,7 +40,7 @@ const SubWalletTable: React.FC<ModalProps> = ({ handleMakeMainWallet, isSubWalle
         setSubWalletModalOpen(false);
         setChangePINModalOpen(true);
     };
-console.log(subWalletData);
+
     const handleEditWallet = () => {
         setEditWalletModalOpen(true);
         setSubWalletModalOpen(false);
@@ -149,6 +149,7 @@ console.log(subWalletData);
             <ForgetPINModal
                 setForgetPINModalOpen={setForgetPINModalOpen}
                 isForgetPINModalOpen={isForgetPINModalOpen}
+                subWalletData = {data}
             />
         </div>
     );
