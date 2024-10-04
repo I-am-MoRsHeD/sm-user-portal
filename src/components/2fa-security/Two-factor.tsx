@@ -15,6 +15,7 @@ const TwoFactor = () => {
 
     const axiosInstance = useAxiosSecure();
 
+    // 2fa Data
     const { data, isError, isLoading } = useQuery({
         queryKey: ['2fa'],
         queryFn: async () => {
@@ -22,7 +23,16 @@ const TwoFactor = () => {
             return res?.data?.data;
         },
     });
+    // user Data
+    const { data: userData, } = useQuery({
+        queryKey: ['userData'],
+        queryFn: async () => {
+            const res = await axiosInstance.get(`/user/profile`);
+            return res?.data?.data;
+        },
+    });
 
+    // Verify 2fa
     const { data: verifyData, isSuccess, isPending, isError: verifyError, mutate } = useMutation({
         mutationFn: async (token: string) => {
             const response = await axiosInstance.post(`/user/two-factor/verify`, {
@@ -34,9 +44,6 @@ const TwoFactor = () => {
             queryClient.invalidateQueries({ queryKey: ['2fa'] })
         },
     });
-
-    console.log(data, 'data qrr');
-    console.log(verifyData, 'verify')
 
     const handleEnable = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -136,7 +143,9 @@ const TwoFactor = () => {
                         isLoading ? <LoadingSpin height='2rem' width='2rem' borderWidth='0.425rem' color='#723EEB' /> : <Image src={data?.qrCodeUrl} width={150} height={150} alt='QrCode' />
                     }
                     <div className='w-3/4 my-5'>
-                        <button onClick={() => setIsOpenEnableModal(true)} className="text-xs bg-[#723EEB] text-white w-full p-1.5 rounded font-semibold">Enable</button>
+                        <button disabled={userData?.twoFactorEnabled} onClick={() => setIsOpenEnableModal(true)} className={`text-xs ${userData?.twoFactorEnabled ? 'bg-[#9c7aea]' : 'bg-[#723EEB]'}  text-white w-full p-1.5 rounded font-semibold`}>{
+                            userData?.twoFactorEnabled ? 'Verified' : 'Enable'
+                        }</button>
                     </div>
                 </div>
             </div>
