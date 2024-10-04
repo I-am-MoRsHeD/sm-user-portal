@@ -1,13 +1,114 @@
-import React from 'react';
-import Image from 'next/image';
-
-
 import CardSubTitle from '@/components/common/cardSubTitle/CardSubTitle';
-import QRcodeImage from '../../../public/qrcode.png';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+import Swal from 'sweetalert2';
+import Modal from '../common/Modal/Modal';
+import useAxiosSecure from '../hooks/useAxiosSecure';
+import LoadingSpin from './LoadingSpin';
 
 const TwoFactor = () => {
+    const [isOpenEnableModal, setIsOpenEnableModal] = useState(false);
+    const [isOpenWithCodeModal, setIsOpenWithCodeModal] = useState(false);
+    const queryClient = useQueryClient();
+
+    const axiosInstance = useAxiosSecure();
+
+    const { data, isError, isLoading } = useQuery({
+        queryKey: ['2fa'],
+        queryFn: async () => {
+            const res = await axiosInstance.get(`/user/two-factor/generate`);
+            return res?.data?.data;
+        },
+    });
+
+    const { data: verifyData, isSuccess, isPending, isError: verifyError, mutate } = useMutation({
+        mutationFn: async (token: string) => {
+            const response = await axiosInstance.post(`/user/two-factor/verify`, {
+                "token": token
+            });
+            return response.data;
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['2fa'] })
+        },
+    });
+
+    console.log(data, 'data qrr');
+    console.log(verifyData, 'verify')
+
+    const handleEnable = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const target = e.target as HTMLFormElement
+        const key = target.key.value;
+        mutate(key);
+    }
+    const handleEnableYes = () => {
+        setIsOpenWithCodeModal(true);
+        setIsOpenEnableModal(false);
+    }
+    const handleEnableCancel = () => {
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Your two-factor authentication is not enabled",
+        });
+        setIsOpenWithCodeModal(false);
+    }
+
+    useEffect(() => {
+        if (verifyError) {
+            toast.error('Invalid code');
+        }
+        if (isSuccess) {
+            toast.success('Two-factor authentication enabled');
+            setIsOpenWithCodeModal(false);
+        }
+    }, [isSuccess, verifyError]);
+
     return (
         <div>
+            <Modal
+                isOpen={isOpenEnableModal}
+                onClose={() => setIsOpenEnableModal(false)}
+            >
+                <div>
+                    <p className='font-medium'>
+                        Are you sure you want to enable two-factor authentication?
+                    </p>
+                    <div className='w-full flex justify-between gap-2 py-4'>
+                        <button onClick={() => setIsOpenEnableModal(false)} className='bg-gray-300 text-gray-500 px-3 py-1 rounded font-medium'>Cancel</button>
+                        <button onClick={handleEnableYes} className='bg-[#723EEB] text-white px-3 py-1 rounded font-medium'>Yes</button>
+                    </div>
+                </div>
+            </Modal>
+            <Modal
+                isOpen={isOpenWithCodeModal}
+                onClose={() => setIsOpenWithCodeModal(false)}
+                disableCloseButton={true}
+            >
+                <form onSubmit={handleEnable}>
+                    <p className='text-red-500'>
+                        *Scan the QR code with your Google Authenticator app or enter the key below manually.
+                    </p>
+                    <div className='flex flex-col gap-2 pt-3'>
+                        <label className='font-medium'>Enter Code</label>
+                        <input
+                            className='w-full px-3 py-1 border border-gray-300 rounded'
+                            type="text"
+                            name="key"
+                            placeholder='32414'
+                        />
+                    </div>
+                    <div className='w-full flex justify-between gap-2 py-4'>
+                        <button type='button' onClick={() => handleEnableCancel()} className='bg-gray-300 text-gray-500 px-3 py-1 rounded font-medium'>Cancel</button>
+                        <button className='bg-[#723EEB] text-white px-3 py-1 rounded font-medium'>{
+                            isPending ? <LoadingSpin height='1rem' width='1rem' borderWidth='0.25rem' color='#fff' /> : 'Enable'
+                        }</button>
+                    </div>
+                </form>
+            </Modal>
             <CardSubTitle title='Two Factor Authenticator' />
             <div className='bg-white p-4 my-5 rounded-xl'>
                 <h5 className="text-xs text-gray-400 font-semibold">QRcode Share</h5>
@@ -15,9 +116,10 @@ const TwoFactor = () => {
                     <input
                         className='w-full px-3 py-1 border border-gray-300 text-xs outline-0 rounded-l'
                         type="text"
-                        name="qrcode" 
+                        name="qrcode"
                         placeholder='MBCE2JDRJQI77J5X'
-                        />
+                        defaultValue={data?.secret}
+                    />
                     <div className='border border-gray-300 w-[25.5px] h-[25.5px] flex justify-center items-center'>
                         <svg width="13" height="13" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M0 0V8.33333H2.91667V7.5H0.833333V0.833333H5.83333V1.25H6.66667V0H0ZM3.33333 1.66667V10H10V1.66667H3.33333ZM4.16667 2.5H9.16667V9.16667H4.16667V2.5Z" fill="#723EEB" />
@@ -30,13 +132,15 @@ const TwoFactor = () => {
                     </div>
                 </div>
                 <div className='flex flex-col justify-center items-center mt-5'>
-                    <Image src={QRcodeImage} alt='QRcode' />
+                    {
+                        isLoading ? <LoadingSpin height='2rem' width='2rem' borderWidth='0.425rem' color='#723EEB' /> : <Image src={data?.qrCodeUrl} width={150} height={150} alt='QrCode' />
+                    }
                     <div className='w-3/4 my-5'>
-                        <button className="text-xs bg-[#723EEB] text-white w-full p-1.5 rounded font-semibold">Enable</button>
+                        <button onClick={() => setIsOpenEnableModal(true)} className="text-xs bg-[#723EEB] text-white w-full p-1.5 rounded font-semibold">Enable</button>
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     );
 };
 
