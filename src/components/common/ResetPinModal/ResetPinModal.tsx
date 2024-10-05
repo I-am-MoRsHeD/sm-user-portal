@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Modal from '../Modal/Modal';
 import { LiaEyeSlashSolid, LiaEyeSolid } from 'react-icons/lia';
-import Swal from 'sweetalert2';
 import useAxiosSecure from '@/components/hooks/useAxiosSecure';
 import LoadingSpinner from '../Loading/LoadingSpinner';
+import toast from 'react-hot-toast';
 
 interface ModalProps {
     resetPinModalOpen: boolean;
@@ -19,7 +19,7 @@ interface FormData {
 };
 
 const ResetPinModal: React.FC<ModalProps> = ({ resetPinModalOpen, setResetPinModalOpen, mainWallet, subWalletData }) => {
-    const [loading, setLoading] =  useState(false);
+    const [loading, setLoading] = useState(false);
     const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>();
     const [newPin, setNewPin] = useState(false);
     const [confirmNewPin, setConfirmNewPin] = useState(false);
@@ -38,13 +38,7 @@ const ResetPinModal: React.FC<ModalProps> = ({ resetPinModalOpen, setResetPinMod
         setLoading(true);
         try {
             if (newPin !== confirmNewPin) {
-                Swal.fire({
-                    position: "center",
-                    icon: "error",
-                    title: "New Pin doesn't match",
-                    showConfirmButton: false,
-                    timer: 1500
-                });
+                toast.error("New Pin doesn't match");;
             }
             else {
                 const res = await axiosInstance.post('/wallet/reset-pin', newPinInfo);
@@ -52,25 +46,13 @@ const ResetPinModal: React.FC<ModalProps> = ({ resetPinModalOpen, setResetPinMod
                     if (res?.status === 200) {
                         reset();
                         setResetPinModalOpen(false);
-                        Swal.fire({
-                            position: "center",
-                            icon: "success",
-                            title: "Pin has been changed",
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
+                        toast.success("Pin has been changed");
                     }
                 }
             }
         } catch (error: any) {
             if (error) {
-                Swal.fire({
-                    position: "center",
-                    icon: "error",
-                    title: "There is something wrong",
-                    showConfirmButton: false,
-                    timer: 1500
-                });
+                toast.error("There is something wrong");
             }
         }
         setLoading(false);
@@ -154,7 +136,7 @@ const ResetPinModal: React.FC<ModalProps> = ({ resetPinModalOpen, setResetPinMod
                                 <button
                                     type="submit"
                                     className="w-full bg-[#ea5455] text-white p-2 rounded text-[10px]">
-                                        {loading ? <LoadingSpinner className='h-4 w-4' /> : 'Confirm'}
+                                    {loading ? <LoadingSpinner className='h-4 w-4' /> : 'Confirm'}
                                     {/* Confirm */}
                                 </button>
                             </div>

@@ -6,7 +6,7 @@ import useCurrency from '../hooks/useCurrency';
 import useMainWallet from '../hooks/useMainWallet';
 import useSubWallets from '../hooks/useSubWallets';
 import LoadingSpinner from '../common/Loading/LoadingSpinner';
-import Swal from 'sweetalert2';
+import toast from 'react-hot-toast';
 
 interface FormData {
     walletName: string;
@@ -45,14 +45,7 @@ const CreateNewWalletForm = () => {
                 if (res.status === 200) {
                     setLoading(false);
                     reset();
-                    Swal.fire({
-                        position: "center",
-                        icon: "success",
-                        title: "Wallet created successfully",
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-                    // toast('Wallet has been created successfully');
+                    toast.success('Wallet has been created successfully');
                 }
             } else {
                 const walletInfo = {
@@ -70,25 +63,12 @@ const CreateNewWalletForm = () => {
                     setLoading(false);
                     refetch();
                     reset();
-                    Swal.fire({
-                        position: "center",
-                        icon: "success",
-                        title: "Wallet created successfully",
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-                    // toast('Sub Wallet has been created successfully');
+                    toast.success('Sub Wallet has been created successfully');
                 }
             };
         } catch (error: any) {
             if (error) {
-                Swal.fire({
-                    position: "center",
-                    icon: "error",
-                    title: "There is something wrong",
-                    showConfirmButton: false,
-                    timer: 1500
-                });
+                toast.error("There is something wrong");
             }
         }
     }

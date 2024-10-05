@@ -2,10 +2,10 @@
 import React, { useEffect, useState } from 'react';
 import Modal from '../Modal/Modal';
 import { useForm } from 'react-hook-form';
-import Swal from 'sweetalert2';
 import ResetPinModal from '../ResetPinModal/ResetPinModal';
 import useAxiosSecure from '@/components/hooks/useAxiosSecure';
 import LoadingSpinner from '../Loading/LoadingSpinner';
+import toast from 'react-hot-toast';
 
 interface ModalProps {
     isForgetPINModalOpen: boolean;
@@ -52,33 +52,9 @@ const ForgetPINModal: React.FC<ModalProps> = ({ setForgetPINModalOpen, isForgetP
             setResetPinModalOpen(true);
         }
         else {
-            Swal.fire({
-                position: "center",
-                icon: "error",
-                title: "Answer is incorrect",
-                showConfirmButton: false,
-                timer: 1500
-            });
+            toast.error("Answer is incorrect");
         }
         setLoading(false);
-        // try {
-        //     if (answer === mainWallet?.answer || answer === subWalletData?.answer) {
-        //         reset();
-        //         setForgetPINModalOpen(false);
-        //         setResetPinModalOpen(true);
-        //     }
-        //     else {
-        //         Swal.fire({
-        //             position: "center",
-        //             icon: "error",
-        //             title: "Answer is incorrect",
-        //             showConfirmButton: false,
-        //             timer: 1500
-        //         });
-        //     }
-        // } catch (error) {
-
-        // }
     }
 
     return (

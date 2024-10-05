@@ -9,7 +9,7 @@ const useSingleRecipient = (id: string | null) => {
         queryFn: async () => {
             if (!id) return null;  
             const res = await axiosInstance.get(`/recipient/${id}`);
-            return res.data;  
+            return res?.data?.data;  
         },
         enabled: !!id,  
     });

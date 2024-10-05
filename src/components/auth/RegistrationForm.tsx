@@ -4,10 +4,11 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { SocialLogin } from "@/app/auth/login/components";
 import useAxiosSecure from "../hooks/useAxiosSecure";
-import 'react-toastify/dist/ReactToastify.css';
-import { toast } from "react-toastify";
 import useAuthContext from "../AuthContext/useAuthContext";
 import LoadingSpinner from "../common/Loading/LoadingSpinner";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+
 
 interface FormData {
   fullName: string;
@@ -30,22 +31,27 @@ const RegistrationForm = () => {
 
   const onSubmit = async (data: FormData) => {
     setLoading(true);
-    if (data.password !== data.repassword) {
-      console.log("Please fill the correct password");
-    } else {
-      const userInfo = {
-        name: data.fullName,
-        email: data.email,
-        password: data.password,
+    try {
+      if (data.password !== data.repassword) {
+        console.log("Please fill the correct password");
+      } else {
+        const userInfo = {
+          name: data.fullName,
+          email: data.email,
+          password: data.password,
+        };
+        const res = await axiosIntance.post('/auth/register', userInfo);
+        if (res.status === 200) {
+          console.log(res.status)
+          toast.success("Please Check Your mail");
+          setLoading(false);
+          // router.push('/auth/verify-email')
+        }
       };
-      const res = await axiosIntance.post('/auth/register', userInfo);
-      console.log(res, userInfo);
-      if (res.status === 200) {
-        console.log(res.status)
-        toast.success("You have successfully registered");
-        setLoading(false);
-      }
-    };
+    } catch (error : any) {
+      setLoading(false);
+      toast.error("There is something wrong");
+    }
 
   };
 

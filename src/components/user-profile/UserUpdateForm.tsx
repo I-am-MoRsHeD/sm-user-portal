@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import useUserProfile from '../hooks/useUserProfile';
 import { useEffect } from 'react';
 import useAxiosSecure from '../hooks/useAxiosSecure';
-import Swal from 'sweetalert2';
+import toast from 'react-hot-toast';
 
 interface FormData {
     country: string;
@@ -59,13 +59,7 @@ const UserUpdateForm = () => {
             },
         });
         if (res.status === 200) {
-            Swal.fire({
-                position: "center",
-                icon: "success",
-                title: "Your information has been updated",
-                showConfirmButton: false,
-                timer: 1500
-            });
+            toast.success("Your information has been updated");
         }
     }
 

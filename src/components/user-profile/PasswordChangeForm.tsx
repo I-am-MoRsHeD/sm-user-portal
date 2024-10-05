@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { LiaEyeSlashSolid, LiaEyeSolid } from 'react-icons/lia';
 import useAxiosSecure from '../hooks/useAxiosSecure';
-import Swal from 'sweetalert2';
+import toast from 'react-hot-toast';
 
 interface FormData {
     currentPassword: string;
@@ -30,48 +30,22 @@ const PasswordChangeForm = () => {
         console.log(changedPasswordInfo)
         try {
             if (newPassword !== confirmPassword) {
-                Swal.fire({
-                    position: "center",
-                    icon: "error",
-                    title: "New Password doesn't match",
-                    showConfirmButton: false,
-                    timer: 1500
-                });
+                toast.error("New Password doesn't match");
             }
             else {
                 const res = await axiosInstance.post('/auth/change-password', changedPasswordInfo);
                 if (res?.status === 200) {
                     reset();
 
-                    Swal.fire({
-                        position: "center",
-                        icon: "success",
-                        title: "Password has been changed",
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
+                    toast.success("Password has been changed");
                 }
             }
-        } catch (error : any) {
+        } catch (error: any) {
             console.log(error);
-            if (error.response && error.response.status === 403) {
-                Swal.fire({
-                    position: "center",
-                    icon: "error",
-                    title: "Current Password is wrong",
-                    showConfirmButton: false,
-                    timer: 1500
-                });
+            if (error) {
+                toast.error("There is something wrong");
             }
-            else {
-                Swal.fire({
-                    position: "center",
-                    icon: "error",
-                    title: "Current Password is wrong",
-                    showConfirmButton: false,
-                    timer: 1500
-                });
-            }
+
         }
     }
 

@@ -5,8 +5,6 @@ import { FaEye, FaEyeSlash } from "react-icons/fa6";
 import SocialLogin from "./SocialLogin";
 import useAxiosSecure from "@/components/hooks/useAxiosSecure";
 
-import 'react-toastify/dist/ReactToastify.css';
-import { toast, ToastContainer } from "react-toastify";
 import { useRouter } from "next/navigation";
 import useAuthContext from "@/components/AuthContext/useAuthContext";
 import Link from "next/link";
@@ -14,6 +12,7 @@ import useNavigationContext from "@/components/NavigationContext/useNavigationCo
 import api from "@/components/hooks/useAxiosSecure";
 import Cookies from 'js-cookie';
 import LoadingSpinner from "@/components/common/Loading/LoadingSpinner";
+import toast from "react-hot-toast";
 
 
 
@@ -56,12 +55,9 @@ const LoginForm = () => {
         const { accessToken, refreshToken } = res?.data?.data;
         Cookies.set('accessToken', accessToken);
         Cookies.set('refreshToken', refreshToken);
-
         
-        // toast.success(res?.data?.data.message);
-        toast("You have successfully logged in");
-
         router.push('/user/dashboard');
+        toast.success("You have successfully logged in");
         setLoading(false)
 
         // window.location.href = '/user/dashboard';
@@ -73,6 +69,8 @@ const LoginForm = () => {
 
       }
     } catch (error: any) {
+      setLoading(false);
+      toast.error("There is something error");
       if (error.response && error.response.status === 403) {
         setServerError("Invalid email or password");
       }

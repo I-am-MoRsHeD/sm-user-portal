@@ -47,17 +47,17 @@ const RecipientsCards = () => {
             {recipients.map((data: any) => (
                 <div
                     key={String(data.id)}
-                    className={`bg-white px-2 py-2 lg:px-6 lg:py-4 mb-5 rounded-2xl cursor-pointer ${open[String(data.id)] ? "shadow-md shadow-neutral-400" : ""
+                    className={`bg-white px-2 py-2 lg:px-6 lg:py-4 mb-5 rounded-2xl cursor-pointer group ${open[String(data.id)] ? "shadow-md shadow-neutral-400" : ""
                         }`}
                 >
                     <div onClick={() => toggleCard(String(data.id))} className="flex flex-row justify-between items-center">
                         <div className="flex flex-row gap-3 lg:gap-4 items-start">
                             <div
                                 className={`${open[String(data.id)] ? "rotate-0" : "-rotate-180"
-                                    } duration-500 bg-gray-200 rounded-full w-6 lg:w-9 h-6 lg:h-9 flex justify-center items-center group-hover:bg-[#723EEB] group-hover:stroke-white`}
+                                    } duration-500 bg-gray-200 rounded-full w-6 lg:w-9 h-6 lg:h-9 flex justify-center items-center text-black group-hover:bg-[#723EEB] group-hover:text-white`}
                             >
                                 <svg width="12" height="12" viewBox="0 0 16 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M8 0L7.37627 0.59661L0 7.97288L1.24746 9.22034L7.1322 3.33559V20.7458H8.8678V3.33559L14.7525 9.22034L16 7.97288L8.62373 0.59661L8 0Z" fill="black" />
+                                    <path d="M8 0L7.37627 0.59661L0 7.97288L1.24746 9.22034L7.1322 3.33559V20.7458H8.8678V3.33559L14.7525 9.22034L16 7.97288L8.62373 0.59661L8 0Z" fill="currentColor" />
                                 </svg>
                             </div>
                             <div className="lg:w-36 w-24">

@@ -4,8 +4,8 @@ import { useForm } from 'react-hook-form';
 import { LiaEyeSlashSolid, LiaEyeSolid } from 'react-icons/lia';
 import useMainWallet from '../hooks/useMainWallet';
 import useAxiosSecure from '../hooks/useAxiosSecure';
-import Swal from 'sweetalert2';
 import LoadingSpinner from '../common/Loading/LoadingSpinner';
+import toast from 'react-hot-toast';
 
 interface ModalProps {
     handleForgetPIN: (value: any) => void;
@@ -19,7 +19,7 @@ interface FormData {
 };
 
 const WithdrawForm: React.FC<ModalProps> = ({ handleForgetPIN }) => {
-    const [loading, setLoading] =  useState(false);
+    const [loading, setLoading] = useState(false);
     const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>();
     const [pin, setPin] = useState(false);
     const [mainWallet, refetch] = useMainWallet();
@@ -41,23 +41,11 @@ const WithdrawForm: React.FC<ModalProps> = ({ handleForgetPIN }) => {
             if (res.status === 200) {
                 reset();
                 refetch();
-                Swal.fire({
-                    position: "center",
-                    icon: "success",
-                    title: `${res?.data?.message}`,
-                    showConfirmButton: false,
-                    timer: 2000
-                });
+                toast.success(`${res?.data?.data}`);
             }
         } catch (error: any) {
             if (error) {
-                Swal.fire({
-                    position: "center",
-                    icon: "error",
-                    title: "There is something wrong",
-                    showConfirmButton: false,
-                    timer: 1500
-                });
+                toast.error("There is something wrong");
             }
         }
         setLoading(false);
@@ -149,7 +137,7 @@ const WithdrawForm: React.FC<ModalProps> = ({ handleForgetPIN }) => {
                 </div>
                 <div className='flex flex-row justify-end'>
                     <button
-                        onClick={()=>handleForgetPIN(mainWallet)}
+                        onClick={() => handleForgetPIN(mainWallet)}
                         className='text-[#723EEB] text-right  text-xs pt-1'>
                         Forget PIN?
                     </button>

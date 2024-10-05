@@ -2,11 +2,11 @@ import CardSubTitle from '@/components/common/cardSubTitle/CardSubTitle';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
 import Swal from 'sweetalert2';
 import Modal from '../common/Modal/Modal';
 import useAxiosSecure from '../hooks/useAxiosSecure';
 import LoadingSpin from './LoadingSpin';
+import toast from 'react-hot-toast';
 
 const TwoFactor = () => {
     const [isOpenEnableModal, setIsOpenEnableModal] = useState(false);

@@ -1,10 +1,10 @@
 'use client'
 import { ReactNode } from 'react';
-import { ToastContainer } from 'react-toastify';
 import useAuthContext from '../AuthContext/useAuthContext';
 import useNavigationContext from '../NavigationContext/useNavigationContext';
 import TheSidebar from '../shared/TheSidebar';
 import Image from 'next/image';
+import { Toaster } from 'react-hot-toast';
 
 interface LayoutProps {
     children: ReactNode;
@@ -18,15 +18,9 @@ const MainLayout = ({ children }: LayoutProps) => {
 
     if (loading) {
         return <div className="flex justify-center items-center h-[100vh]">
-            <Image src={'/loader.gif'} width={20} height={20} alt='Loader'/>
+            <Image src={'/loader.gif'} width={20} height={20} alt='Loader' />
         </div>
     };
-
-    // useEffect(() => {
-    //     if (user === null || !user) {
-    //         redirect('/auth/login');
-    //     }
-    // }, [user]);
 
     return (
         <div>
@@ -42,18 +36,58 @@ const MainLayout = ({ children }: LayoutProps) => {
                 <ToastContainer />
             </div> */}
             <div className='grid grid-cols-20 w-full bg-gradient-to-tl from-cyan-200 to-pink-200 h-auto text-black'>
-                <div className={`h-screen ${isNavOpen ? 'col-span-2 md:col-span-4 lg:col-span-3 5xl:col-span-2' : 'col-span-2 md:col-span-1'} w-full bg-white transition-all duration-300 ease-in-out overflow-auto`}>
+                <div className={`h-screen ${isNavOpen ? 'translate-x-0 col-span-2 md:col-span-4 lg:col-span-3 5xl:col-span-2' : '-translate-x-full lg:translate-x-0 md:col-span-1'} mx-auto w-full bg-white transition-all duration-300 ease-in-out overflow-auto`}>
                     <TheSidebar />
                 </div>
-                <div className={`h-screen ${isNavOpen ? 'col-span-18 md:col-span-16 lg:col-span-17 5xl:col-span-18' : 'col-span-18 md:col-span-19'} transition-all duration-300 ease-in-out w-full`}>
-                    <div className='h-full custom-scrollbar overflow-y-auto overflow-x-hidden py-2 lg:pl-4 pl-2 pr-2'>
+                <div className={`h-screen ${isNavOpen ? 'col-span-18 md:col-span-16 lg:col-span-17 5xl:col-span-18' : 'col-span-19 md:col-span-19'} transition-all duration-300 ease-in-out w-full `}>
+                    <div className='h-full custom-scrollbar overflow-y-auto overflow-x-hidden py-2 lg:pl-4 pl-2 pr-2 '>
                         {children}
                     </div>
                 </div>
-                <ToastContainer />
+                <Toaster />
             </div>
+            {/* <div className='grid grid-cols-20 w-full bg-gradient-to-tl from-cyan-200 to-pink-200 h-auto text-black'>
+               
+                <div
+                    className={`
+                    h-screen 
+                    ${isNavOpen ? 'translate-x-0 col-span-4 lg:col-span-3 5xl:col-span-2' : '-translate-x-full lg:translate-x-0 lg:col-span-1'}
+                    mx-auto 
+                    w-full 
+                    bg-white 
+                    transition-all 
+                    duration-300 
+                    ease-in-out 
+                    overflow-auto 
+                    border 
+                    border-red-600
+                    fixed lg:static
+                    top-0 left-0 
+                `}
+                >
+                    <TheSidebar />
+                </div>
+
+                
+                <div
+                    className={`
+                    h-screen
+                    ${isNavOpen ? 'col-span-16 lg:col-span-17 5xl:col-span-18' : 'col-span-20'}
+                    transition-all 
+                    duration-300 
+                    ease-in-out 
+                    w-full 
+                    ml-auto
+                `}
+                >
+                    <div className="h-full custom-scrollbar overflow-y-auto overflow-x-hidden py-2 lg:pl-4 pl-2 pr-2 border border-blue-600">
+                        {children}
+                    </div>
+                </div>
+            </div> */}
         </div>
     );
 };
 
 export default MainLayout;
+

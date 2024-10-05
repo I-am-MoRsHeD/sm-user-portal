@@ -11,14 +11,14 @@ const TheSidebar = () => {
     return (
         <div>
             {/* responsive */}
-            <div className={` duration-300 ease-in-out overflow-y-auto w-full ${isNavOpen ? "translate-x-0 " : ""} h-full  lg:hidden`} >
+            <div className={`duration-300 ease-in-out overflow-y-auto w-full ${isNavOpen ? "translate-x-0 " : "-translate-x-full"} h-full lg:hidden`} >
                 <div className='w-full'>
                     <div className='flex justify-center items-center w-full pt-3'>
                         {
                             isNavOpen ? <SideLogo /> : null
                         }
                     </div>
-                    <div className={`${isNavOpen ? 'mt-3 mb-3' : 'h-[100vh] flex flex-col items-center justify-center'} h-[81vh] overflow-y-auto duration-300`}>
+                    <div className={`${isNavOpen ? 'mt-3 mb-3' : ''} h-full overflow-y-auto duration-300`}>
                         <SideMenuList isNavOpen={isNavOpen}
                             toggleNavigation={toggleNavigation} />
                     </div>
@@ -32,7 +32,7 @@ const TheSidebar = () => {
                             isNavOpen ? <SideLogo /> : null
                         }
                     </div>
-                    <div className={`${isNavOpen ? 'mt-7' : 'h-[100vh] flex flex-col items-center justify-center'} h-[80vh] overflow-y-auto duration-300`}>
+                    <div className={`${isNavOpen ? 'mt-7' : 'mt-[90px]'} h-[80vh] overflow-y-auto duration-300`}>
                         <SideMenuList isNavOpen={isNavOpen}
                             toggleNavigation={toggleNavigation} />
                     </div>
