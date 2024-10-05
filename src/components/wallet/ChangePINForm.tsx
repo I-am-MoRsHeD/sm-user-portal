@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import useAxiosSecure from '../hooks/useAxiosSecure';
 import { toast, ToastContainer } from 'react-toastify';
 import Swal from 'sweetalert2';
+import LoadingSpinner from '../common/Loading/LoadingSpinner';
 
 interface ModalProps {
     handleForgetPIN: () => void;
@@ -21,7 +22,7 @@ interface FormData {
 };
 
 const ChangePINForm: React.FC<ModalProps> = ({ handleForgetPIN, mainWallet, subWalletData, setChangePINModalOpen }) => {
-
+    const [loading, setLoading] =  useState(false);
     const [pin, setPin] = useState(false);
     const axiosInstance = useAxiosSecure();
     const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>();
@@ -36,7 +37,7 @@ const ChangePINForm: React.FC<ModalProps> = ({ handleForgetPIN, mainWallet, subW
             oldPin,
             newPin,
         };
-
+        setLoading(true);
         try {
             if (newPin !== confirmNewPin) {
                 Swal.fire({
@@ -52,6 +53,7 @@ const ChangePINForm: React.FC<ModalProps> = ({ handleForgetPIN, mainWallet, subW
                 if (res?.status === 200) {
                     reset();
                     setChangePINModalOpen(false);
+                    setLoading(false);
                     Swal.fire({
                         position: "center",
                         icon: "success",
@@ -62,6 +64,7 @@ const ChangePINForm: React.FC<ModalProps> = ({ handleForgetPIN, mainWallet, subW
                 }
             }
         } catch (error: any) {
+            setLoading(false);
             if (error.response && error.response.status === 403) {
                 Swal.fire({
                     position: "center",
@@ -195,7 +198,9 @@ const ChangePINForm: React.FC<ModalProps> = ({ handleForgetPIN, mainWallet, subW
                         type="submit"
                         className="w-full bg-[#ea5455] text-white p-2 rounded text-[10px]"
                     >
-                        Confirm
+                        
+                         {loading ? <LoadingSpinner className='h-4 w-4' /> : 'Confirm'}
+                        {/* Confirm */}
                     </button>
                 </div>
             </form>

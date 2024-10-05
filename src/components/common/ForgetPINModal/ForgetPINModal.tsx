@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import ResetPinModal from '../ResetPinModal/ResetPinModal';
 import useAxiosSecure from '@/components/hooks/useAxiosSecure';
+import LoadingSpinner from '../Loading/LoadingSpinner';
 
 interface ModalProps {
     isForgetPINModalOpen: boolean;
@@ -18,7 +19,7 @@ interface FormData {
 }
 
 const ForgetPINModal: React.FC<ModalProps> = ({ setForgetPINModalOpen, isForgetPINModalOpen, mainWallet, subWalletData }) => {
-
+    const [loading, setLoading] = useState(false);
     const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm<FormData>();
     const [resetPinModalOpen, setResetPinModalOpen] = useState(false);
     const axiosInstance = useAxiosSecure();
@@ -35,16 +36,16 @@ const ForgetPINModal: React.FC<ModalProps> = ({ setForgetPINModalOpen, isForgetP
     }, [mainWallet, subWalletData, setValue]);
 
     const onSubmit = async (data: FormData) => {
-        const answer = data.answer;
 
         const securityQuestionInfo = {
             walletId: mainWallet?.id || subWalletData?.id,
             securityQuestion: data.question,
             answer: data.answer
         }
-        console.log(securityQuestionInfo);
+        setLoading(true);
+
         const res = await axiosInstance.post('/wallet/forgot-pin', securityQuestionInfo);
-        console.log(res)
+
         if (res.status === 200) {
             reset();
             setForgetPINModalOpen(false);
@@ -59,7 +60,7 @@ const ForgetPINModal: React.FC<ModalProps> = ({ setForgetPINModalOpen, isForgetP
                 timer: 1500
             });
         }
-
+        setLoading(false);
         // try {
         //     if (answer === mainWallet?.answer || answer === subWalletData?.answer) {
         //         reset();
@@ -127,7 +128,8 @@ const ForgetPINModal: React.FC<ModalProps> = ({ setForgetPINModalOpen, isForgetP
                                 <button
                                     type="submit"
                                     className="w-full bg-[#ea5455] text-white p-2 rounded text-[10px]">
-                                    Confirm
+                                        {loading ? <LoadingSpinner className='h-4 w-4' /> : 'Confirm'}
+                                    {/* Confirm */}
                                 </button>
                             </div>
                         </form>

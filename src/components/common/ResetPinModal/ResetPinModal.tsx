@@ -5,6 +5,7 @@ import Modal from '../Modal/Modal';
 import { LiaEyeSlashSolid, LiaEyeSolid } from 'react-icons/lia';
 import Swal from 'sweetalert2';
 import useAxiosSecure from '@/components/hooks/useAxiosSecure';
+import LoadingSpinner from '../Loading/LoadingSpinner';
 
 interface ModalProps {
     resetPinModalOpen: boolean;
@@ -18,7 +19,7 @@ interface FormData {
 };
 
 const ResetPinModal: React.FC<ModalProps> = ({ resetPinModalOpen, setResetPinModalOpen, mainWallet, subWalletData }) => {
-
+    const [loading, setLoading] =  useState(false);
     const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>();
     const [newPin, setNewPin] = useState(false);
     const [confirmNewPin, setConfirmNewPin] = useState(false);
@@ -34,7 +35,7 @@ const ResetPinModal: React.FC<ModalProps> = ({ resetPinModalOpen, setResetPinMod
             walletId: mainWallet?.id || subWalletData?.id,
             newPin,
         }
-
+        setLoading(true);
         try {
             if (newPin !== confirmNewPin) {
                 Swal.fire({
@@ -72,7 +73,7 @@ const ResetPinModal: React.FC<ModalProps> = ({ resetPinModalOpen, setResetPinMod
                 });
             }
         }
-
+        setLoading(false);
 
     }
 
@@ -153,7 +154,8 @@ const ResetPinModal: React.FC<ModalProps> = ({ resetPinModalOpen, setResetPinMod
                                 <button
                                     type="submit"
                                     className="w-full bg-[#ea5455] text-white p-2 rounded text-[10px]">
-                                    Confirm
+                                        {loading ? <LoadingSpinner className='h-4 w-4' /> : 'Confirm'}
+                                    {/* Confirm */}
                                 </button>
                             </div>
                         </form>

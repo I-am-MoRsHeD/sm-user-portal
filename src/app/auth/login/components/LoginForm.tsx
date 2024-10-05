@@ -13,6 +13,7 @@ import Link from "next/link";
 import useNavigationContext from "@/components/NavigationContext/useNavigationContext";
 import api from "@/components/hooks/useAxiosSecure";
 import Cookies from 'js-cookie';
+import LoadingSpinner from "@/components/common/Loading/LoadingSpinner";
 
 
 
@@ -27,6 +28,7 @@ const LoginForm = () => {
   const { user, setUser, loading, setLoading }: any = useAuthContext();
   const axiosInstance = useAxiosSecure();
   const router = useRouter();
+  // const [isLoading, setIsLoading] = useState(false);
 
   const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
   const [showPassword, setShowPassword] = useState(false);
@@ -145,7 +147,10 @@ const LoginForm = () => {
             type="submit"
             className="w-full md:px-4 py-2.5 bg-[#723EEB] text-white text-xs rounded-3xl hover:bg-[#6129e6] duration-500"
           >
-            Login
+            {
+              loading ? <LoadingSpinner className="h-4 w-4"/> : 'Login'
+            }
+            {/* Login */}
           </button>
         </div>
       </form>

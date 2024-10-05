@@ -4,6 +4,7 @@ import { ToastContainer } from 'react-toastify';
 import useAuthContext from '../AuthContext/useAuthContext';
 import useNavigationContext from '../NavigationContext/useNavigationContext';
 import TheSidebar from '../shared/TheSidebar';
+import Image from 'next/image';
 
 interface LayoutProps {
     children: ReactNode;
@@ -16,11 +17,10 @@ const MainLayout = ({ children }: LayoutProps) => {
     const user = typeof window !== "undefined" ? localStorage.getItem('user') : null;
 
     if (loading) {
-        console.log('hit');
-        return <div className="flex justify-center items-center h-[100vh] z-50 backdrop-brightness-90">
-            <h1>Loading .....</h1>
+        return <div className="flex justify-center items-center h-[100vh]">
+            <Image src={'/loader.gif'} width={20} height={20} alt='Loader'/>
         </div>
-    }
+    };
 
     // useEffect(() => {
     //     if (user === null || !user) {

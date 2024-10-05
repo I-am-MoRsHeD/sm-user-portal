@@ -1,36 +1,52 @@
 "use client";
 import React from "react"
 import { GoDotFill } from "react-icons/go";
-import {  RecipientsDataType } from "@/utils/data/recipientsData";
+import { RecipientsDataType } from "@/utils/data/recipientsData";
 import RecipientsTable from "./RecipientsTable";
 import { useState } from "react";
 import Link from "next/link";
 import useRecipients from "../hooks/useRecipients";
 import useDeleteRecipient from "../hooks/useDeleteRecipients";
+import { redirect } from "next/dist/server/api-utils";
+import { useRouter } from "next/navigation";
+import LoadingSpinner from "../common/Loading/LoadingSpinner";
 
 
 
 const RecipientsCards = () => {
     const [open, setOpen] = useState<Record<string, boolean>>({});
-    const [recipients, isPending] = useRecipients();
-    const {deleteRecipient, isDeleting} = useDeleteRecipient();
-   
+    const [recipients, , isPending, isLoading] = useRecipients();
+    const { deleteRecipient, isDeleting } = useDeleteRecipient();
+    const router = useRouter();
+
+    if (isLoading) {
+        return (
+            <div className="flex justify-center items-center h-[80vh]">
+                <LoadingSpinner className="h-4 w-4"/>
+            </div>
+        )
+    }
+
     const toggleCard = (id: string) => {
         setOpen((prevState) => ({
             ...prevState,
             [id]: !prevState[id],
         }));
     };
-    const handleDeleterecipient = (id:string) => {
+    const handleSingleRecipient = (id: any) => {
+        router.push(`/user/recipients/edit-recipient?id=${id}`)
+    }
+    const handleDeleterecipient = (id: string) => {
         deleteRecipient(id);
 
         console.log("delete recipient");
     }
+
     return (
         <>
-            {recipients.map((data : any) => (
+            {recipients.map((data: any) => (
                 <div
-                    key={String(data.id)} 
+                    key={String(data.id)}
                     className={`bg-white px-2 py-2 lg:px-6 lg:py-4 mb-5 rounded-2xl cursor-pointer ${open[String(data.id)] ? "shadow-md shadow-neutral-400" : ""
                         }`}
                 >
@@ -38,11 +54,11 @@ const RecipientsCards = () => {
                         <div className="flex flex-row gap-3 lg:gap-4 items-start">
                             <div
                                 className={`${open[String(data.id)] ? "rotate-0" : "-rotate-180"
-                                    } duration-500 bg-gray-200 rounded-full w-6 lg:w-9 h-6 lg:h-9 flex justify-center items-center hover:bg-[#723EEB] hover:stroke-white`}
+                                    } duration-500 bg-gray-200 rounded-full w-6 lg:w-9 h-6 lg:h-9 flex justify-center items-center group-hover:bg-[#723EEB] group-hover:stroke-white`}
                             >
-                                 <svg width="12" height="12" viewBox="0 0 16 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M8 0L7.37627 0.59661L0 7.97288L1.24746 9.22034L7.1322 3.33559V20.7458H8.8678V3.33559L14.7525 9.22034L16 7.97288L8.62373 0.59661L8 0Z" fill="black" />
-            </svg>
+                                <svg width="12" height="12" viewBox="0 0 16 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M8 0L7.37627 0.59661L0 7.97288L1.24746 9.22034L7.1322 3.33559V20.7458H8.8678V3.33559L14.7525 9.22034L16 7.97288L8.62373 0.59661L8 0Z" fill="black" />
+                                </svg>
                             </div>
                             <div className="lg:w-36 w-24">
                                 <h3 className="text-[10px] lg:text-base font-bold">{data.fullName}</h3>
@@ -55,12 +71,12 @@ const RecipientsCards = () => {
                             <div>
                                 <h3 className="text-[10px] lg:text-base font-semibold text-[#723EEB]">
                                     ID: {data.recipientId}
-                                     {/* Convert recipientsId to string */}
+                                    {/* Convert recipientsId to string */}
                                 </h3>
                             </div>
                         </div>
                         <div className="flex flex-row gap-2">
-                            <Link href="/user/recipients/edit-recipient" className="bg-[#723EEB] rounded-full flex justify-center items-center w-6 lg:w-12 h-6">
+                            <button onClick={() => handleSingleRecipient(data?.id)} className="bg-[#723EEB] rounded-full flex justify-center items-center w-6 lg:w-12 h-6">
                                 <svg
                                     width="10"
                                     height="10"
@@ -73,8 +89,22 @@ const RecipientsCards = () => {
                                         fill="white"
                                     />
                                 </svg>
-                            </Link>
-                            <div onClick= {() =>handleDeleterecipient(data?.id)} className="bg-red-600 rounded-full flex justify-center items-center w-6 lg:w-12 h-6">
+                            </button>
+                            {/* <Link href="/user/recipients/edit-recipient" className="bg-[#723EEB] rounded-full flex justify-center items-center w-6 lg:w-12 h-6">
+                                <svg
+                                    width="10"
+                                    height="10"
+                                    viewBox="0 0 10 10"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        d="M8.65388 -0.00390625C8.30888 -0.00390625 7.97356 0.134737 7.7124 0.3959L7.67371 0.434591L7.41577 0.189549L0.606158 6.99916L0.580364 7.12813L0.12897 9.398L0 10.0042L0.606158 9.87518L2.87603 9.42379L3.005 9.398L9.81461 2.58839L9.56956 2.34334L9.59536 2.31755L9.60825 2.29176C10.1306 1.76943 10.1306 0.918228 9.60825 0.3959C9.34709 0.134737 8.99887 -0.00390625 8.65388 -0.00390625ZM8.65388 0.808604C8.78285 0.808604 8.91827 0.86664 9.02789 0.976265C9.24875 1.19713 9.24875 1.49053 9.02789 1.71139L8.9892 1.75008L8.25407 1.01496L8.29276 0.976265C8.40239 0.86664 8.52491 0.808604 8.65388 0.808604ZM7.42866 1.35028L8.65388 2.57549L8.06062 3.18165L6.82251 1.94354L7.42866 1.35028ZM6.25504 2.5368L7.46735 3.74912L3.15976 8.06961L2.9921 7.32158L2.94051 7.06364L2.68257 7.01205L1.93455 6.84439L6.25504 2.5368ZM1.34129 7.55373L2.24408 7.76008L2.45043 8.66287L1.61212 8.83053L1.17363 8.39203L1.34129 7.55373Z"
+                                        fill="white"
+                                    />
+                                </svg>
+                            </Link> */}
+                            <div onClick={() => handleDeleterecipient(data?.id)} className="bg-red-600 rounded-full flex justify-center items-center w-6 lg:w-12 h-6">
                                 <svg
                                     width="10"
                                     height="10"

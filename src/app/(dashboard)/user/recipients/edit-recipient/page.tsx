@@ -6,8 +6,15 @@ import Link from 'next/link';
 
 import Topbar from '@/components/Topbar';
 import UserProfile from '../../../../../../public/user-avater.png';
+import { useRouter, useSearchParams } from 'next/navigation';
+import useSingleRecipient from '@/components/hooks/useSingleRecipient';
 
 const EditRecipientPage = () => {
+    const searchParams = useSearchParams();
+    const id = searchParams.get('id');
+    const [singleRecipient] : any = useSingleRecipient(id as string | null);
+    console.log(singleRecipient);
+
     return (
         <div>
             <Topbar>Edit Recipient</Topbar>

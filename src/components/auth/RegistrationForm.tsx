@@ -6,6 +6,8 @@ import { SocialLogin } from "@/app/auth/login/components";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import 'react-toastify/dist/ReactToastify.css';
 import { toast } from "react-toastify";
+import useAuthContext from "../AuthContext/useAuthContext";
+import LoadingSpinner from "../common/Loading/LoadingSpinner";
 
 interface FormData {
   fullName: string;
@@ -17,6 +19,7 @@ interface FormData {
 const RegistrationForm = () => {
   const [isChecked, setIsChecked] = useState(false); // State for checkbox
   const axiosIntance = useAxiosSecure();
+  const { loading, setLoading }: any = useAuthContext();
   const baseURL = process.env.BASE_URL;
 
   const {
@@ -26,7 +29,7 @@ const RegistrationForm = () => {
   } = useForm<FormData>();
 
   const onSubmit = async (data: FormData) => {
-
+    setLoading(true);
     if (data.password !== data.repassword) {
       console.log("Please fill the correct password");
     } else {
@@ -40,6 +43,7 @@ const RegistrationForm = () => {
       if (res.status === 200) {
         console.log(res.status)
         toast.success("You have successfully registered");
+        setLoading(false);
       }
     };
 
@@ -249,7 +253,7 @@ const RegistrationForm = () => {
           <button
             type="submit"
             className="w-full md:px-4 py-2.5 bg-[#723EEB] text-white text-xs rounded-3xl hover:bg-[#6129e6] duration-500">
-            Register
+            {loading ? <LoadingSpinner className="h-4 w-4" /> : 'Register'}
           </button>
         </div>
 
