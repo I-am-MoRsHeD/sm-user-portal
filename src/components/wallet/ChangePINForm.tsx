@@ -4,8 +4,8 @@ import ForgetPINModal from '../common/ForgetPINModal/ForgetPINModal';
 import { FaEye, FaEyeSlash } from 'react-icons/fa6';
 import { useForm } from 'react-hook-form';
 import useAxiosSecure from '../hooks/useAxiosSecure';
-import { toast, ToastContainer } from 'react-toastify';
-import Swal from 'sweetalert2';
+import LoadingSpinner from '../common/Loading/LoadingSpinner';
+import toast from 'react-hot-toast';
 
 interface ModalProps {
     handleForgetPIN: () => void;
@@ -21,7 +21,7 @@ interface FormData {
 };
 
 const ChangePINForm: React.FC<ModalProps> = ({ handleForgetPIN, mainWallet, subWalletData, setChangePINModalOpen }) => {
-
+    const [loading, setLoading] = useState(false);
     const [pin, setPin] = useState(false);
     const axiosInstance = useAxiosSecure();
     const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>();
@@ -36,49 +36,24 @@ const ChangePINForm: React.FC<ModalProps> = ({ handleForgetPIN, mainWallet, subW
             oldPin,
             newPin,
         };
-
+        setLoading(true);
         try {
             if (newPin !== confirmNewPin) {
-                Swal.fire({
-                    position: "center",
-                    icon: "error",
-                    title: "New Pin doesn't match",
-                    showConfirmButton: false,
-                    timer: 1500
-                });
+                toast.error("New Pin doesn't match");
             } else {
                 const res = await axiosInstance.put('/wallet/change-pin', changedPinInfo)
 
                 if (res?.status === 200) {
                     reset();
                     setChangePINModalOpen(false);
-                    Swal.fire({
-                        position: "center",
-                        icon: "success",
-                        title: "Pin has been changed",
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
+                    setLoading(false);
+                    toast.success("Pin successfully changed");
                 }
             }
         } catch (error: any) {
-            if (error.response && error.response.status === 403) {
-                Swal.fire({
-                    position: "center",
-                    icon: "error",
-                    title: "Current Pin is wrong",
-                    showConfirmButton: false,
-                    timer: 1500
-                });
-            }
-            else {
-                Swal.fire({
-                    position: "center",
-                    icon: "error",
-                    title: "Current Pin is wrong",
-                    showConfirmButton: false,
-                    timer: 1500
-                });
+            setLoading(false);
+            if (error) {
+                toast.error("There is something wrong");
             }
         }
     }
@@ -195,7 +170,9 @@ const ChangePINForm: React.FC<ModalProps> = ({ handleForgetPIN, mainWallet, subW
                         type="submit"
                         className="w-full bg-[#ea5455] text-white p-2 rounded text-[10px]"
                     >
-                        Confirm
+
+                        {loading ? <LoadingSpinner className='h-4 w-4' /> : 'Confirm'}
+                        {/* Confirm */}
                     </button>
                 </div>
             </form>

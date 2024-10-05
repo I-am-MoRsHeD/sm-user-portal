@@ -4,8 +4,8 @@ import Link from 'next/link';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import React, { Suspense, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import { LiaEyeSlashSolid, LiaEyeSolid } from 'react-icons/lia';
-import Swal from 'sweetalert2';
 
 interface FormData {
     newPassword: string;
@@ -33,31 +33,20 @@ const Page = () => {
 
         try {
             if (password !== confirmPassword) {
-                Swal.fire({
-                    position: "center",
-                    icon: "error",
-                    title: "New Password doesn't match",
-                    showConfirmButton: false,
-                    timer: 1500
-                });
+                toast.error("New Password doesn't match");
             }
             else {
                 const res = await axios.post(`https://diasporex-api.vercel.app/api/v1/auth/reset-password?token=${token}`, changedPasswordInfo);
                 if (res?.status === 200) {
                     reset();
 
-                    Swal.fire({
-                        position: "center",
-                        icon: "success",
-                        title: "Password has been reseted",
-                        showConfirmButton: false,
-                        timer: 2000
-                    });
+                    toast.error("Password has been reseted");
                     router.push('/auth/login');
                 }
             }
         } catch (error: any) {
             console.log(error);
+            toast.error("There is something wrong");
         }
     }
 

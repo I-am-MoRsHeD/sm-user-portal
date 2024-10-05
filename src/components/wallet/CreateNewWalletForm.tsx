@@ -5,6 +5,8 @@ import useAxiosSecure from '../hooks/useAxiosSecure';
 import useCurrency from '../hooks/useCurrency';
 import useMainWallet from '../hooks/useMainWallet';
 import useSubWallets from '../hooks/useSubWallets';
+import LoadingSpinner from '../common/Loading/LoadingSpinner';
+import toast from 'react-hot-toast';
 
 interface FormData {
     walletName: string;
@@ -16,47 +18,59 @@ interface FormData {
 }
 
 const CreateNewWalletForm = () => {
+    const [loading, setLoading] =  useState(false);
     const [currency] = useCurrency();
     const [mainWallet] = useMainWallet();
     const [, refetch] = useSubWallets();
-    const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
+    const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>();
     const [pin, setPin] = useState(false);
     const axiosInstance = useAxiosSecure();
 
 
     const onSubmit = async (data: any) => {
         const currencyId = await currency.filter((c: any) => c.name === data.currency);
-        if (!mainWallet?.userId) {
-            const walletInfo = {
-                currencyId: currencyId[0]?.id,
-                category: 'PRIMARY',
-                walletEmail: data?.email,
-                walletName: data?.walletName,
-                securityQuestion: data?.securityQuestion,
-                answer: data?.answer,
-                pinNumber: parseInt(data?.newPin)
+        setLoading(true);
+        try {
+            if (!mainWallet?.userId) {
+                const walletInfo = {
+                    currencyId: currencyId[0]?.id,
+                    category: 'PRIMARY',
+                    walletEmail: data?.email,
+                    walletName: data?.walletName,
+                    securityQuestion: data?.securityQuestion,
+                    answer: data?.answer,
+                    pinNumber: parseInt(data?.newPin)
+                };
+                const res = await axiosInstance.post('/wallet/create-wallet', walletInfo)
+                if (res.status === 200) {
+                    setLoading(false);
+                    reset();
+                    toast.success('Wallet has been created successfully');
+                }
+            } else {
+                const walletInfo = {
+                    currencyId: currencyId[0]?.id,
+                    category: 'SECONDARY',
+                    walletEmail: data?.email,
+                    walletName: data?.walletName,
+                    securityQuestion: data?.securityQuestion,
+                    answer: data?.answer,
+                    pinNumber: parseInt(data?.newPin)
+                };
+                const res = await axiosInstance.post('/wallet/create-wallet', walletInfo);
+                console.log(res);
+                if (res.status === 200) {
+                    setLoading(false);
+                    refetch();
+                    reset();
+                    toast.success('Sub Wallet has been created successfully');
+                }
             };
-            const res = await axiosInstance.post('/wallet/create-wallet', walletInfo)
-            if (res.status === 200) {
-                // toast('Wallet has been created successfully');
+        } catch (error: any) {
+            if (error) {
+                toast.error("There is something wrong");
             }
-        } else {
-            const walletInfo = {
-                currencyId: currencyId[0]?.id,
-                category: 'SECONDARY',
-                walletEmail: data?.email,
-                walletName: data?.walletName,
-                securityQuestion: data?.securityQuestion,
-                answer: data?.answer,
-                pinNumber: parseInt(data?.newPin)
-            };
-            const res = await axiosInstance.post('/wallet/create-wallet', walletInfo)
-            console.log(res);
-            if (res.status === 200) {
-                refetch();
-                // toast('Sub Wallet has been created successfully');
-            }
-        };
+        }
     }
 
     return (
@@ -179,7 +193,10 @@ const CreateNewWalletForm = () => {
                         type="submit"
                         className="mt-1 w-full bg-[#723EEB] text-white cursor-pointer px-1 py-[6px] rounded text-[10px] sm:text-sm"
                     >
-                        Create Now
+                        {
+                            loading ? <LoadingSpinner className='h-4 w-4' /> : 'Create Now'
+                        }
+
                     </button>
                 </div>
             </form>

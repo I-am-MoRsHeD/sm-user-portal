@@ -6,6 +6,7 @@ import EditWalletModal from './EditWalletModal';
 import ForgetPINModal from '../common/ForgetPINModal/ForgetPINModal';
 import Link from 'next/link';
 import useCurrency from '../hooks/useCurrency';
+import LoadingSpinner from '../common/Loading/LoadingSpinner';
 
 interface ModalProps {
     handleWithdrawIntoWallet: () => void;
@@ -16,6 +17,7 @@ interface ModalProps {
 }
 
 const SubWalletModalForm: React.FC<ModalProps> = ({ handleWithdrawIntoWallet, handleChangePIN, handleForgetPIN, handleEditWallet, subWalletData }) => {
+    const [loading, setLoading] = useState(false);
     const [currency] = useCurrency();
 
     return (
@@ -141,9 +143,16 @@ const SubWalletModalForm: React.FC<ModalProps> = ({ handleWithdrawIntoWallet, ha
                         Forget PIN?
                     </button>
                 </div>
-                <div className='w-full mx-auto py-3'>
-                    <input className='w-full bg-[#723EEB] text-white p-2 rounded text-[10px]' type="submit" value="Confirm" />
+                <div className="w-full mx-auto py-3">
+                    <button
+                        type="submit"
+                        className="w-full bg-[#723EEB] text-white p-2 rounded text-[10px]">
+                        {loading ? <LoadingSpinner className='h-4 w-4' /> : 'Confirm'}
+                    </button>
                 </div>
+                {/* <div className='w-full mx-auto py-3'>
+                    <input className='w-full bg-[#723EEB] text-white p-2 rounded text-[10px]' type="submit" value="Confirm" />
+                </div> */}
             </div>
         </div>
     );
