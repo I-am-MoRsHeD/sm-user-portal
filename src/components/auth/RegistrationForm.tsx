@@ -4,8 +4,11 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { SocialLogin } from "@/app/auth/login/components";
 import useAxiosSecure from "../hooks/useAxiosSecure";
-import 'react-toastify/dist/ReactToastify.css';
-import { toast } from "react-toastify";
+import useAuthContext from "../AuthContext/useAuthContext";
+import LoadingSpinner from "../common/Loading/LoadingSpinner";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+
 
 interface FormData {
   fullName: string;
@@ -17,6 +20,7 @@ interface FormData {
 const RegistrationForm = () => {
   const [isChecked, setIsChecked] = useState(false); // State for checkbox
   const axiosIntance = useAxiosSecure();
+  const { loading, setLoading }: any = useAuthContext();
   const baseURL = process.env.BASE_URL;
 
   const {
@@ -26,22 +30,28 @@ const RegistrationForm = () => {
   } = useForm<FormData>();
 
   const onSubmit = async (data: FormData) => {
-
-    if (data.password !== data.repassword) {
-      console.log("Please fill the correct password");
-    } else {
-      const userInfo = {
-        name: data.fullName,
-        email: data.email,
-        password: data.password,
+    setLoading(true);
+    try {
+      if (data.password !== data.repassword) {
+        console.log("Please fill the correct password");
+      } else {
+        const userInfo = {
+          name: data.fullName,
+          email: data.email,
+          password: data.password,
+        };
+        const res = await axiosIntance.post('/auth/register', userInfo);
+        if (res.status === 200) {
+          console.log(res.status)
+          toast.success("Please Check Your mail");
+          setLoading(false);
+          // router.push('/auth/verify-email')
+        }
       };
-      const res = await axiosIntance.post('/auth/register', userInfo);
-      console.log(res, userInfo);
-      if (res.status === 200) {
-        console.log(res.status)
-        toast.success("You have successfully registered");
-      }
-    };
+    } catch (error : any) {
+      setLoading(false);
+      toast.error("There is something wrong");
+    }
 
   };
 
@@ -249,7 +259,7 @@ const RegistrationForm = () => {
           <button
             type="submit"
             className="w-full md:px-4 py-2.5 bg-[#723EEB] text-white text-xs rounded-3xl hover:bg-[#6129e6] duration-500">
-            Register
+            {loading ? <LoadingSpinner className="h-4 w-4" /> : 'Register'}
           </button>
         </div>
 

@@ -4,8 +4,9 @@ import { useForm } from "react-hook-form";
 import Topbar from "../Topbar";
 import CardSubTitle from "../common/cardSubTitle/CardSubTitle";
 import { CreateRecipient } from "../hooks/recipientApi";
-import { toast, ToastContainer } from "react-toastify";
 import useRecipient from "../hooks/useRecipientsTable";
+import toast from "react-hot-toast";
+import useCurrency from "../hooks/useCurrency";
 
 
 interface FormValues {
@@ -23,7 +24,7 @@ const CreateRecipientForm: React.FC = () => {
   const [searchError, setSearchError] = useState<string>("");
   const [submitError, setSubmitError] = useState<string>("");
   const { recipient, refetch, isError } = useRecipient();
-
+  const [currency] = useCurrency();
 
 
   const {
@@ -36,7 +37,7 @@ const CreateRecipientForm: React.FC = () => {
 
 
   const onSubmit = async (data: FormValues) => {
-    console.log("Here is the input....",data);
+
     try {
       setSubmitError("");
       const createdRecipient = await CreateRecipient(data);
@@ -44,7 +45,7 @@ const CreateRecipientForm: React.FC = () => {
       toast.success("Recipient created successfully");
       reset();
     } catch (error) {
-      console.error("Error creating recipient:", error);
+      toast.success("There is something wrong");
       if (error instanceof Error && error.message.includes("Token not found")) {
         setSubmitError("Authentication failed. Please log in again.");
       } else {
@@ -137,13 +138,13 @@ const CreateRecipientForm: React.FC = () => {
                 {...register("country", { required: "Country is required" })}
                 className={`w-full px-3 py-2 border ${errors.country ? "border-red-500" : "border-gray-300"} outline-none rounded-xl`}
               >   <option value="">Select Country</option>
-              {
-                
-                recipient?.map(country => (
-                  <option key={country.id} value={country.name}>{country.name}</option>
-                )) 
-              }
-                
+                {
+
+                  currency?.map((currency : any) => (
+                    <option key={currency.id} value={currency.name}>{currency.name}</option>
+                  ))
+                }
+
               </select>
               {errors.country && <div className="text-red-500 text-xs mt-1">{errors.country.message}</div>}
             </div>

@@ -2,10 +2,9 @@
 import React, { useState } from 'react';
 import useNavigationContext from '../NavigationContext/useNavigationContext';
 import { useForm } from 'react-hook-form';
-import axios from 'axios';
-import { toast } from 'react-toastify';
 import Link from 'next/link';
-import Swal from 'sweetalert2';
+import toast from 'react-hot-toast';
+import LoadingSpinner from '../common/Loading/LoadingSpinner';
 
 interface FormData {
     email: string;
@@ -37,23 +36,17 @@ const ForgetPassword = () => {
                 console.log(res);
 
                 if (res?.status === 200) {
-                    // toast.success('Password reset link sent to your email');
                     setLoading(false);
-                    Swal.fire({
-                        position: "center",
-                        icon: "success",
-                        title: "Please check your mail",
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
+                    toast.success('Password reset link sent to your email');
                     reset();
                 } else {
-                    // toast.error('Something went wrong');
+                    toast.error("There is something wrong");
                     setLoading(false);
                 }
             } catch (err: Error | any) {
                 setLoading(false);
-                toast.error('Something went wrong');
+                toast.error("There is something wrong");
+                setError('Please provide a valid email');
             }
         }
     }
@@ -107,7 +100,7 @@ const ForgetPassword = () => {
                         type="submit"
                         className="w-full md:px-4 py-2.5 bg-[#723EEB] text-white text-xs rounded-3xl hover:bg-[#6129e6] duration-500"
                     >
-                        Send Link
+                        {loading ? <LoadingSpinner className='h-4 w-4' /> : 'Send Link'}
                     </button>
                 </div>
                 <div className="text-center flex justify-center mb-4 items-center gap-1">

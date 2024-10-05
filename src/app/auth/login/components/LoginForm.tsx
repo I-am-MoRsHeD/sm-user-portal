@@ -5,14 +5,14 @@ import { FaEye, FaEyeSlash } from "react-icons/fa6";
 import SocialLogin from "./SocialLogin";
 import useAxiosSecure from "@/components/hooks/useAxiosSecure";
 
-import 'react-toastify/dist/ReactToastify.css';
-import { toast, ToastContainer } from "react-toastify";
 import { useRouter } from "next/navigation";
 import useAuthContext from "@/components/AuthContext/useAuthContext";
 import Link from "next/link";
 import useNavigationContext from "@/components/NavigationContext/useNavigationContext";
 import api from "@/components/hooks/useAxiosSecure";
 import Cookies from 'js-cookie';
+import LoadingSpinner from "@/components/common/Loading/LoadingSpinner";
+import toast from "react-hot-toast";
 
 
 
@@ -27,6 +27,7 @@ const LoginForm = () => {
   const { user, setUser, loading, setLoading }: any = useAuthContext();
   const axiosInstance = useAxiosSecure();
   const router = useRouter();
+  // const [isLoading, setIsLoading] = useState(false);
 
   const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
   const [showPassword, setShowPassword] = useState(false);
@@ -54,12 +55,9 @@ const LoginForm = () => {
         const { accessToken, refreshToken } = res?.data?.data;
         Cookies.set('accessToken', accessToken);
         Cookies.set('refreshToken', refreshToken);
-
         
-        // toast.success(res?.data?.data.message);
-        toast("You have successfully logged in");
-
         router.push('/user/dashboard');
+        toast.success("You have successfully logged in");
         setLoading(false)
 
         // window.location.href = '/user/dashboard';
@@ -71,6 +69,8 @@ const LoginForm = () => {
 
       }
     } catch (error: any) {
+      setLoading(false);
+      toast.error("There is something error");
       if (error.response && error.response.status === 403) {
         setServerError("Invalid email or password");
       }
@@ -145,7 +145,10 @@ const LoginForm = () => {
             type="submit"
             className="w-full md:px-4 py-2.5 bg-[#723EEB] text-white text-xs rounded-3xl hover:bg-[#6129e6] duration-500"
           >
-            Login
+            {
+              loading ? <LoadingSpinner className="h-4 w-4"/> : 'Login'
+            }
+            {/* Login */}
           </button>
         </div>
       </form>

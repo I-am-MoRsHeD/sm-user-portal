@@ -1,3 +1,4 @@
+import { Toaster } from 'react-hot-toast';
 import '.././../styles/globals.css';
 
 export const metadata = {
@@ -12,9 +13,10 @@ export default function RootLayout({
 }) {
   return (
     <section>
-      
+
       {children}
+      <Toaster />
     </section>
-  
+
   );
 }
