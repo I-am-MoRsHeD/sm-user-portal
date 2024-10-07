@@ -9,8 +9,8 @@ const Page = () => {
         <div className="bg-gradient-to-r from-pink-200 to-blue-200 min-h-screen w-full flex items-center justify-center">
             <div className="px-2 lg:px-4 sm:container">
                 <div className="lg:flex items-center justify-center gap-10">
-                    <div className="hidden lg:block">
-                        <div className="lg:block">
+                    <div className="hidden lg:block w-full lg:w-[40%]">
+                        <div className="lg:block ">
                             <Image
                                 src="/auth/register_bg.png"
                                 width={593}
@@ -21,7 +21,7 @@ const Page = () => {
                         </div>
                     </div>
                     {/* Registration Form Section */}
-                    <div className="w-full lg:w-[50%]">
+                    <div className="w-full lg:w-[40%]">
                         <RegistrationForm />
                     </div>
                 </div>

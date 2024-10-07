@@ -8,6 +8,7 @@ import useAuthContext from "../AuthContext/useAuthContext";
 import LoadingSpinner from "../common/Loading/LoadingSpinner";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { LiaEyeSlashSolid, LiaEyeSolid } from "react-icons/lia";
 
 
 interface FormData {
@@ -21,6 +22,8 @@ const RegistrationForm = () => {
   const [isChecked, setIsChecked] = useState(false); // State for checkbox
   const axiosIntance = useAxiosSecure();
   const { loading, setLoading }: any = useAuthContext();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showRePassword, setShowRePassword] = useState(false);
   const baseURL = process.env.BASE_URL;
 
   const {
@@ -48,7 +51,7 @@ const RegistrationForm = () => {
           // router.push('/auth/verify-email')
         }
       };
-    } catch (error : any) {
+    } catch (error: any) {
       setLoading(false);
       toast.error("There is something wrong");
     }
@@ -61,8 +64,8 @@ const RegistrationForm = () => {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-lg px-2 lg:px-6 py-6 my-5 lg:my-10 w-full">
-      <h3 className="text-base font-semibold text-black">Register</h3>
+    <div className="bg-white rounded-xl shadow-lg px-2 lg:px-6 py-6 my-5 w-full">
+      <h3 className="text-black text-sm font-medium">Register</h3>
 
       <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
         {/* Full Name Field */}
@@ -73,7 +76,7 @@ const RegistrationForm = () => {
               required: "Name is required",
               minLength: 3
             })}
-            className={`border border-gray-300 text-gray-900 focus:outline-none text-xs rounded-full block w-full py-2.5 px-4 dark:border-gray-600 bg-white mt-1 ${errors.fullName ? "border-red-500" : "border-gray-300"
+            className={`border border-gray-300 text-gray-900 focus:outline-none text-xs rounded-xl block w-full py-2.5 px-4 dark:border-gray-600 bg-white mt-1 ${errors.fullName ? "border-red-500" : "border-gray-300"
               }`}
             placeholder="Enter Full Name"
           />
@@ -99,7 +102,7 @@ const RegistrationForm = () => {
                 message: "Enter a valid email address",
               },
             })}
-            className={`border border-gray-300 text-gray-900 focus:outline-none text-xs rounded-full block w-full py-2.5 px-4 dark:border-gray-600 bg-white mt-1 ${errors.email ? "border-red-500" : "border-gray-300"
+            className={`border border-gray-300 text-gray-900 focus:outline-none text-xs rounded-xl block w-full py-2.5 px-4 dark:border-gray-600 bg-white mt-1 ${errors.email ? "border-red-500" : "border-gray-300"
               }`}
             placeholder="Enter Email Address"
           />
@@ -115,17 +118,24 @@ const RegistrationForm = () => {
           <div className="w-full">
             <div className="relative">
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 {...register("password", {
                   required: "Password is required",
                   minLength: 8,
                   maxLength: 20,
                   pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/
                 })}
-                className={`border border-gray-300 text-gray-900 focus:outline-none text-xs rounded-full block w-full py-2.5 px-4 dark:border-gray-600 bg-white mt-1 ${errors.password ? "border-red-500" : "border-gray-300"
+                className={`border border-gray-300 text-gray-900 focus:outline-none text-xs rounded-xl block w-full py-2.5 px-4 dark:border-gray-600 bg-white mt-1 ${errors.password ? "border-red-500" : "border-gray-300"
                   }`}
                 placeholder="Enter Password..."
               />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute top-3 right-4 text-xl"
+              >
+                {showPassword ? <LiaEyeSolid className='text-base' /> : <LiaEyeSlashSolid className='text-base' />}
+              </button>
             </div>
             {errors.password?.type == "required" && (
               <span className='text-red-600 text-xs -mt-5'>Password is required</span>
@@ -144,17 +154,24 @@ const RegistrationForm = () => {
           <div className="w-full">
             <div className="relative">
               <input
-                type="password"
+                type={showRePassword ? "text" : "password"}
                 {...register("repassword", {
                   required: "Password is required",
                   minLength: 8,
                   maxLength: 20,
                   pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/
                 })}
-                className={`border border-gray-300 text-gray-900 focus:outline-none text-xs rounded-full block w-full py-2.5 px-4 dark:border-gray-600 bg-white mt-1 ${errors.repassword ? "border-red-500" : "border-gray-300"
+                className={`border border-gray-300 text-gray-900 focus:outline-none text-xs rounded-xl block w-full py-2.5 px-4 dark:border-gray-600 bg-white mt-1 ${errors.repassword ? "border-red-500" : "border-gray-300"
                   }`}
                 placeholder="Re-enter Password..."
               />
+              <button
+                type="button"
+                onClick={() => setShowRePassword(!showRePassword)}
+                className="absolute top-3 right-4 text-xl"
+              >
+                {showRePassword ? <LiaEyeSolid className='text-base' /> : <LiaEyeSlashSolid className='text-base' />}
+              </button>
             </div>
             {errors.repassword?.type == "required" && (
               <span className='text-red-600 text-xs -mt-5'>Password is required</span>
@@ -171,7 +188,7 @@ const RegistrationForm = () => {
           </div>
         </div>
 
-        <div className="border-[1.5px] border-[#9747FF] w-full p-2 rounded-full">
+        <div className="border-[1.5px] border-[#9747FF] w-full p-2 rounded-xl">
           <h4 className="text-[#9747FF] text-xs px-2">
             You Are Referred By Abdul Karim
           </h4>
@@ -262,8 +279,6 @@ const RegistrationForm = () => {
             {loading ? <LoadingSpinner className="h-4 w-4" /> : 'Register'}
           </button>
         </div>
-
-
         <SocialLogin />
       </form>
     </div>

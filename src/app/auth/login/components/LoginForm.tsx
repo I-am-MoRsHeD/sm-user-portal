@@ -13,6 +13,7 @@ import api from "@/components/hooks/useAxiosSecure";
 import Cookies from 'js-cookie';
 import LoadingSpinner from "@/components/common/Loading/LoadingSpinner";
 import toast from "react-hot-toast";
+import { LiaEyeSlashSolid, LiaEyeSolid } from "react-icons/lia";
 
 
 
@@ -121,7 +122,7 @@ const LoginForm = () => {
               onClick={togglePasswordVisibility}
               className="absolute top-3 right-4 text-xl"
             >
-              {showPassword ? <FaEye /> : <FaEyeSlash />}
+              {showPassword ? <LiaEyeSolid className='text-base' /> : <LiaEyeSlashSolid className='text-base' />}
             </button>
           </div>
 
