@@ -40,7 +40,7 @@ const Page = () => {
                 if (res?.status === 200) {
                     reset();
 
-                    toast.error("Password has been reseted");
+                    toast.success("Password has been reseted");
                     router.push('/auth/login');
                 }
             }

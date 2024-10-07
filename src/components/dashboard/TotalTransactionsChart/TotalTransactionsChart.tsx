@@ -197,13 +197,13 @@ const TotalTransactionsChart = () => {
             <div className="bg-white pt-6 rounded-xl">
                 <h1 className="font-semibold pl-4">Total Transaction Chart</h1>
                 <div className="hidden lg:block">
-                    <ResponsiveContainer width="99%" height="50%" aspect={4}>
+                    <ResponsiveContainer width="99%" height="100%" aspect={2.3}>
                         <LineChart margin={{
                             top: 40,
                             right: 10,
                             left: -30,
                             bottom: -0,
-                        }} width={1000} height={300} data={data}>
+                        }} width={1000} height={500} data={data}>
 
                             <CartesianGrid strokeDasharray="0 0" y={Infinity} />
                             <XAxis dataKey="name" axisLine={false} className="text-[8px]" axisType="radiusAxis" />
