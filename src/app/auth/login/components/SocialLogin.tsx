@@ -45,7 +45,7 @@ const SocialLogin = () => {
       </button>
       {/* </div> */}
       {route === "/auth/login" ? (
-        <div className="text-center  flex justify-center my-4 items-center gap-1">
+        <div className="text-center flex justify-center mt-4 items-center gap-1 ">
           <Minus className="" />
           <div className="text-black text-sm flex justify-center items-center">
             Do not have an account?{" "}

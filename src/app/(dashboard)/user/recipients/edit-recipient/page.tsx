@@ -34,12 +34,12 @@ const EditRecipientPage = () => {
 
     const onSubmit = async (data: any) => {
         const updatedInfo = {
-            city: data.city
+            data
         }
         console.log(updatedInfo);
         setLoading(true);
         try {
-            const res = await axiosInstance.patch(`/recipient/${id}`, updatedInfo);
+            const res = await axiosInstance.patch(`/recipient/${id}`, updatedInfo?.data);
             if (res.status === 200) {
                 refetch();
                 setLoading(false);

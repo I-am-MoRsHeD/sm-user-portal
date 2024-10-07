@@ -42,7 +42,7 @@ const Page = () => {
     return (
         <div className='min-h-[calc(100vh-100px)]'>
             <Topbar>Dashboard</Topbar>
-            <div className='grid grid-cols-12 gap-5 mt-2 lg:mt-8 w-full '>
+            <div className='grid grid-cols-12 gap-5 mt-2 lg:mt-8 w-full pb-5'>
                 {/* First column */}
                 <div className='xl:col-span-7 lg:col-span-6 col-span-12 space-y-8'>
 
@@ -50,7 +50,7 @@ const Page = () => {
                         <Wallet />
                     </div>
 
-                    <div className='w-full mt-0 md:mt-5 lg:mt-0'>
+                    <div className='w-full mt-0 md:mt-5 lg:mt-0 h-[50vh] '>
                         <TotalTransactionsChart />
                     </div>
                 </div>
