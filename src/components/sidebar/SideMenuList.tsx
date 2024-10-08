@@ -15,7 +15,7 @@ const SideMenuList: React.FC<StateProps> = ({ toggleNavigation, isNavOpen }) => 
     return (
         <>
             <nav>
-                <ul className='flex flex-col items-center sm:block sm:items-start'>
+                <ul className='flex flex-col items-center md:block md:items-start sm:items-center'>
                     {/* for responsive*/}
                     {
                         sideMenu.map((item) => (

@@ -70,10 +70,10 @@ const WalletPage = () => {
             <CardSubTitle fontSize='1rem' title='Wallet Balance' />
             <div className='w-full my-5 flex flex-col lg:flex-row gap-5'>
                 {mainWallet?.userId && (
-                    <div className='bg-white rounded-xl w-full lg:w-3/5'>
+                    <div className='bg-white rounded-xl w-full lg:w-2/4'>
                         <div>
                             {/* id section */}
-                            <div className='flex flex-row justify-between items-center px-2 lg:px-5 pt-5'>
+                            <div className='flex flex-row lg:flex-wrap  lg:gap-2 xl:gap-0 justify-between items-center px-2 lg:px-5 pt-5'>
                                 <div className="font-semibold flex flex-row items-center text-xs lg:text-base">Wallet ID :
                                     <span className='border border-gray-400 px-[3px]'>{mainWallet?.walletId}</span>
                                     <div className='border border-gray-300 p-[3px] lg:p-[7px]'>
@@ -139,7 +139,7 @@ const WalletPage = () => {
                 )}
 
                 {/* new wallet form */}
-                <div className='bg-white p-4 rounded-xl xl:w-3/5 mx-auto w-full h-full'>
+                <div className='bg-white p-4 rounded-xl lg:w-2/4 mx-auto w-full h-full'>
                     <CreateNewWalletForm />
                 </div>
             </div>

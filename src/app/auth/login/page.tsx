@@ -26,7 +26,7 @@ const LoginPage = () => {
             </div>
           </div>
         ) : (
-          <div className='lg:flex items-center justify-center gap-5 '>
+          <div className='sm:flex items-center justify-center gap-5 '>
             <div className='relative lg:block'>
               <div className='hidden lg:block h-full mt-3 '>
                 <Image
@@ -37,7 +37,7 @@ const LoginPage = () => {
                 />
               </div>
             </div>
-            <div className='w-full lg:w-[40%] '>
+            <div className='w-full mx-auto sm:w-[70%] lg:w-[40%]'>
               <LoginForm />
             </div>
           </div>
