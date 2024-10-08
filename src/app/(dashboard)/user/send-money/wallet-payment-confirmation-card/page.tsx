@@ -1,9 +1,45 @@
 'use client'
 import Topbar from '@/components/Topbar';
+import useAxiosSecure from '@/components/hooks/useAxiosSecure';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Link from 'next/link';
-import React from 'react';
+import { useSearchParams } from 'next/navigation';
+import { useEffect } from 'react';
+import toast from 'react-hot-toast';
 
 const page = () => {
+    const id = useSearchParams().get('id');
+    const axiosInstance = useAxiosSecure();
+    const queryClient = useQueryClient();
+
+    const { data, isError, isLoading } = useQuery({
+        queryKey: ['preparedTransaction'],
+        queryFn: async () => {
+            const res = await axiosInstance.get(`/transaction/wallet-to-bank/prepared/${id}`);
+            return res?.data?.data;
+        },
+    });
+
+    //Add recipient
+    const { data: pendingTransactionData, isSuccess, isPending: isPendingTransaction, isError: isPandingTransactionError, mutate } = useMutation({
+        mutationFn: async () => {
+            const response = await axiosInstance.post(`/wallet-to-bank/pending/${id}`, {
+                "pinNumber": 1234
+            });
+            return response.data;
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['add-recipient'] })
+        },
+    });
+
+
+    useEffect(() => {
+        if (isError) {
+            toast.error('get transaction Error');
+        }
+    }, [isError]);
+
     return (
         <>
             <Topbar>Payment Confirmation</Topbar>
@@ -14,17 +50,17 @@ const page = () => {
                     </div>
                     <div>
                         <div className='my-8 space-y-1'>
-                            <h5 className="text-xs">Transfering Wallet: Main Wallet</h5>
-                            <h5 className="text-xs">Transfering Amount: 00.0$</h5>
+                            <h5 className="text-xs">Transfering Wallet: {data?.walletType}</h5>
+                            <h5 className="text-xs">Transfering Amount: {data?.amount}</h5>
                         </div>
                         <div className='flex flex-row w-full h-28 my-3'>
                             <div className='border p-2 w-1/2 h-full'>
                                 <h5 className="text-[10px]">Your Current Wallet Balance: </h5>
-                                <h4 className="text-xl h-full flex flex-row justify-end items-end pb-8">00.0$</h4>
+                                <h4 className="text-xl h-full flex flex-row justify-end items-end pb-8">{data?.senderCurrentBalance}</h4>
                             </div>
                             <div className='border p-2 w-1/2 h-full'>
                                 <h5 className="text-[10px]">Balance after Transaction: </h5>
-                                <h4 className="text-xl h-full flex flex-row justify-end items-end pb-4">00.0$</h4>
+                                <h4 className="text-xl h-full flex flex-row justify-end items-end pb-4">{data?.senderCurrentBalance}</h4>
                             </div>
                         </div>
                         <div className="w-full my-5 relative ">

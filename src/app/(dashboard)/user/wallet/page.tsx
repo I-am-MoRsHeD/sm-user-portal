@@ -51,7 +51,6 @@ const WalletPage = () => {
         setForgetPINModalOpen(false);
     }
 
-
     return (
         <div className='min-h-[calc(100vh-100px)]'>
             <Modal
