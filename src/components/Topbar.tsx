@@ -79,15 +79,15 @@ const Topbar = ({ children }: { children: string }) => {
           {/* language */}
           <div className="relative sm:w-24 w-16 text-xs">
             <div onClick={() => setDropdown(!dropdown)} className="mx-auto flex w-full items-center justify-between rounded sm:px-3 px-1 py-0.5 border-[1.5px] border-gray-300 cursor-pointer">
-              <h1 className="font-medium text-sm">{dropdownSelectedValue}</h1>
+              <h1 className="font-medium lg:text-sm">{dropdownSelectedValue}</h1>
 
               <svg className={`${dropdown ? '-rotate-180' : 'rotate-0'} duration-300`} width={25} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M7 10L12 15L17 10" stroke="#4B5563" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>{' '}</g></svg>
             </div>
 
             {/* dropdown - options  */}
-            <div className={`${dropdown ? 'visible top-5 bg-white opacity-100' : 'invisible -top-4 opacity-0'} absolute mx-auto my-4 w-full z-50 rounded border duration-300 cursor-pointer`}>
+            <div className={`${dropdown ? 'visible top-2 lg:top-5 bg-white opacity-100' : 'invisible -top-4 opacity-0'} absolute mx-auto my-4 w-full z-50 rounded border duration-300 cursor-pointer`}>
               {selectOptions?.map((option, idx) => (
-                <div key={idx} onClick={(e) => { setDropdownSelectedValue(option); setDropdown(false); }} className=" text-black hover:bg-gray-100 text-sm px-4 py-1 ">
+                <div key={idx} onClick={(e) => { setDropdownSelectedValue(option); setDropdown(false); }} className=" text-black hover:bg-gray-100 text-sm px-2 lg:px-4 py-1 ">
                   {option}
                 </div>
               ))}

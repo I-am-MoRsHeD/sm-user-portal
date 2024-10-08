@@ -10,19 +10,22 @@ import useDeleteRecipient from "../hooks/useDeleteRecipients";
 import { redirect } from "next/dist/server/api-utils";
 import { useRouter } from "next/navigation";
 import LoadingSpinner from "../common/Loading/LoadingSpinner";
+import useAxiosSecure from "../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 
 
 
 const RecipientsCards = () => {
     const [open, setOpen] = useState<Record<string, boolean>>({});
-    const [recipients, , isPending, isLoading] = useRecipients();
+    const [recipients, refetch, isPending, isLoading] = useRecipients();
     const { deleteRecipient, isDeleting } = useDeleteRecipient();
     const router = useRouter();
+    const axiosInstance = useAxiosSecure();
 
     if (isLoading) {
         return (
             <div className="flex justify-center items-center h-[80vh]">
-                <LoadingSpinner className="h-4 w-4"/>
+                <LoadingSpinner className="h-4 w-4" />
             </div>
         )
     }
@@ -33,13 +36,34 @@ const RecipientsCards = () => {
             [id]: !prevState[id],
         }));
     };
+    // get single recipient value
     const handleSingleRecipient = (id: any) => {
         router.push(`/user/recipients/edit-recipient?id=${id}`)
-    }
-    const handleDeleterecipient = (id: string) => {
-        deleteRecipient(id);
+    };
 
-        console.log("delete recipient");
+    // delete recipient
+    const handleDeleterecipient = async (id: string) => {
+        // deleteRecipient(id);
+        Swal.fire({
+            title: "Are you sure?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, logged out!"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const res = await axiosInstance.delete(`/recipient/${id}`);
+                if (res?.data?.statusCode === 200) {
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: "Recipient deleted successfully",
+                        icon: "success",
+                    });
+                    refetch();
+                }
+            }
+        });
     }
 
     return (
@@ -50,8 +74,8 @@ const RecipientsCards = () => {
                     className={`bg-white px-2 py-2 lg:px-6 lg:py-4 mb-5 rounded-2xl cursor-pointer group ${open[String(data.id)] ? "shadow-md shadow-neutral-400" : ""
                         }`}
                 >
-                    <div onClick={() => toggleCard(String(data.id))} className="flex flex-row justify-between items-center">
-                        <div className="flex flex-row gap-3 lg:gap-4 items-start">
+                    <div className="flex flex-row justify-between items-center">
+                        <div onClick={() => toggleCard(String(data.id))} className="flex flex-row gap-3 lg:gap-4 items-start w-full">
                             <div
                                 className={`${open[String(data.id)] ? "rotate-0" : "-rotate-180"
                                     } duration-500 bg-gray-200 rounded-full w-6 lg:w-9 h-6 lg:h-9 flex justify-center items-center text-black group-hover:bg-[#723EEB] group-hover:text-white`}

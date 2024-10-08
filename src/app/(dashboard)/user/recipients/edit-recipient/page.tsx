@@ -8,7 +8,7 @@ import useSingleRecipient from '@/components/hooks/useSingleRecipient';
 import { useForm } from 'react-hook-form';
 import useCurrency from '@/components/hooks/useCurrency';
 import useAxiosSecure from '@/components/hooks/useAxiosSecure';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import LoadingSpinner from '@/components/common/Loading/LoadingSpinner';
 import toast from 'react-hot-toast';
 
@@ -23,7 +23,7 @@ interface FormData {
 }
 
 const EditRecipientPage = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
+    const { register, handleSubmit, formState: { errors }, setValue } = useForm<FormData>();
     const [loading, setLoading] = useState(false);
     const searchParams = useSearchParams();
     const id = searchParams.get('id');
@@ -32,14 +32,32 @@ const EditRecipientPage = () => {
     const { fullName, email, phone, city, bankName, accountNumber } = singleRecipient;
     const axiosInstance = useAxiosSecure();
 
+    useEffect(() => {
+
+        setValue('fullName', singleRecipient?.fullName);
+        setValue('email', singleRecipient?.email);
+        setValue('phoneNumber', singleRecipient?.phone);
+        setValue('city', singleRecipient?.city);
+        setValue('bankName', singleRecipient?.bankName);
+        setValue('accountNumber', singleRecipient?.accountNumber);
+        setValue('country', singleRecipient?.country);
+
+    }, [singleRecipient, setValue]);
+
     const onSubmit = async (data: any) => {
         const updatedInfo = {
-            data
+           fullName: data?.fullName,
+           email: data?.email,
+           phone: data?.phoneNumber,
+           city: data?.city,
+           bankName: data?.bankName,
+           accountNumber: data?.accountNumber,
+           country: data?.country,
         }
         console.log(updatedInfo);
         setLoading(true);
         try {
-            const res = await axiosInstance.patch(`/recipient/${id}`, updatedInfo?.data);
+            const res = await axiosInstance.patch(`/recipient/${id}`, updatedInfo);
             if (res.status === 200) {
                 refetch();
                 setLoading(false);
@@ -124,10 +142,10 @@ const EditRecipientPage = () => {
                             {
                                 currency?.map((currency: any) => (
                                     <option key={currency.id}
-                                        value={currency.name}
-                                        defaultChecked={currency.name}
+                                        value={currency?.country}
+                                        defaultChecked={currency?.country}
                                     >
-                                        {currency.name}
+                                        {currency?.country}
                                     </option>
                                 ))
                             }
