@@ -33,58 +33,38 @@ const MainLayout = ({ children }: LayoutProps) => {
                         {children}
                     </div>
                 </div>
-                <ToastContainer />
             </div> */}
             <div className='grid grid-cols-20 w-full bg-gradient-to-tl from-cyan-200 to-pink-200 h-auto text-black'>
-                <div className={`h-screen ${isNavOpen ? 'translate-x-0 col-span-2 md:col-span-4 lg:col-span-3 5xl:col-span-2' : '-translate-x-full lg:translate-x-0 md:col-span-1'} mx-auto w-full bg-white transition-all duration-300 ease-in-out overflow-auto`}>
-                    <TheSidebar />
+                <div className={`h-screen ${isNavOpen ? 'translate-x-0 col-span-2 xxs:col-span-2 md:col-span-4 lg:col-span-3 5xl:col-span-2' : 'hidden lg:block lg:translate-x-0 md:col-span-1'} mx-auto w-full bg-white transition-all duration-300 ease-in-out overflow-auto`}>
+                    <div className='transition-all duration-300 ease-in-out'>
+                        <TheSidebar />
+                    </div>
                 </div>
-                <div className={`h-screen ${isNavOpen ? 'col-span-18 md:col-span-16 lg:col-span-17 5xl:col-span-18' : 'col-span-19 md:col-span-19'} transition-all duration-300 ease-in-out w-full `}>
+                <div className={`h-screen ${isNavOpen ? 'col-span-18 xxs:col-span-18 md:col-span-16 lg:col-span-17 5xl:col-span-18' : 'col-span-20 lg:col-span-19'} transition-all duration-300 ease-in-out w-full `}>
                     <div className='h-full custom-scrollbar overflow-y-auto overflow-x-hidden py-2 lg:pl-4 pl-2 pr-2 '>
                         {children}
                     </div>
                 </div>
                 <Toaster />
             </div>
-            {/* <div className='grid grid-cols-20 w-full bg-gradient-to-tl from-cyan-200 to-pink-200 h-auto text-black'>
+            {/* <div className={`grid ${isNavOpen ? 'grid-cols-20' : 'grid-cols-1'} w-full bg-gradient-to-tl from-cyan-200 to-pink-200 h-auto text-black`}>
                
-                <div
-                    className={`
-                    h-screen 
-                    ${isNavOpen ? 'translate-x-0 col-span-4 lg:col-span-3 5xl:col-span-2' : '-translate-x-full lg:translate-x-0 lg:col-span-1'}
-                    mx-auto 
-                    w-full 
-                    bg-white 
-                    transition-all 
-                    duration-300 
-                    ease-in-out 
-                    overflow-auto 
-                    border 
-                    border-red-600
-                    fixed lg:static
-                    top-0 left-0 
-                `}
-                >
-                    <TheSidebar />
-                </div>
+                {isNavOpen && (
+                    <div className={`h-screen col-span-2 xxs:col-span-2 md:col-span-4 lg:col-span-3 5xl:col-span-2 mx-auto w-full bg-white transition-all duration-300 ease-in-out overflow-auto`}>
+                        <TheSidebar />
+                    </div>
+                )}
 
                 
-                <div
-                    className={`
-                    h-screen
-                    ${isNavOpen ? 'col-span-16 lg:col-span-17 5xl:col-span-18' : 'col-span-20'}
-                    transition-all 
-                    duration-300 
-                    ease-in-out 
-                    w-full 
-                    ml-auto
-                `}
-                >
-                    <div className="h-full custom-scrollbar overflow-y-auto overflow-x-hidden py-2 lg:pl-4 pl-2 pr-2 border border-blue-600">
+                <div className={`h-screen ${isNavOpen ? 'col-span-18 xxs:col-span-18 md:col-span-16 lg:col-span-17 5xl:col-span-18' : 'col-span-1'} transition-all duration-300 ease-in-out w-full`}>
+                    <div className='h-full custom-scrollbar overflow-y-auto overflow-x-hidden py-2 lg:pl-4 pl-2 pr-2 '>
                         {children}
                     </div>
                 </div>
+
+                <Toaster />
             </div> */}
+
         </div>
     );
 };

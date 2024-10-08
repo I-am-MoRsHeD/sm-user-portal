@@ -23,8 +23,8 @@ const SendMoneyLog = () => {
         setId(id);
     }
     return (
-        <div className='lg:mt-0 lg:h-[89vh] 2xl:h-[82vh] 3xl:h-[79vh] 4xl:h-[77vh] overflow-auto custom-scrollbar scroll-smooth w-full'>
-            <div className='flex justify-between mb-5'>
+        <div className='lg:mt-0 lg:h-[100vh] xl:h-[92vh] 2xl:h-[88vh] 3xl:h-[84vh] 4xl:h-[82vh] overflow-auto custom-scrollbar scroll-smooth w-full'>
+            <div className='flex justify-between mb-5 '>
                 <h2 className='text-sm lg:text-base font-semibold'>Send Money Log</h2>
                 <button className='bg-[#723EEB] hover:bg-[#6125ec] duration-500 rounded-3xl lg:text-base font-bold text-white text-xs px-3 lg:px-5 py-1'>
                     <Link href={'/user/transactions'}>

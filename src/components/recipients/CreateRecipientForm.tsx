@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form";
 import Topbar from "../Topbar";
 import CardSubTitle from "../common/cardSubTitle/CardSubTitle";
 import { CreateRecipient } from "../hooks/recipientApi";
-import useRecipient from "../hooks/useRecipientsTable";
 import toast from "react-hot-toast";
 import useCurrency from "../hooks/useCurrency";
 
@@ -23,7 +22,6 @@ const CreateRecipientForm: React.FC = () => {
   const [searchId, setSearchId] = useState<string>("");
   const [searchError, setSearchError] = useState<string>("");
   const [submitError, setSubmitError] = useState<string>("");
-  const { recipient, refetch, isError } = useRecipient();
   const [currency] = useCurrency();
 
 
@@ -136,12 +134,12 @@ const CreateRecipientForm: React.FC = () => {
               <label className="block mb-3 font-semibold">Select Country*</label>
               <select
                 {...register("country", { required: "Country is required" })}
-                className={`w-full px-3 py-2 border ${errors.country ? "border-red-500" : "border-gray-300"} outline-none rounded-xl`}
-              >   <option value="">Select Country</option>
+                className={`w-full px-3 py-2 border cursor-pointer ${errors.country ? "border-red-500" : "border-gray-300"} outline-none rounded-xl`}
+              >   <option disabled value="">Select Country</option>
                 {
 
                   currency?.map((currency : any) => (
-                    <option key={currency.id} value={currency.name}>{currency.name}</option>
+                    <option key={currency.id} value={currency?.country}>{currency?.country}</option>
                   ))
                 }
 
