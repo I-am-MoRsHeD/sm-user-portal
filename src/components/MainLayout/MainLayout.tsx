@@ -1,10 +1,10 @@
 'use client'
+import Image from 'next/image';
 import { ReactNode } from 'react';
+import { Toaster } from 'react-hot-toast';
 import useAuthContext from '../AuthContext/useAuthContext';
 import useNavigationContext from '../NavigationContext/useNavigationContext';
 import TheSidebar from '../shared/TheSidebar';
-import Image from 'next/image';
-import { Toaster } from 'react-hot-toast';
 
 interface LayoutProps {
     children: ReactNode;
@@ -35,17 +35,32 @@ const MainLayout = ({ children }: LayoutProps) => {
                 </div>
                 <ToastContainer />
             </div> */}
-            <div className='grid grid-cols-20 w-full bg-gradient-to-tl from-cyan-200 to-pink-200 h-auto text-black'>
-                <div className={`h-screen ${isNavOpen ? 'translate-x-0 col-span-2 md:col-span-4 lg:col-span-3 5xl:col-span-2' : '-translate-x-full lg:translate-x-0 md:col-span-1'} mx-auto w-full bg-white transition-all duration-300 ease-in-out overflow-auto`}>
+            <div className='flex w-full bg-gradient-to-tl from-cyan-200 to-pink-200 h-auto text-black'>
+                {/* Sidebar */}
+                <div
+                    className={`h-screen bg-white transition-all duration-300 ease-in-out overflow-auto ${isNavOpen
+                        ? 'w-[12%] md:w-[20%] lg:w-[18%] xl:w-[15%] 5xl:w-[10%] translate-x-0'
+                        : 'w-[0] lg:w-[5%] 5xl:w-[3%] translate-x-[-100%] md:translate-x-0'
+                        }`}
+                >
                     <TheSidebar />
                 </div>
-                <div className={`h-screen ${isNavOpen ? 'col-span-18 md:col-span-16 lg:col-span-17 5xl:col-span-18' : 'col-span-19 md:col-span-19'} transition-all duration-300 ease-in-out w-full `}>
-                    <div className='h-full custom-scrollbar overflow-y-auto overflow-x-hidden py-2 lg:pl-4 pl-2 pr-2 '>
+
+                {/* Main content */}
+                <div
+                    className={`h-screen transition-all duration-300 ease-in-out ${isNavOpen
+                        ? 'w-[88%] md:w-[80%] lg:w-[82%] xl:w-[85%] 5xl:w-[90%]'
+                        : 'w-[100%] lg:w-[95%] 5xl:w-[97%]'
+                        }`}
+                >
+                    <div className='h-full custom-scrollbar overflow-y-auto overflow-x-hidden py-2 lg:pl-4 pl-2 pr-2'>
                         {children}
                     </div>
                 </div>
+
                 <Toaster />
             </div>
+
             {/* <div className='grid grid-cols-20 w-full bg-gradient-to-tl from-cyan-200 to-pink-200 h-auto text-black'>
                
                 <div
