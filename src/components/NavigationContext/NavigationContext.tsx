@@ -8,6 +8,8 @@ interface NavigationContextType {
     setOpenForgetPassword: (value: boolean) => void;
     message: boolean;
     setMessage: (value: boolean) => void;
+    subWalletData: object;
+    setSubWalletData: (value: boolean) => void;
 };
 
 interface NavigationContextProviderProps {
@@ -21,6 +23,7 @@ const NavigationContextProvider: React.FC<NavigationContextProviderProps> = ({ch
     const [navOpen, setNavOpen] = useState(true);
     const [openForgetPassword, setOpenForgetPassword] = useState(false);
     const [message, setMessage] = useState(false);
+    const [subWalletData, setSubWalletData] = useState({});
 
     const toggleNavigation = () =>{
         setNavOpen(!navOpen);
@@ -32,7 +35,9 @@ const NavigationContextProvider: React.FC<NavigationContextProviderProps> = ({ch
         openForgetPassword, 
         setOpenForgetPassword,
         message,
-        setMessage
+        setMessage,
+        subWalletData,
+        setSubWalletData
     };
 
     return <NavigationContext.Provider value={info}>

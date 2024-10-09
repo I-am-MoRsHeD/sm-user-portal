@@ -22,7 +22,7 @@ const WithdrawForm: React.FC<ModalProps> = ({ handleForgetPIN }) => {
     const [loading, setLoading] = useState(false);
     const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>();
     const [pin, setPin] = useState(false);
-    const [mainWallet, refetch] = useMainWallet();
+    const [mainWallet, mainWalletRefetch] = useMainWallet();
     const axiosInstance = useAxiosSecure();
 
     const onSubmit = async (data: any) => {
@@ -40,7 +40,7 @@ const WithdrawForm: React.FC<ModalProps> = ({ handleForgetPIN }) => {
             console.log(res);
             if (res.status === 200) {
                 reset();
-                refetch();
+                mainWalletRefetch();
                 toast.success(`${res?.data?.data}`);
             }
         } catch (error: any) {
