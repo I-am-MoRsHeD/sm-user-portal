@@ -27,8 +27,8 @@ const LoginPage = () => {
           </div>
         ) : (
           <div className='sm:flex items-center justify-center gap-5 '>
-            <div className='relative lg:block'>
-              <div className='hidden lg:block h-full mt-3 '>
+            <div className='relative lg:block '>
+              <div className='hidden lg:block h-full mt-3'>
                 <Image
                   src="/auth/login_bg.png"
                   width={530}
@@ -37,7 +37,7 @@ const LoginPage = () => {
                 />
               </div>
             </div>
-            <div className='w-full mx-auto sm:w-[70%] lg:w-[40%]'>
+            <div className='w-full sm:w-[70%] lg:w-[40%]'>
               <LoginForm />
             </div>
           </div>

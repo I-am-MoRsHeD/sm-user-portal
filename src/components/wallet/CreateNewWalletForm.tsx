@@ -25,6 +25,7 @@ const CreateNewWalletForm = () => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>();
     const [pin, setPin] = useState(false);
     const axiosInstance = useAxiosSecure();
+    console.log(mainWallet);
 
 
     const onSubmit = async (data: any) => {
@@ -96,7 +97,7 @@ const CreateNewWalletForm = () => {
                 <div className="mb-3">
                     <label className="text-gray-600  font-semibold">Email</label>
                     <input
-                        type="text"
+                        type="email"
                         {...register("email", {
                             required: "Email is required",
                         })}
