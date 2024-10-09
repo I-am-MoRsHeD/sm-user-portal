@@ -6,11 +6,12 @@ import { useForm } from 'react-hook-form';
 import useAxiosSecure from '../hooks/useAxiosSecure';
 import LoadingSpinner from '../common/Loading/LoadingSpinner';
 import toast from 'react-hot-toast';
+import useNavigationContext from '../NavigationContext/useNavigationContext';
 
 interface ModalProps {
     handleForgetPIN: () => void;
     mainWallet?: any;
-    subWalletData?: any;
+    // subWalletData?: any;
     setChangePINModalOpen: (value: boolean) => void;
 };
 
@@ -20,11 +21,12 @@ interface FormData {
     confirmNewPin: number;
 };
 
-const ChangePINForm: React.FC<ModalProps> = ({ handleForgetPIN, mainWallet, subWalletData, setChangePINModalOpen }) => {
+const ChangePINForm: React.FC<ModalProps> = ({ handleForgetPIN, mainWallet, setChangePINModalOpen }) => {
     const [loading, setLoading] = useState(false);
     const [pin, setPin] = useState(false);
     const axiosInstance = useAxiosSecure();
     const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>();
+    const { subWalletData }: any = useNavigationContext();
 
     const onSubmit = async (data: any) => {
         const oldPin = parseInt(data?.currentPin);

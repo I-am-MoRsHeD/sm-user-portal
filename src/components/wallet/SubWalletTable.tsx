@@ -8,23 +8,27 @@ import ChangePINForm from './ChangePINForm';
 import ForgetPINModal from '../common/ForgetPINModal/ForgetPINModal';
 import EditWalletModal from './EditWalletModal';
 import useSubWallets from '../hooks/useSubWallets';
+import useNavigationContext from '../NavigationContext/useNavigationContext';
+import DeleteSubWalletModal from './DeleteSubWalletModal';
 
 interface ModalProps {
     isSubWalletModalOpen: boolean;
     setSubWalletModalOpen: (value: boolean) => void;
-    handleMakeMainWallet: () => void;
+    handleMakeMainWallet: (value: any) => void;
     handleSubWallet: (value: any) => void;
     data: any;
 }
 
 const SubWalletTable: React.FC<ModalProps> = ({ handleMakeMainWallet, isSubWalletModalOpen, setSubWalletModalOpen, handleSubWallet, data }) => {
     const [subWallets] = useSubWallets();
-    const [subWalletData, setSubWalletData] = useState({});
+    // const [subWalletData, setSubWalletData] = useState({});
+    const { setSubWalletData }: any = useNavigationContext();
 
     const [isWithdrawIntoWalletModalOpen, setWithdrawIntoWalletModalOpen] = useState(false);
     const [isChangePINModalOpen, setChangePINModalOpen] = useState(false);
     const [isForgetPINModalOpen, setForgetPINModalOpen] = useState(false);
     const [isEditWalletModalOpen, setEditWalletModalOpen] = useState(false);
+    const [isDeleteSubWalletModalOpen, setDeleteSubWalletModalOpen] = useState(false);
 
     // const handleSubWallet = () => {
     //     setSubWalletModalOpen(true);
@@ -41,8 +45,15 @@ const SubWalletTable: React.FC<ModalProps> = ({ handleMakeMainWallet, isSubWalle
         setChangePINModalOpen(true);
     };
 
-    const handleEditWallet = () => {
+    const handleEditSubWallet = (data: any) => {
+        setSubWalletData(data);
         setEditWalletModalOpen(true);
+        setSubWalletModalOpen(false);
+    };
+
+    const handleDeleteSubWallet = (data: any) => {
+        setSubWalletData(data)
+        setDeleteSubWalletModalOpen(true);
         setSubWalletModalOpen(false);
     };
 
@@ -70,7 +81,8 @@ const SubWalletTable: React.FC<ModalProps> = ({ handleMakeMainWallet, isSubWalle
                         handleWithdrawIntoWallet={handleWithdrawIntoWallet}
                         handleChangePIN={handleChangePIN}
                         handleForgetPIN={handleForgetPIN}
-                        handleEditWallet={handleEditWallet}
+                        handleEditSubWallet={handleEditSubWallet}
+                        handleDeleteSubWallet={handleDeleteSubWallet}
                         subWalletData={data}
                     />
                 </Modal>
@@ -101,7 +113,7 @@ const SubWalletTable: React.FC<ModalProps> = ({ handleMakeMainWallet, isSubWalle
                                         <td
                                             onClick={() => handleSubWallet(data)} className='w-[30%]'>{data?.balance}.0 {data?.currency?.code}</td>
                                     </span>
-                                    <td onClick={handleMakeMainWallet} className='w-14'>
+                                    <td onClick={() => handleMakeMainWallet(data)} className='w-14'>
                                         <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M0 0V22H22V0H0ZM2 2H20V20H2V2ZM16.2812 6.28125L9 13.5625L5.71875 10.2812L4.28125 11.7188L8.28125 15.7188L9 16.4062L9.71875 15.7188L17.7188 7.71875L16.2812 6.28125Z" fill="#723EEB" />
                                         </svg>
@@ -132,6 +144,12 @@ const SubWalletTable: React.FC<ModalProps> = ({ handleMakeMainWallet, isSubWalle
                 setEditWalletModalOpen={setEditWalletModalOpen}
             />
 
+            {/* delete wallet modal */}
+            <DeleteSubWalletModal
+                isDeleteSubWalletModalOpen={isDeleteSubWalletModalOpen}
+                setDeleteSubWalletModalOpen={setDeleteSubWalletModalOpen}
+            />
+
             {/* change pin modal */}
             <Modal
                 isOpen={isChangePINModalOpen}
@@ -141,7 +159,7 @@ const SubWalletTable: React.FC<ModalProps> = ({ handleMakeMainWallet, isSubWalle
                 <ChangePINForm
                     handleForgetPIN={handleForgetPIN}
                     setChangePINModalOpen={setChangePINModalOpen}
-                    subWalletData={subWalletData} />
+                />
             </Modal>
 
 
@@ -149,7 +167,7 @@ const SubWalletTable: React.FC<ModalProps> = ({ handleMakeMainWallet, isSubWalle
             <ForgetPINModal
                 setForgetPINModalOpen={setForgetPINModalOpen}
                 isForgetPINModalOpen={isForgetPINModalOpen}
-                subWalletData = {data}
+                subWalletData={data}
             />
         </div>
     );

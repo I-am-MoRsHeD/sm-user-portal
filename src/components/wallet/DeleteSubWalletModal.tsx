@@ -1,68 +1,75 @@
 'use client'
 import React, { useState } from 'react';
+import { Close } from '../icons/Icon';
+import { LiaEyeSlashSolid, LiaEyeSolid } from 'react-icons/lia';
 import { useForm } from 'react-hook-form';
 import LoadingSpinner from '../common/Loading/LoadingSpinner';
-import { LiaEyeSlashSolid, LiaEyeSolid } from 'react-icons/lia';
+import useNavigationContext from '../NavigationContext/useNavigationContext';
 import useAxiosSecure from '../hooks/useAxiosSecure';
 import toast from 'react-hot-toast';
 import useSubWallets from '../hooks/useSubWallets';
-import useMainWallet from '../hooks/useMainWallet';
 
 interface ModalProps {
-    isMakeMainWalletModalOpen: boolean;
-    setMakeMainWalletModalOpen: (value: boolean) => void;
-    subWalletData?: any;
+    isDeleteSubWalletModalOpen: boolean;
+    setDeleteSubWalletModalOpen: (value: boolean) => void;
+    title?: string;
+    disableCloseButton?: boolean;
 }
 interface FormData {
     confirmPin: number;
 };
 
-const MakeMainWalletModal: React.FC<ModalProps> = ({ isMakeMainWalletModalOpen, setMakeMainWalletModalOpen, subWalletData }) => {
-    const [confirmNewPin, setConfirmNewPin] = useState(false);
+const DeleteSubWalletModal: React.FC<ModalProps> = ({ isDeleteSubWalletModalOpen, title, disableCloseButton, setDeleteSubWalletModalOpen }) => {
+    const [showPin, setShowPin] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [, mainWalletRefetch] = useMainWallet();
+    const { subWalletData }: any = useNavigationContext();
     const [, refetch] = useSubWallets();
     const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>();
     const axiosInstance = useAxiosSecure();
-    console.log(subWalletData)
-    const handleCloseModal = () => setMakeMainWalletModalOpen(false);
+
+    const handleCloseModal = () => setDeleteSubWalletModalOpen(false);
 
     const onSubmit = async (data: any) => {
-        const updatedInfo = {
-            pinNumber: data.confirmPin
-        };
+        const pin = {
+            pinNumber: Number(data.confirmPin)
+        } as any;
         setLoading(true);
+        console.log(pin);
         try {
-            const res = await axiosInstance.put(`/wallet/set-main/${subWalletData?.id}`, updatedInfo);
+            const res = await axiosInstance.post(`/wallet/delete-wallet/${subWalletData?.id}`, pin);
+            console.log(res);
             if (res.status === 200) {
-                toast.success('Converted to main wallet');
-                mainWalletRefetch();
+                toast.success('Wallet deleted successfully');
                 refetch();
-                setMakeMainWalletModalOpen(false);
             }
-        } catch (error) {
-            toast.error('There is something error');
-        };
+        } catch (error: any) {
+            if (error) {
+                toast.error('There is something error');
+            }
+        }
         setLoading(false);
-    }
+        reset();
+    };
 
     return (
-        <div className=''>
-            <div className={`fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-[999] ${isMakeMainWalletModalOpen ? 'opacity-1 visible' : 'invisible opacity-0'}`}>
-                <div className={`bg-white rounded shadow-lg overflow-hidden w-[95%] max-w-96 lg:w-full overflow-y-auto transition-all duration-300 absolute top-5 ${isMakeMainWalletModalOpen ? 'opacity-1 translate-y-0 duration-300' : '-translate-y-20 opacity-0 duration-300 '}`}>
-                    <div className="flex justify-between items-center py-2 px-4">
-                        <h3 className="text-sm font-semibold "></h3>
-                        <div onClick={() => handleCloseModal()} className='bg-[#723EEB] w-6 h-6 flex justify-center items-center text-white rounded cursor-pointer'>
+        <div>
+            <div className={`fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-[999] ${isDeleteSubWalletModalOpen ? 'opacity-1 visible' : 'invisible opacity-0'}`}>
+                <div className={`bg-white rounded-xl shadow-lg overflow-hidden w-[95%] lg:max-w-lg max-h-[96vh] lg:w-full overflow-y-auto transition-transform transform ease-in-out duration-500 ${isDeleteSubWalletModalOpen ? 'opacity-1 translate-y-0 ' : '-translate-y-20 opacity-0'}`}>
+                    <div className="flex justify-between items-center px-6 pt-6 pb-2">
+                        <h3 className="text-lg font-semibold dark:text-max">{title}</h3>
+                        <div
+                            style={{ display: disableCloseButton ? 'none' : 'flex' }}
+                            onClick={handleCloseModal} className='bg-[#723EEB] w-6 h-6 flex justify-center items-center text-white rounded cursor-pointer'>
                             <div
                                 className="text-3xl"
                             >
-                                &times;
+                                <Close />
                             </div>
                         </div>
                     </div>
-                    <div className="px-6 pb-2">
+                    <div className="px-6 ">
                         <form onSubmit={handleSubmit(onSubmit)} className='space-y-4 w-full mx-auto'>
-                            <h1 className=" text-sm">Want to Make this Wallet Your Main Wallet?</h1>
+                            <h1 className=" text-sm">Want to Delete this Wallet?</h1>
 
                             {/* Confirm New Pin Field */}
                             <div className="w-full relative text-xs">
@@ -79,10 +86,10 @@ const MakeMainWalletModal: React.FC<ModalProps> = ({ isMakeMainWalletModalOpen, 
                                     />
                                     <button
                                         type="button"
-                                        onClick={() => setConfirmNewPin(!confirmNewPin)}
+                                        onClick={() => setShowPin(!showPin)}
                                         className="absolute top-3 right-4 text-[11px]"
                                     >
-                                        {confirmNewPin ? <LiaEyeSolid className='text-base' /> : <LiaEyeSlashSolid className='text-base' />}
+                                        {showPin ? <LiaEyeSolid className='text-base' /> : <LiaEyeSlashSolid className='text-base' />}
                                     </button>
                                 </div>
 
@@ -98,7 +105,8 @@ const MakeMainWalletModal: React.FC<ModalProps> = ({ isMakeMainWalletModalOpen, 
                                 <button
                                     type="submit"
                                     className="w-full bg-[#ea5455] text-white p-2 rounded text-[10px]">
-                                    {loading ? <LoadingSpinner className='h-4 w-4' /> : 'Confirm Change'}
+
+                                    {loading ? <LoadingSpinner className='h-4 w-4' /> : 'Confirm'}
 
                                 </button>
                             </div>
@@ -110,4 +118,4 @@ const MakeMainWalletModal: React.FC<ModalProps> = ({ isMakeMainWalletModalOpen, 
     );
 };
 
-export default MakeMainWalletModal;
+export default DeleteSubWalletModal;

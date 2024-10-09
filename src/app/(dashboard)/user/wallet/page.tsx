@@ -36,7 +36,8 @@ const WalletPage = () => {
         setChangePINModalOpen(false);
     };
 
-    const handleMakeMainWallet = () => {
+    const handleMakeMainWallet = (data: any) => {
+        setSubWalletData(data);
         setSubWalletModalOpen(false);
         setMakeMaintWalletModalOpen(true);
     }
@@ -128,12 +129,6 @@ const WalletPage = () => {
                                     </div>
                                 )
                             }
-                            {/* <SubWalletTable
-                                isSubWalletModalOpen={isSubWalletModalOpen}
-                                setSubWalletModalOpen={setSubWalletModalOpen}
-                                handleMakeMainWallet={handleMakeMainWallet}
-                                handleSubWallet={handleSubWallet}
-                            /> */}
                         </div>
                     </div>
                 )}
@@ -195,6 +190,7 @@ const WalletPage = () => {
             <MakeMainWalletModal
                 isMakeMainWalletModalOpen={isMakeMaintWalletModalOpen}
                 setMakeMainWalletModalOpen={setMakeMaintWalletModalOpen}
+                subWalletData={subWalletData}
             />
 
             {/* forget pin modal */}
