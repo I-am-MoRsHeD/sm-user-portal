@@ -1,8 +1,6 @@
-import React from 'react';
 
 import RegistrationForm from '@/components/auth/RegistrationForm';
 import Image from 'next/image';
-import { BackToHome } from '../login/components';
 
 const Page = () => {
     return (
@@ -21,7 +19,7 @@ const Page = () => {
                         </div>
                     </div>
                     {/* Registration Form Section */}
-                    <div className="w-full lg:w-[50%]">
+                    <div className="w-full lg:w-[50%] p-3">
                         <RegistrationForm />
                     </div>
                 </div>
