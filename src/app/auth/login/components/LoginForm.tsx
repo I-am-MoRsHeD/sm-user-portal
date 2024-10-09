@@ -1,17 +1,16 @@
 "use client";
-import { useEffect, useState } from "react";
+import useAxiosSecure from "@/components/hooks/useAxiosSecure";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
 import SocialLogin from "./SocialLogin";
-import useAxiosSecure from "@/components/hooks/useAxiosSecure";
 
-import { useRouter } from "next/navigation";
 import useAuthContext from "@/components/AuthContext/useAuthContext";
-import Link from "next/link";
 import useNavigationContext from "@/components/NavigationContext/useNavigationContext";
-import api from "@/components/hooks/useAxiosSecure";
-import Cookies from 'js-cookie';
 import LoadingSpinner from "@/components/common/Loading/LoadingSpinner";
+import Cookies from 'js-cookie';
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
 
@@ -55,7 +54,7 @@ const LoginForm = () => {
         const { accessToken, refreshToken } = res?.data?.data;
         Cookies.set('accessToken', accessToken);
         Cookies.set('refreshToken', refreshToken);
-        
+
         router.push('/user/dashboard');
         toast.success("You have successfully logged in");
         setLoading(false)
@@ -81,7 +80,7 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-lg px-2 lg:px-6 py-6 my-10 lg-my-0 max-w-xl w-full">
+    <div className="bg-white rounded-xl shadow-lg px-5 lg:px-6 py-5 my-10 lg-my-0 max-w-xl w-full">
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* Email Field */}
         <div className="mb-4">
@@ -146,7 +145,7 @@ const LoginForm = () => {
             className="w-full md:px-4 py-2.5 bg-[#723EEB] text-white text-xs rounded-3xl hover:bg-[#6129e6] duration-500"
           >
             {
-              loading ? <LoadingSpinner className="h-4 w-4"/> : 'Login'
+              loading ? <LoadingSpinner className="h-4 w-4" /> : 'Login'
             }
             {/* Login */}
           </button>
