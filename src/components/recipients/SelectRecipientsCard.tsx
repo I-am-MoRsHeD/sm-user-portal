@@ -5,6 +5,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { redirect, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import LoadingSpin from "../2fa-security/LoadingSpin";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import useRecipients from "../hooks/useRecipients";
 import RecipientsTable from "./RecipientsTable";
@@ -102,7 +103,7 @@ const RecipientsCards = () => {
                 ))
             }
             <div className='w-[50%] lg:w-[100%]'>
-                <button onClick={() => handleAddRecipient()} className="text-sm bg-[#723EEB] text-white w-full p-2.5 rounded-xl font-semibold">Next</button>
+                <button onClick={() => handleAddRecipient()} className="text-sm bg-[#723EEB] text-white w-full p-2.5 rounded-xl font-semibold flex justify-center items-center">{isAddRecipientPending ? <LoadingSpin height='1rem' width='1rem' borderWidth='0.225rem' color='#FFF' /> : 'Next'}</button>
             </div>
         </>
     );
