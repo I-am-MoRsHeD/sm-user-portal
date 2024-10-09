@@ -19,7 +19,7 @@ const Page = () => {
                         </div>
                     </div>
                     {/* Registration Form Section */}
-                    <div className="w-full lg:w-[50%] p-3">
+                    <div className="w-full lg:w-[50%]">
                         <RegistrationForm />
                     </div>
                 </div>
