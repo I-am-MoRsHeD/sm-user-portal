@@ -22,6 +22,7 @@ const WalletOptionSelect = ({ control }: {control: any}) => {
             control={control}
             options={options}
             error="Please select wallet"
+            borderColor={false}
         />
   )
 }

@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import TextInputKYC from './TextInputField';
-import InputSelectKyc from './InputSelect';
+import InputSelectKyc from './InputSelectKYC';
 import PrimaryFileUpload from './PrimaryFileUpload';
+import toast from 'react-hot-toast';
+import { useKYC } from '@/context/useKyc';
 
 const PrimaryKycForm = () => {
+  const {setPrimaryKycData} = useKYC()
   const {
     register,
     handleSubmit,
@@ -12,10 +15,15 @@ const PrimaryKycForm = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data: any) => {
-    console.log('Form Data:', data);
-  };
-
+    const onSubmit = (data: any) => {
+        if (data) {
+            setPrimaryKycData(data);
+            toast.success('Primary KYC Saved!');
+        } else {
+            toast.error('Primary KYC Not Saved!');
+        }
+    };
+  
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -44,11 +52,12 @@ const PrimaryKycForm = () => {
         <div className="flex flex-col lg:flex-row justify-between w-full gap-3 lg:gap-10 my-3">
             <div className="w-full">
                 <InputSelectKyc
-                    options={['USA', 'Canada']}
                     name="country"
-                    register={register}
-                    errors={errors}
+                    error="Country is Required"
                     label="Country"
+                    placeholder="Select Country"
+                    control={control}
+                    borderColor={true}
                 />
             </div>
             <div className="w-full">

@@ -1,4 +1,4 @@
-export const optionsStyles = (error: any) => {
+export const optionsStyles = (error: any, borderColor: boolean = false) => {
     const style = {
         control: (provided: any, state: any) => ({
             ...provided,
@@ -10,7 +10,7 @@ export const optionsStyles = (error: any) => {
             borderRadius: '10px',
             outline: 'none',
             border: `1px solid ${
-                state.isFocused ? '#9CA3AF' : '#E5E7EB'
+                error && borderColor ? 'red' : state.isFocused ? '#9CA3AF' : '#E5E7EB'
             }`,
             boxShadow: 'none',
             cursor: 'pointer',
