@@ -19,7 +19,7 @@ const SocialLogin = () => {
         <hr
           className={`w-20 sm:w-32 md:36 lg:w-44 xl:w-52 h-px bg-black border-0`}
         />
-        <span className="mx-2 text-second-1000 w-24 flex text-xs font-medium ml-5">
+        <span className="mx-2 text-second-1000 w-28 flex text-xs font-medium ml-5">
           {route === "/auth/login" ? "Or Login with" : "Or Register with"}
         </span>
         <hr

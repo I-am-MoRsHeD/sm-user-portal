@@ -80,7 +80,7 @@ const Topbar = ({ children }: { children: string }) => {
           {/* language */}
           <div className="relative sm:w-24 w-16 text-xs">
             <div onClick={() => setDropdown(!dropdown)} className="mx-auto flex w-full items-center justify-between rounded sm:px-3 px-1 py-0.5 border-[1.5px] border-gray-300 cursor-pointer">
-              <h1 className="font-medium lg:text-sm">{dropdownSelectedValue}</h1>
+              <h1 className="font-medium text-sm">{dropdownSelectedValue}</h1>
 
               <svg className={`${dropdown ? '-rotate-180' : 'rotate-0'} duration-300`} width={25} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M7 10L12 15L17 10" stroke="#4B5563" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>{' '}</g></svg>
             </div>
@@ -118,7 +118,7 @@ const Topbar = ({ children }: { children: string }) => {
               {/* <svg className={`${profileDropdown ? '-rotate-180' : 'rotate-0'} duration-300`} width={25} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M7 10L12 15L17 10" stroke="#4B5563" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>{' '}</g></svg> */}
             </div>
             {/* profile dropdown options  */}
-            <div className={`${profileDropdown ? 'visible top-9 right-0 p-2 bg-white opacity-100 px-4' : 'invisible top-12 opacity-0'} absolute mx-auto w-28 z-50 rounded border duration-300 cursor-pointer divide-y`}>
+            <div className={`${profileDropdown ? 'visible top-9 right-0 p-2 bg-white opacity-100 px-4' : 'invisible top-12 opacity-0 right-0'} absolute transition-all mx-auto w-28 z-50 rounded border duration-300 ease-in-out cursor-pointer divide-y`}>
 
               <Link href={'/user/user-profile'} >
                 <div onClick={() => setProfileDropdown(!profileDropdown)} className="text-black hover:scale-110 duration-500">Profile</div>

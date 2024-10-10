@@ -1,9 +1,62 @@
 'use client'
+import LoadingSpin from '@/components/2fa-security/LoadingSpin';
 import Topbar from '@/components/Topbar';
-import Link from 'next/link';
-import React from 'react';
+import useAxiosSecure from '@/components/hooks/useAxiosSecure';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { redirect, useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 
-const page = () => {
+const PaymentConfirmationPage = () => {
+    const id = useSearchParams().get('id');
+    const axiosInstance = useAxiosSecure();
+    const queryClient = useQueryClient();
+    const [pin, setPin] = useState('');
+
+    const { data, isError, isLoading } = useQuery({
+        queryKey: ['preparedTransaction'],
+        queryFn: async () => {
+            const res = await axiosInstance.get(`/transaction/wallet-to-bank/prepared/${id}`);
+            return res?.data?.data;
+        },
+    });
+
+    //Add confirm transaction
+    const { data: pendingTransactionData, isSuccess, isPending: isPendingTransaction, isError: isPendingTransactionError, mutate } = useMutation({
+        mutationFn: async () => {
+            const response = await axiosInstance.post(`/transaction/wallet-to-bank/pending/${id}`, {
+                "pinNumber": parseInt(pin)
+            });
+            return response.data;
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['pending-transaction'] })
+        },
+    });
+
+
+
+    // handle confirm payment
+
+    const handleConfirmPayment = () => {
+        mutate();
+    }
+
+
+    useEffect(() => {
+        if (isError) {
+            toast.error('get transaction Error');
+        }
+        if (isPendingTransactionError) {
+            toast.error('confirm transaction Error');
+        }
+        if (isSuccess) {
+            toast.success('Transaction confirmed successfully');
+            redirect(`/user/send-money/payment-confirmation?transactionID=${pendingTransactionData?.data?.transactionId}`);
+        }
+    }, [isError, isSuccess, isPendingTransactionError, pendingTransactionData]);
+
+    // 
     return (
         <>
             <Topbar>Payment Confirmation</Topbar>
@@ -14,17 +67,23 @@ const page = () => {
                     </div>
                     <div>
                         <div className='my-8 space-y-1'>
-                            <h5 className="text-xs">Transfering Wallet: Main Wallet</h5>
-                            <h5 className="text-xs">Transfering Amount: 00.0$</h5>
+                            <h5 className="text-xs">Transfering Wallet: {data?.walletType}</h5>
+                            <h5 className="text-xs">Transfering Amount: {data?.amount}</h5>
                         </div>
                         <div className='flex flex-row w-full h-28 my-3'>
                             <div className='border p-2 w-1/2 h-full'>
                                 <h5 className="text-[10px]">Your Current Wallet Balance: </h5>
-                                <h4 className="text-xl h-full flex flex-row justify-end items-end pb-8">00.0$</h4>
+                                <h4 className="text-xl h-full flex flex-row justify-end items-end pb-8">{
+                                    isLoading ? <LoadingSpin height='2rem' width='2rem' borderWidth='0.425rem' color='#723EEB' /> :
+                                        data?.senderCurrentBalance
+                                }</h4>
                             </div>
                             <div className='border p-2 w-1/2 h-full'>
                                 <h5 className="text-[10px]">Balance after Transaction: </h5>
-                                <h4 className="text-xl h-full flex flex-row justify-end items-end pb-4">00.0$</h4>
+                                <h4 className="text-xl h-full flex flex-row justify-end items-end pb-4">{
+                                    isLoading ? <LoadingSpin height='2rem' width='2rem' borderWidth='0.425rem' color='#723EEB' /> :
+                                        data?.transactionAfterBalance
+                                }</h4>
                             </div>
                         </div>
                         <div className="w-full my-5 relative ">
@@ -34,6 +93,8 @@ const page = () => {
                                 name="endterPIN"
                                 className="w-full px-3 py-2 text-[10px] border border-gray-300 rounded-full focus:outline-none"
                                 placeholder="Enter PIN....."
+                                value={pin}
+                                onChange={(e) => setPin(e.target.value)}
                             />
                             <span className='absolute right-5 mt-2'>
 
@@ -43,9 +104,9 @@ const page = () => {
 
                             </span>
                         </div>
-                        <Link href={'/user/send-money/payment-confirmation'} className="w-full ">
-                            <button className="bg-[#723EEB] hover:bg-indigo-600 text-white w-full text-max px-4 py-2 text-xs rounded-full">Confirm Payment</button>
-                        </Link>
+                        <div className="w-full ">
+                            <button onClick={() => handleConfirmPayment()} className="bg-[#723EEB] hover:bg-indigo-600 text-white w-full text-max px-4 py-2 text-xs rounded-full flex justify-center items-center">{isPendingTransaction ? <LoadingSpin height='1rem' width='1rem' borderWidth='0.225rem' color='#FFF' /> : "Confirm Payment"}</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -53,4 +114,4 @@ const page = () => {
     );
 };
 
-export default page;
+export default PaymentConfirmationPage;

@@ -6,8 +6,10 @@ import toast from "react-hot-toast"
 const TransactionInfoDisplay = () => {
     const [copyId, setCopyId] = useState(false)
     const [copyLink, setCopyLink] = useState(false)
-    const query = useSearchParams()
-    const id = query?.get('transactionId')    
+    const id = useSearchParams().get('transactionID');
+
+    console.log(id, 'helllop+++++')
+
 
     const handleCopy = (e: any) => {
         e.preventDefault()
@@ -26,7 +28,7 @@ const TransactionInfoDisplay = () => {
                 setCopyLink(false)
             }, 2000)
         }
-        
+
     }
     return (
         <>
@@ -44,8 +46,8 @@ const TransactionInfoDisplay = () => {
                 <div onClick={handleCopy} id="copyId" className='cursor-pointer border-y-[1px] border-gray-400 w-12 h-[38px] flex justify-center items-center'>
                     {
                         !copyId ? <svg width="13" height="13" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M0 0V8.33333H2.91667V7.5H0.833333V0.833333H5.83333V1.25H6.66667V0H0ZM3.33333 1.66667V10H10V1.66667H3.33333ZM4.16667 2.5H9.16667V9.16667H4.16667V2.5Z" fill="#723EEB" />
-                    </svg> : <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <path d="M0 0V8.33333H2.91667V7.5H0.833333V0.833333H5.83333V1.25H6.66667V0H0ZM3.33333 1.66667V10H10V1.66667H3.33333ZM4.16667 2.5H9.16667V9.16667H4.16667V2.5Z" fill="#723EEB" />
+                        </svg> : <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>
                     }
                 </div>
                 <div className='cursor-pointer border-[1px] border-gray-400 w-12 h-[39px] p-4 flex justify-center items-center rounded-tr-[15px] rounded-br-[15px] bg-[#723EEB]'>

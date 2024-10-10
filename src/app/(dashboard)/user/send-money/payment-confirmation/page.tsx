@@ -1,8 +1,14 @@
+'use client'
 import TransactionInfoDisplay from '@/components/payment-confirmation/TransactionInfoDisplay';
 import Topbar from '@/components/Topbar';
 import Link from 'next/link';
-import React from 'react';
-const page = () => {
+import { useSearchParams } from 'next/navigation';
+
+
+const PaymentConfirmationMassagePage = () => {
+    const id = useSearchParams().get('transactionID');
+
+    console.log(id, 'usafuiaywer')
 
     return (
         <div>
@@ -15,7 +21,7 @@ const page = () => {
                         </svg>
                     </div>
                     <h3 className="text-xs lg:text-base font-semibold">Your Withdraw Is Successfully Completed</h3>
-                    <TransactionInfoDisplay/>
+                    <TransactionInfoDisplay />
                     <div className='flex flex-row gap-3 w-full px-5'>
                         <Link href={"/user/send-money"} className='w-[50%]'>
                             <button className="text-xs bg-[#723EEB] text-white w-full p-2 lg:p-3 rounded-full font-semibold">Send Money Again</button>
@@ -30,4 +36,4 @@ const page = () => {
     );
 };
 
-export default page;
+export default PaymentConfirmationMassagePage;

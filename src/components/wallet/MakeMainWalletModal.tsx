@@ -36,6 +36,7 @@ const MakeMainWalletModal: React.FC<ModalProps> = ({ isMakeMainWalletModalOpen, 
             const res = await axiosInstance.put(`/wallet/set-main/${subWalletData?.id}`, updatedInfo);
             if (res.status === 200) {
                 toast.success('Converted to main wallet');
+                reset();
                 mainWalletRefetch();
                 refetch();
                 setMakeMainWalletModalOpen(false);

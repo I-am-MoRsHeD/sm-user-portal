@@ -68,7 +68,7 @@ const RecipientsCards = () => {
 
     return (
         <>
-            {recipients.map((data: any) => (
+            {recipients?.map((data: any) => (
                 <div
                     key={String(data.id)}
                     className={`bg-white px-2 py-2 lg:px-6 lg:py-4 mb-5 rounded-2xl cursor-pointer group ${open[String(data.id)] ? "shadow-md shadow-neutral-400" : ""
