@@ -1,21 +1,16 @@
 "use client";
-
-import { ReactNode, useEffect } from 'react';
+import { ReactNode } from 'react';
 import '../styles/globals.css'
 import NavigationContextProvider from '@/components/NavigationContext/NavigationContext';
 import AuthContextProvider from '@/components/AuthContext/AuthContext';
-import { SessionProvider } from 'next-auth/react';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { SessionProvider } from 'next-auth/react';
 
 const queryClient = new QueryClient();
-
-
-
 
 interface LayoutProps {
   children: ReactNode;
 }
-
 const Layout = ({ children }: LayoutProps) => {
 
   return (
