@@ -31,7 +31,7 @@ const LoginPage = () => {
               <div className='hidden lg:block h-full mt-3'>
                 <Image
                   src="/auth/login_bg.png"
-                  width={530}
+                  width={500}
                   height={460}
                   alt="Picture of the author"
                 />
