@@ -1,37 +1,71 @@
-import Link from 'next/link';
+'use client'
 import React, { useState, useEffect } from 'react';
+import useAxiosSecure from '../hooks/useAxiosSecure';
+import toast from 'react-hot-toast'
+import LoadingSpinner from '../LoaderSpinner';
+import { useRouter } from 'next/navigation';
 
-interface Props {
-    transferInfo : any;
+export interface TransactionPreparedTypes {
+    id: string,
+    amount: number,
+    recipientsWalletNumber: string;
+    senderCurrentBalance: number;
+    transactionAfterBalance: number;
+    walletType: string;
+}
+export interface TransferTypes {
+    transferInfo: TransactionPreparedTypes | null;
+    setWalletModalOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const WalletToWalletModalForm:React.FC<Props> = ({ transferInfo }) => {
-    const [isVisible, setIsVisible] = useState(false);
-
-    useEffect(() => {
-        setIsVisible(true);
-    }, []);
+const WalletToWalletModalForm = ({ transferInfo, setWalletModalOpen }: TransferTypes) => {
+    const [isLoading, setIsLoading] = useState(false);
+    const passwordRef = React.createRef<HTMLInputElement>();
+    const axiosInstance = useAxiosSecure();
+    const router: any = useRouter();
+    
+    const handleSubmit = async () => {
+        const password = {
+            pinNumber: parseInt(passwordRef.current?.value as string)
+        }
+        try {
+            setIsLoading(true)
+            const res = await axiosInstance.post(`transaction/wallet-to-wallet/completed/${transferInfo?.id}`, password);
+            if (res.status === 200) {
+                toast.success("Transaction Successful");
+                router.push(`/user/send-money/payment-confirmation?transactionId=${res?.data.data.transactionId}`);                  
+                setWalletModalOpen(false);
+            } else {
+                toast.error("Transaction Failed");
+            }
+        } catch (err) {
+            toast.error("Transaction Failed");
+        } finally {
+            setIsLoading(false)
+        }
+    }
 
     return (
-        <div className={`transition-opacity duration-300 ease-in-out ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+        <div className={`transition-opacity duration-300 ease-in-out`}>
             <div className='mt-1 mb-2 space-y-1 font-semibold'>
-                <h5 className="text-[10px]">Transfering Wallet: Main Wallet</h5>
-                <h5 className="text-[10px]">Transfering Amount: 00.0$</h5>
-                <h5 className="text-[10px]">Recipients Wallet: 123343453450</h5>
+                <h5 className="text-[10px]">Transfer Wallet: {transferInfo?.walletType}</h5>
+                <h5 className="text-[10px]">Transfer Amount: {transferInfo?.amount}$</h5>
+                <h5 className="text-[10px]">Recipients Wallet: {transferInfo?.recipientsWalletNumber}</h5>
             </div>
             <div className='flex flex-row'>
                 <div className='border p-2'>
                     <h5 className="text-[10px]">Your Current Wallet Balance: </h5>
-                    <h4 className="text-xs flex flex-row justify-end">00.0$</h4>
+                    <h4 className="text-xs flex flex-row justify-end">{transferInfo?.senderCurrentBalance}$</h4>
                 </div>
                 <div className='border p-2'>
                     <h5 className="text-[10px]">Balance after Transaction: </h5>
-                    <h4 className="text-xs flex flex-row justify-end">00.0$</h4>
+                    <h4 className="text-xs flex flex-row justify-end">{transferInfo?.transactionAfterBalance}$</h4>
                 </div>
             </div>
             <div className="w-full my-2">
                 <label className="block mb-1 text-gray-600 font-bold text-[10px]">Confirm PIN*</label>
                 <input
+                    ref={passwordRef}
                     type="password"
                     name="confirmPIN"
                     className="w-full px-3 py-1 text-[10px] border border-gray-300 rounded focus:outline-none"
@@ -43,9 +77,11 @@ const WalletToWalletModalForm:React.FC<Props> = ({ transferInfo }) => {
                     </svg>
                 </span>
             </div>
-            <Link href={'/user/send-money/payment-confirmation'} className="w-full ">
-                <button className="bg-[#723EEB] text-white w-full text-max px-4 py-1 text-xs rounded transition-all duration-300 ease-in-out hover:bg-[#5c31c0]">Confirm</button>
-            </Link>
+            <button onClick={handleSubmit} className="bg-[#723EEB] text-white w-full text-max px-4 py-1 text-xs rounded transition-all duration-300 ease-in-out hover:bg-[#5c31c0]">
+                {
+                    isLoading ? <LoadingSpinner className='h-4 w-4'/> : 'Confirm'
+                }
+            </button>
         </div>
     );
 };
