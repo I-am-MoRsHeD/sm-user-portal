@@ -103,7 +103,7 @@ const SecondaryFileUpload = ({ control, errors }: { control: any, errors: any })
                     )}
                 </div>
             </div>
-            <div className="flex items-start gap-1">
+            <div className="flex items-start gap-1 mt-5">
                 <Controller
                     control={control}
                     name="checkbox"
