@@ -1,14 +1,14 @@
 "use client";
-import { useState } from "react";
-import Link from "next/link";
-import { useForm } from "react-hook-form";
 import { SocialLogin } from "@/app/auth/login/components";
-import useAxiosSecure from "../hooks/useAxiosSecure";
+import Link from "next/link";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import useAuthContext from "../AuthContext/useAuthContext";
 import LoadingSpinner from "../common/Loading/LoadingSpinner";
 import { useRouter } from "next/navigation";
-import toast from "react-hot-toast";
 import { LiaEyeSlashSolid, LiaEyeSolid } from "react-icons/lia";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 
 interface FormData {
@@ -64,7 +64,7 @@ const RegistrationForm = () => {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-lg px-2 lg:px-6 py-6 my-5 w-full">
+    <div className="bg-white rounded-xl shadow-lg px-6 py-6 my-5 w-full">
       <h3 className="text-black text-sm font-medium">Register</h3>
 
       <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
