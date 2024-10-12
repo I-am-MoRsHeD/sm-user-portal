@@ -13,7 +13,7 @@ const SocialLogin = () => {
     <>
       {/* <div className='flex flex-col items-center '> */}
       <div
-        className={`flex justify-between items-center overflow-hidden ${route === `/auth/login` ? "my-4" : ""
+        className={`flex justify-between items-center overflow-hidden ${route === `/auth/login` ? "my-4" : "my-4"
           }`}
       >
         <hr
@@ -45,7 +45,7 @@ const SocialLogin = () => {
       </button>
       {/* </div> */}
       {route === "/auth/login" ? (
-        <div className="text-center flex justify-center mt-4 items-center gap-1 ">
+        <div className="text-center flex justify-center mt-4 items-center gap-1">
           <Minus className="" />
           <div className="text-black text-sm flex justify-center items-center">
             Do not have an account?{" "}
@@ -59,7 +59,7 @@ const SocialLogin = () => {
           <Minus className="" />
         </div>
       ) : (
-        <div className="text-center flex justify-center mb-4 items-center gap-1">
+        <div className="text-center flex justify-center mt-4 items-center gap-1">
           <Minus className="" />
           <div className="text-black text-sm flex justify-center items-center">
             Already Have An Account?

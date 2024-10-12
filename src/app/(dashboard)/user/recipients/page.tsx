@@ -3,9 +3,12 @@ import Link from 'next/link';
 // import RecipientsCards from '../../components/recipients/RecipientsCards';
 import Topbar from '@/components/Topbar';
 import RecipientsCards from '@/components/recipients/RecipientsCards';
+import useRecipients from '@/components/hooks/useRecipients';
 
 
 const RecipientsPage = () => {
+    const [recipients, refetch, isPending, isLoading] = useRecipients();
+
     return (
         <div>
             <Topbar>Recipients</Topbar>

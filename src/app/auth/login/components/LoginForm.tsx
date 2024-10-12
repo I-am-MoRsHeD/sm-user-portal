@@ -85,7 +85,7 @@ const LoginForm = () => {
 
   return (
     <div className="bg-white rounded-xl shadow-lg px-6 py-6 my-10 lg-my-0 max-w-xl w-full mx-auto">
-      <h3 className="text-black text-sm font-medium pb-5">Login</h3>
+      <h3 className="text-black  font-semibold pb-5">Login</h3>
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* Email Field */}
         <div className="mb-4">
