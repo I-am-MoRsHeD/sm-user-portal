@@ -43,16 +43,18 @@ const ForgetPINModal: React.FC<ModalProps> = ({ setForgetPINModalOpen, isForgetP
             answer: data.answer
         }
         setLoading(true);
+        try {
 
-        const res = await axiosInstance.post('/wallet/forgot-pin', securityQuestionInfo);
+            const res = await axiosInstance.post('/wallet/forgot-pin', securityQuestionInfo);
 
-        if (res.status === 200) {
-            reset();
-            setForgetPINModalOpen(false);
-            setResetPinModalOpen(true);
-        }
-        else {
-            toast.error("Answer is incorrect");
+            if (res.status === 200) {
+                reset();
+                setForgetPINModalOpen(false);
+                setResetPinModalOpen(true);
+                toast.success('Pin reseted successfully')
+            }
+        } catch (error: any) {
+            toast.error('There is something error')
         }
         setLoading(false);
     }
@@ -91,7 +93,7 @@ const ForgetPINModal: React.FC<ModalProps> = ({ setForgetPINModalOpen, isForgetP
                                     {...register("answer", {
                                         required: "Answer is required"
                                     })}
-                                    className={`mt-1 w-full px-3 py-2  border border-gray-400 rounded-full focus:outline-none placeholder:text-black`}
+                                    className={`mt-1 w-full px-3 py-2  border border-gray-400 rounded-full focus:outline-none placeholder:text-gray-400`}
                                     placeholder="Your Answer Here....."
                                 />
                                 {errors.answer && (
@@ -104,7 +106,7 @@ const ForgetPINModal: React.FC<ModalProps> = ({ setForgetPINModalOpen, isForgetP
                                 <button
                                     type="submit"
                                     className="w-full bg-[#ea5455] text-white p-2 rounded text-[10px]">
-                                        {loading ? <LoadingSpinner className='h-4 w-4' /> : 'Confirm'}
+                                    {loading ? <LoadingSpinner className='h-4 w-4' /> : 'Confirm'}
                                     {/* Confirm */}
                                 </button>
                             </div>

@@ -32,6 +32,7 @@ const DepositModal = () => {
             >
                 <DepositForm
                     handleForgetPIN={handleForgetPIN}
+                    setDepositModalOpen={setDepositModalOpen}
                 />
             </Modal>
             <button

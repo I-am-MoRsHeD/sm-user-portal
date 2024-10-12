@@ -50,7 +50,7 @@ const RecipientsCards = () => {
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, logged out!"
+            confirmButtonText: "Yes, Delete it!"
         }).then(async (result) => {
             if (result.isConfirmed) {
                 const res = await axiosInstance.delete(`/recipient/${id}`);

@@ -29,7 +29,7 @@ const LoginForm = () => {
   const router = useRouter();
   // const [isLoading, setIsLoading] = useState(false);
 
-  const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>();
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -69,14 +69,17 @@ const LoginForm = () => {
 
       }
     } catch (error: any) {
-      setLoading(false);
-      toast.error("There is something error");
       if (error.response && error.response.status === 403) {
         setServerError("Invalid email or password");
+        toast.error("Invalid email or password");
       }
       else if (error.response.status === 404) {
         setServerError("Invalid email or password");
+        toast.error("Invalid email or password");
+      } else {
+        toast.error("There is something error");
       }
+      setLoading(false);
     }
   };
 

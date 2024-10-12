@@ -24,7 +24,6 @@ const MakeMainWalletModal: React.FC<ModalProps> = ({ isMakeMainWalletModalOpen, 
     const [, refetch] = useSubWallets();
     const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>();
     const axiosInstance = useAxiosSecure();
-    console.log(subWalletData)
     const handleCloseModal = () => setMakeMainWalletModalOpen(false);
 
     const onSubmit = async (data: any) => {
