@@ -11,14 +11,14 @@ const TheSidebar = () => {
     return (
         <div>
             {/* responsive */}
-            <div className={`duration-300 ease-in-out overflow-y-auto w-full ${isNavOpen ? "translate-x-0 " : "-translate-x-full"} h-full lg:hidden`} >
+            <div className={`duration-300 ease-in-out overflow-y-auto scr w-full ${isNavOpen ? "translate-x-0 " : "-translate-x-full"} h-full lg:hidden [&::-webkit-scrollbar]:w-0 `} >
                 <div className='w-full'>
                     <div className='flex justify-center items-center w-full pt-3'>
                         {
                             isNavOpen ? <SideLogo /> : null
                         }
                     </div>
-                    <div className={`${isNavOpen ? 'mt-3 mb-3' : ''} h-full flex flex-col justify-center items-center gap-3  overflow-y-auto duration-300`}>
+                    <div className={`${isNavOpen ? 'mt-3 mb-3' : ''} h-full flex flex-col justify-center items-center gap-3  overflow-y-auto [&::-webkit-scrollbar]:w-0 duration-300`}>
                         <SideMenuList isNavOpen={isNavOpen}
                             toggleNavigation={toggleNavigation} />
                     </div>

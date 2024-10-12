@@ -8,7 +8,6 @@ const TransactionInfoDisplay = () => {
     const [copyLink, setCopyLink] = useState(false)
     const id = useSearchParams().get('transactionId');
 
-    console.log(id, 'helllop+++++')
 
 
     const handleCopy = (e: any) => {
@@ -34,7 +33,7 @@ const TransactionInfoDisplay = () => {
         <>
             <div className="flex flex-row items-end text-xs lg:text-base w-full px-5">
                 <div className='w-full '>
-                    <label className="block mb-1 text-gray-600 font-semibold text-sm ">Transaction ID</label>
+                    <label className="block mb-1 text-gray-600 font-semibold text-xs lg:text-sm ">Transaction ID</label>
                     <input
                         className='w-full px-3 py-2.5 border-[1px] border-gray-300  text-xs outline-0 rounded-tl-[15px] rounded-bl-[15px]'
                         type="text"
@@ -58,7 +57,7 @@ const TransactionInfoDisplay = () => {
             </div>
             <div className="flex flex-row items-end text-xs lg:text-base w-full px-5">
                 <div className='w-full '>
-                    <label className="block mb-1 text-gray-600 font-semibold text-sm ">Track Your Transaction</label>
+                    <label className="block mb-1 text-gray-600 font-semibold text-xs lg:text-sm ">Track Your Transaction</label>
                     <input
                         className='w-full px-3 py-2.5 border border-gray-300 text-xs outline-0 rounded-tl-[15px] rounded-bl-[15px] font-semibold placeholder:text-[#733ebc]'
                         type="text"
