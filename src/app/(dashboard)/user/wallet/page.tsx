@@ -21,7 +21,7 @@ const WalletPage = () => {
     const [mainWallet] = useMainWallet();
     const [subWallets] = useSubWallets();
     const [walletLog] = useWalletLog();
-    console.log(walletLog)
+    console.log(subWallets);
 
     const [isChangePINModalOpen, setChangePINModalOpen] = useState(false);
     const [isForgetPINModalOpen, setForgetPINModalOpen] = useState(false);
@@ -101,7 +101,7 @@ const WalletPage = () => {
                                 <p className="text-xs text-gray-500">Today,{new Date().toISOString().slice(0, 10)}</p>
                             </div>
                             <div className='my-7 px-2 lg:px-5'>
-                                <h2 className="font-semibold">$ <span className='text-5xl'>{mainWallet?.balance}.00</span>USD</h2>
+                                <h2 className="font-semibold">{mainWallet?.currency?.symbol} <span className='text-5xl'>{mainWallet?.balance}.00</span>{mainWallet?.currency?.code}</h2>
                             </div>
                             {/* button */}
                             <div className='flex flex-row gap-7 justify-center items-center w-3/4 mx-auto my-7'>

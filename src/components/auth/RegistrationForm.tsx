@@ -29,7 +29,7 @@ const RegistrationForm = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors }, reset
   } = useForm<FormData>();
 
   const onSubmit = async (data: FormData) => {
@@ -44,16 +44,31 @@ const RegistrationForm = () => {
           password: data.password,
         };
         const res = await axiosIntance.post('/auth/register', userInfo);
+        console.log(res);
         if (res.status === 200) {
-          console.log(res.status)
           toast.success("Please Check Your mail");
           setLoading(false);
+          reset();
           // router.push('/auth/verify-email')
         }
       };
     } catch (error: any) {
+      if (error.response) {
+        if (error.response.status === 400) {
+          toast.error("Invalid data. Please check your input.");
+        } else if (error.response.status === 409) {
+          toast.error("Email is already registered. Please try logging in.");
+        } else if (error.response.status === 500) {
+          toast.error("Please try again later.");
+        } else {
+          toast.error(`Unexpected error: ${error.response.status}`);
+        }
+      } else if (error.request) {
+        toast.error("No response from the server. Please check your network.");
+      } else {
+        toast.error("An unexpected error occurred. Please try again.");
+      }
       setLoading(false);
-      toast.error("There is something wrong");
     }
 
   };

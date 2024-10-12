@@ -20,7 +20,6 @@ interface FormValues {
 
 const CreateRecipientForm: React.FC = () => {
   const [searchId, setSearchId] = useState<string>("");
-  const [searchError, setSearchError] = useState<string>("");
   const [submitError, setSubmitError] = useState<string>("");
   const [currency] = useCurrency();
 
@@ -43,10 +42,11 @@ const CreateRecipientForm: React.FC = () => {
       toast.success("Recipient created successfully");
       reset();
     } catch (error) {
-      toast.success("There is something wrong");
       if (error instanceof Error && error.message.includes("Token not found")) {
+        toast.error("Authentication failed. Please log in again.");
         setSubmitError("Authentication failed. Please log in again.");
       } else {
+        toast.error(error instanceof Error ? error.message : "Failed to create recipient. Please try again.");
         setSubmitError(error instanceof Error ? error.message : "Failed to create recipient. Please try again.");
       }
     }
@@ -58,26 +58,6 @@ const CreateRecipientForm: React.FC = () => {
       <Topbar>Create Recipient</Topbar>
       <CardSubTitle title="Create Recipient" />
       <div className="bg-white px-2 lg:px-6 py-10 rounded-2xl text-xs my-5">
-        {/* Search Existing Recipient */}
-        <div className="flex flex-row gap-3 items-end lg:w-1/2 mb-6">
-          <div className="lg:w-1/2">
-            <label className="block mb-3 font-semibold">Search Existing Recipient</label>
-            <input
-              type="text"
-              value={searchId}
-              onChange={(e) => setSearchId(e.target.value)}
-              className="w-full px-3 py-1 border border-gray-300 outline-none"
-              placeholder="Enter ID ..."
-            />
-          </div>
-          <div className="w-1/2">
-            <button className="bg-[#5f76e8] w-full px-4 py-1 text-white">
-              Search
-            </button>
-          </div>
-        </div>
-        {searchError && <div className="text-red-500 mb-4">{searchError}</div>}
-
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="w-full mb-4">
             <label className="block mb-3 font-semibold">Full Name*</label>
@@ -138,7 +118,7 @@ const CreateRecipientForm: React.FC = () => {
               >   <option disabled value="">Select Country</option>
                 {
 
-                  currency?.map((currency : any) => (
+                  currency?.map((currency: any) => (
                     <option key={currency.id} value={currency?.country}>{currency?.country}</option>
                   ))
                 }
