@@ -122,6 +122,7 @@ const WalletToWalletpage = () => {
                             onToggle={() => handleDropdownToggle(1)}
                             placeholder='Select Sending Wallet'
                             isLoading={isLoading}
+                            errorMassage='wallet is required'
                         />
                         {/* <h3 className="text-red-600 text-xs">Your Transferring Currency is USD $</h3> */}
                         {/* Sending amount Field */}

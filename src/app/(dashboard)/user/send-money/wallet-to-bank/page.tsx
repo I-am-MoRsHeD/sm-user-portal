@@ -37,11 +37,11 @@ const WalletToBankPage: React.FC = () => {
   const [wallet, setWallet] = useState({} as any);
   const [walletOptions, setWalletOptions] = useState([]);
   const [currencyOptions, setCurrencyOptions] = useState([]);
-  const [sendingCurrency, setSendingCurrency] = useState({} as any);
+  const [sendingCurrency, setSendingCurrency] = useState(wallet?.currency?.id || {} as any);
   const [receivingCurrency, setReceivingCurrency] = useState({} as any);
   const [sendingAmount, setSendingAmount] = useState('');
 
-
+  console.log(wallet, 'wallet')
 
 
   // fetching data from the server
@@ -164,6 +164,7 @@ const WalletToBankPage: React.FC = () => {
             onToggle={() => handleDropdownToggle(1)}
             placeholder='Select Sending Wallet'
             isLoading={isLoading}
+            errorMassage='wallet is required'
           />
           <CurrencyDropdown
             label="Sending Currency"
@@ -173,6 +174,7 @@ const WalletToBankPage: React.FC = () => {
             isLoading={currencyLoading}
             isOpen={openDropdown === 2}
             onToggle={() => handleDropdownToggle(2)}
+            errorMassage='currency is required'
           />
           <CurrencyDropdown
             label="Receiving Currency"
@@ -182,6 +184,7 @@ const WalletToBankPage: React.FC = () => {
             isLoading={currencyLoading}
             isOpen={openDropdown === 3}
             onToggle={() => handleDropdownToggle(3)}
+            errorMassage='currency is required'
           />
           <div className='w-full'>
             <label className="block mb-1 font-semibold text-xs xl:text-sm">Sending Amount</label>

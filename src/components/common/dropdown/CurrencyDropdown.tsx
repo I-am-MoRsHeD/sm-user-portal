@@ -10,6 +10,7 @@ type CurrencyDropdownProps = {
     setSelectedValue: (value: any) => void;
     isLoading?: boolean;
     placeholder?: string;
+    errorMassage?: string
 };
 
 
@@ -21,7 +22,8 @@ const CurrencyDropdown: React.FC<CurrencyDropdownProps & { isOpen?: boolean; onT
     isLoading,
     isOpen,
     onToggle,
-    placeholder
+    placeholder,
+    errorMassage
 }) => {
     const [searchTerm, setSearchTerm] = useState('');
 
@@ -33,7 +35,7 @@ const CurrencyDropdown: React.FC<CurrencyDropdownProps & { isOpen?: boolean; onT
         <div className="relative w-full text-xs xl:text-sm">
             <label className="block mb-2 font-semibold">{label}</label>
             <div className="border rounded-xl flex">
-                <div className="mx-auto flex w-full items-center justify-between px-3 py-1 cursor-pointer bg-gray-200 rounded-l-xl">
+                <div className="mx-auto flex w-full items-center px-3 py-1 cursor-pointer bg-gray-200 rounded-l-xl">
                     {Object.keys(selectedValue).length !== 0 && (
                         <div className="relative w-5 h-5 mr-2">
                             <Image
@@ -82,7 +84,7 @@ const CurrencyDropdown: React.FC<CurrencyDropdownProps & { isOpen?: boolean; onT
                 </div>
                 <div className="max-h-36 overflow-y-auto">
                     {isLoading ? (
-                        <div className='w-full py-4'><SkeletonCurrencyDropdawn /></div>
+                        <div className='w-full py-2'><SkeletonCurrencyDropdawn /></div>
                     ) : (
                         filteredOptions?.map((option) => (
                             <div
@@ -110,7 +112,9 @@ const CurrencyDropdown: React.FC<CurrencyDropdownProps & { isOpen?: boolean; onT
                     )}
                 </div>
             </div>
-
+            {
+                Object.keys(selectedValue).length === 0 && <p className='text-red-500 font-medium text-xs'>{errorMassage}</p>
+            }
         </div>
     );
 };

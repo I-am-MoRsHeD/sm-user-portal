@@ -66,32 +66,32 @@ const PaymentConfirmationPage = () => {
                         <h2 className="text-xl font-semibold">Payment Confirmation</h2>
                     </div>
                     <div>
-                        <div className='my-8 space-y-1'>
-                            <h5 className="text-xs">Transfering Wallet: {data?.walletType}</h5>
-                            <h5 className="text-xs">Transfering Amount: {data?.amount}</h5>
+                        <div className='my-8 space-y-1 text-xs lg:text-sm'>
+                            <h5 className="">Transfering Wallet: {data?.walletType}</h5>
+                            <h5 className="">Transfering Amount: {data?.amount}</h5>
                         </div>
                         <div className='flex flex-row w-full h-28 my-3'>
                             <div className='border p-2 w-1/2 h-full'>
-                                <h5 className="text-[10px]">Your Current Wallet Balance: </h5>
-                                <h4 className="text-xl h-full flex flex-row justify-end items-end pb-8">{
+                                <h5 className="text-xs lg:text-sm">Your Current Wallet Balance: </h5>
+                                <h4 className="text-2xl h-full flex flex-row justify-end items-end pb-8">{
                                     isLoading ? <LoadingSpin height='2rem' width='2rem' borderWidth='0.425rem' color='#723EEB' /> :
                                         data?.senderCurrentBalance
                                 }</h4>
                             </div>
                             <div className='border p-2 w-1/2 h-full'>
-                                <h5 className="text-[10px]">Balance after Transaction: </h5>
-                                <h4 className="text-xl h-full flex flex-row justify-end items-end pb-4">{
+                                <h5 className="text-xs lg:text-sm">Balance after Transaction: </h5>
+                                <h4 className="text-2xl h-full flex flex-row justify-end items-end pb-4">{
                                     isLoading ? <LoadingSpin height='2rem' width='2rem' borderWidth='0.425rem' color='#723EEB' /> :
                                         data?.transactionAfterBalance
                                 }</h4>
                             </div>
                         </div>
                         <div className="w-full my-5 relative ">
-                            <label className="block mb-1 text-gray-600 font-bold text-[10px]">Enter PIN*</label>
+                            <label className="block mb-1 text-gray-600 font-bold text-xs lg:text-sm">Enter PIN*</label>
                             <input
                                 type="password"
                                 name="endterPIN"
-                                className="w-full px-3 py-2 text-[10px] border border-gray-300 rounded-full focus:outline-none"
+                                className="w-full px-3 py-2 text-xs border border-gray-300 rounded-full focus:outline-none"
                                 placeholder="Enter PIN....."
                                 value={pin}
                                 onChange={(e) => setPin(e.target.value)}

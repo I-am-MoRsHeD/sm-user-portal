@@ -6,6 +6,7 @@ import { redirect, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import LoadingSpin from "../2fa-security/LoadingSpin";
+import SkeletonForRecipient from "../common/skeleton/SkeletonForRecipient";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import useRecipients from "../hooks/useRecipients";
 import RecipientsTable from "./RecipientsTable";
@@ -20,7 +21,7 @@ const RecipientsCards = () => {
     const [open, setOpen] = useState<OpenStateType>({});
     const [select, setSelect] = useState<OpenStateType>({});
     const [selectID, setSelectID] = useState('');
-    const [recipients, isPending] = useRecipients();
+    const [recipients, isPending, isLoading] = useRecipients();
     const axiosInstance = useAxiosSecure();
     const queryClient = useQueryClient();
 
@@ -72,8 +73,9 @@ const RecipientsCards = () => {
 
     return (
         <>
-            {
-                recipients.map((data: any) => (
+
+            {isLoading ? <SkeletonForRecipient /> :
+                recipients?.map((data: any) => (
                     <div key={data.id} className={`${select[data.recipientId] ? 'bg-[#abd2e9]' : 'bg-white'} px-2 py-2 lg:px-6 lg:py-4 mb-5 rounded-2xl cursor-pointer ${open[data.id] ? ' shadow-md shadow-neutral-400' : ''}`}>
                         <div className="flex flex-row justify-between items-center w-full">
                             <div onClick={() => toggleCard(data.id)} className="flex flex-row gap-3 lg:gap-4 items-start w-[85%]">
@@ -102,9 +104,13 @@ const RecipientsCards = () => {
                     </div>
                 ))
             }
-            <div className='w-[50%] lg:w-[100%]'>
-                <button onClick={() => handleAddRecipient()} className="text-sm bg-[#723EEB] text-white w-full p-2.5 rounded-xl font-semibold flex justify-center items-center">{isAddRecipientPending ? <LoadingSpin height='1rem' width='1rem' borderWidth='0.225rem' color='#FFF' /> : 'Next'}</button>
-            </div>
+            {!isLoading &&
+                (
+                    <div className='w-[50%] lg:w-[100%]'>
+                        <button onClick={() => handleAddRecipient()} className="text-sm bg-[#723EEB] text-white w-full p-2.5 rounded-xl font-semibold flex justify-center items-center">{isAddRecipientPending ? <LoadingSpin height='1rem' width='1rem' borderWidth='0.225rem' color='#FFF' /> : 'Next'}</button>
+                    </div>
+                )
+            }
         </>
     );
 };
