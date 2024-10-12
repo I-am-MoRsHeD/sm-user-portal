@@ -40,7 +40,7 @@ const ForgetPassword = () => {
                     toast.success('Password reset link sent to your email');
                     reset();
                 } else {
-                    toast.error("There is something wrong");
+                    toast.error("No User found on this email");
                     setLoading(false);
                 }
             } catch (err: Error | any) {

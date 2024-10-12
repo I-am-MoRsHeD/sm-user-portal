@@ -16,16 +16,76 @@ interface FormData {
     answer: string;
     newPin: number;
 }
+type DropdownProps = {
+    label: string;
+    options: { name: string; value: string; }[];
+    selectedValue: string;
+    setSelectedValue: (value: string) => void;
+};
+
+// Reusable Dropdown component
+const Dropdown: React.FC<DropdownProps> = ({ label, options, selectedValue, setSelectedValue }) => {
+    const [isOpen, setIsOpen] = useState(false);
+    const selectedOption = options?.find(option => option.value === selectedValue);
+
+    return (
+        <div className="relative w-full text-xs">
+            <label className="block mb-2 font-semibold">{label}</label>
+            <div
+                onClick={() => setIsOpen(!isOpen)}
+                className="mx-auto flex w-full items-center justify-between rounded-xl px-3 py-1 border border-gray-400 cursor-pointer"
+            >
+                <h1 className="font-medium">{selectedOption ? selectedOption.name : 'select'}</h1>
+                <svg className={`${isOpen ? '-rotate-180' : 'rotate-0'} duration-300`} width={25} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M7 10L12 15L17 10" stroke="#4B5563" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>{' '}</g></svg>
+            </div>
+
+            <div className={`${isOpen ? 'visible top-12 bg-white opacity-100' : 'invisible -top-4 opacity-0'} absolute mx-auto my-4 w-full z-50 rounded-xl py-4 border duration-300`}>
+                {options?.map((option, idx) => (
+                    <div
+                        key={idx}
+                        onClick={() => {
+                            setSelectedValue(option.value);
+                            setIsOpen(false);
+                        }}
+                        className="px-6 py-2 text-gray-500 hover:bg-gray-100 cursor-pointer"
+                    >
+                        {option.name}
+                    </div>
+                ))}
+            </div>
+
+        </div>
+    );
+};
+
+const securityQuestionOptions = [
+    {
+        name: 'What is your favourite hobby?',
+        value: 'What is your favourite hobby?',
+    },
+    {
+        name: 'In what city were you born?',
+        value: 'In what city were you born?',
+    },
+    {
+        name: 'What was your childhood nickname?',
+        value: 'What was your childhood nickname?',
+    },
+    {
+        name: 'What is your favorite sports team?',
+        value: 'What is your favorite sports team?',
+    },
+];
 
 const CreateNewWalletForm = () => {
-    const [loading, setLoading] =  useState(false);
+    const [loading, setLoading] = useState(false);
+    const [securityQuestion, setSecurityQuestion] = useState(securityQuestionOptions[1].value);
     const [currency] = useCurrency();
     const [mainWallet] = useMainWallet();
     const [, refetch] = useSubWallets();
     const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>();
     const [pin, setPin] = useState(false);
     const axiosInstance = useAxiosSecure();
-    console.log(mainWallet);
 
 
     const onSubmit = async (data: any) => {
@@ -38,7 +98,7 @@ const CreateNewWalletForm = () => {
                     category: 'PRIMARY',
                     walletEmail: data?.email,
                     walletName: data?.walletName,
-                    securityQuestion: data?.securityQuestion,
+                    securityQuestion: securityQuestion,
                     answer: data?.answer,
                     pinNumber: parseInt(data?.newPin)
                 };
@@ -54,7 +114,7 @@ const CreateNewWalletForm = () => {
                     category: 'SECONDARY',
                     walletEmail: data?.email,
                     walletName: data?.walletName,
-                    securityQuestion: data?.securityQuestion,
+                    securityQuestion: securityQuestion,
                     answer: data?.answer,
                     pinNumber: parseInt(data?.newPin)
                 };
@@ -77,7 +137,7 @@ const CreateNewWalletForm = () => {
     return (
         <>
             <form className='text-[10px] sm:text-sm' onSubmit={handleSubmit(onSubmit)}>
-                <h3 className="font-semibold pb-3 text-base">Create New Wallet</h3>
+                <h3 className="font-semibold pb-3 text-base">Create {mainWallet ? 'New Sub' : 'New'} Wallet</h3>
                 {/* wallet name Field */}
                 <div className="mb-3">
                     <label className="text-gray-600  font-semibold">Wallet Name</label>
@@ -129,8 +189,14 @@ const CreateNewWalletForm = () => {
                     )}
                 </div>
                 {/* security question Field */}
-                <div className="mb-3">
-                    <label className="text-gray-600   font-semibold">Enter a Security Question</label>
+                <Dropdown
+                    label="Select Transfer Type"
+                    options={securityQuestionOptions}
+                    selectedValue={securityQuestion}
+                    setSelectedValue={setSecurityQuestion}
+                />
+                {/* <div className="mb-3">
+                    <label className="text-gray-600 font-semibold">Enter a Security Question</label>
                     <input
                         type="text"
                         {...register("securityQuestion", {
@@ -142,10 +208,10 @@ const CreateNewWalletForm = () => {
                     {errors.securityQuestion?.type === 'required' && (
                         <p className="text-red-500 text-xs">Security Question is required</p>
                     )}
-                </div>
+                </div> */}
                 {/* Answer Field */}
                 <div className="mb-3">
-                    <label className="text-gray-600  font-semibold">Answer</label>
+                    <label className="text-gray-600 font-semibold">Answer</label>
                     <input
                         type="text"
                         {...register("answer", {
@@ -160,7 +226,7 @@ const CreateNewWalletForm = () => {
                 </div>
                 {/* Pin Field */}
                 <div className="mb-3">
-                    <label className="text-gray-600   font-semibold">Create New PIN</label>
+                    <label className="text-gray-600 font-semibold">Create New PIN</label>
                     <div className="relative">
                         <input
                             type={'number'}
@@ -174,7 +240,7 @@ const CreateNewWalletForm = () => {
                         <button
                             type="button"
                             onClick={() => setPin(!pin)}
-                            className="absolute top-2.5 right-4 text-[11px]"
+                            className="absolute top-3 right-4 text-[11px]"
                         >
                             {pin ? <FaEye /> : <FaEyeSlash />}
                         </button>

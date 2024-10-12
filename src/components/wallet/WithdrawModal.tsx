@@ -36,6 +36,7 @@ const WithdrawModal = () => {
                 >
                     <WithdrawForm
                         handleForgetPIN={handleForgetPIN}
+                        setWithdrawModalOpen={setWithdrawModalOpen}
                     />
 
                 </Modal>

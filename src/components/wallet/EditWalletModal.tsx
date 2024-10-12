@@ -28,7 +28,7 @@ const EditWalletModal: React.FC<ModalProps> = ({ isEditWalletModalOpen, setEditW
     const { subWalletData }: any = useNavigationContext();
     const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm<FormData>();
     const axiosInstance = useAxiosSecure();
-
+    console.log(subWalletData?.currency?.name);
 
     useEffect(() => {
         setValue('walletName', subWalletData?.walletName);
@@ -43,7 +43,7 @@ const EditWalletModal: React.FC<ModalProps> = ({ isEditWalletModalOpen, setEditW
         const updatedInfo = {
             walletName: data?.walletName,
             walletEmail: data?.walletEmail,
-            currencyId: data?.currency,
+            currencyId: subWalletData?.currency?.id,
             pinNumber: parseInt(data?.confirmPIN)
         };
         setLoading(true);
@@ -111,16 +111,17 @@ const EditWalletModal: React.FC<ModalProps> = ({ isEditWalletModalOpen, setEditW
                         <label className="">Select Currency*</label>
                         <select
                             className="mt-1 w-full px-3 border border-gray-400 rounded-full focus:outline-none select select-sm text-xs"
-                            defaultValue={subWalletData?.currency?.name}
+                            // defaultValue={subWalletData?.currency?.name}
                             {...register("currency", {
                                 required: 'Please select a currency'
                             })}
                         >
-                            {currency?.map((data: any) => (
+                            <option disabled value={subWalletData?.currency?.name}>{subWalletData?.currency?.name}</option>
+                            {/* {currency?.map((data: any) => (
                                 <option value={data?.id} key={data.id}>
                                     {data?.name}
                                 </option>
-                            ))}
+                            ))} */}
                         </select>
                         {errors.currency?.type === 'required' && (
                             <p className="text-red-500 text-xs">Currency is required</p>

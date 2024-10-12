@@ -6,7 +6,7 @@ import toast from "react-hot-toast"
 const TransactionInfoDisplay = () => {
     const [copyId, setCopyId] = useState(false)
     const [copyLink, setCopyLink] = useState(false)
-    const id = useSearchParams().get('transactionID');
+    const id = useSearchParams().get('transactionId');
 
     console.log(id, 'helllop+++++')
 

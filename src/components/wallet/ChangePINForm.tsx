@@ -81,7 +81,7 @@ const ChangePINForm: React.FC<ModalProps> = ({ handleForgetPIN, mainWallet, setC
                                 required: "Pin is required",
                                 minLength: 4,
                             })}
-                            className={`w-full mt-1 px-3 py-1 border border-gray-400 rounded-full focus:outline-none placeholder:text-black`}
+                            className={`w-full mt-1 px-3 py-1 border border-gray-400 rounded-full focus:outline-none placeholder:text-gray-400 text-xs`}
                             placeholder="PIN Here...."
                         />
                         <button
@@ -118,7 +118,7 @@ const ChangePINForm: React.FC<ModalProps> = ({ handleForgetPIN, mainWallet, setC
                                 required: "Pin is required",
                                 minLength: 4,
                             })}
-                            className={`w-full mt-1 px-3 py-1 border border-gray-400 rounded-full focus:outline-none placeholder:text-black`}
+                            className={`w-full mt-1 px-3 py-1 border border-gray-400 rounded-full focus:outline-none placeholder:text-gray-400 text-xs`}
                             placeholder="PIN Here...."
                         />
                         <button
@@ -147,7 +147,7 @@ const ChangePINForm: React.FC<ModalProps> = ({ handleForgetPIN, mainWallet, setC
                                 required: "Pin is required",
                                 minLength: 4,
                             })}
-                            className={`w-full mt-1 px-3 py-1 border border-gray-400 rounded-full focus:outline-none placeholder:text-black`}
+                            className={`w-full mt-1 px-3 py-1 border border-gray-400 rounded-full focus:outline-none placeholder:text-gray-400 text-xs`}
                             placeholder="PIN Here...."
                         />
                         <button

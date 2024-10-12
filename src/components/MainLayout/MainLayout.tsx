@@ -37,7 +37,7 @@ const MainLayout = ({ children }: LayoutProps) => {
             <div className='flex w-full bg-gradient-to-tl from-cyan-200 to-pink-200 h-auto text-black'>
                 {/* Sidebar */}
                 <div
-                    className={`h-screen bg-white transition-all duration-300 ease-in-out overflow-auto ${isNavOpen
+                    className={`h-screen bg-white transition-all duration-500 ease-in-out overflow-auto ${isNavOpen
                         ? 'w-[12%] md:w-[20%] lg:w-[18%] xl:w-[15%] 5xl:w-[10%] translate-x-0'
                         : 'w-[0] lg:w-[5%] 5xl:w-[3%] translate-x-[-100%] md:translate-x-0'
                         }`}
@@ -47,7 +47,7 @@ const MainLayout = ({ children }: LayoutProps) => {
 
                 {/* Main content */}
                 <div
-                    className={`h-screen transition-all duration-300 ease-in-out ${isNavOpen
+                    className={`h-screen transition-all duration-500 ease-in-out ${isNavOpen
                         ? 'w-[88%] md:w-[80%] lg:w-[82%] xl:w-[85%] 5xl:w-[90%]'
                         : 'w-[100%] lg:w-[95%] 5xl:w-[97%]'
                         }`}

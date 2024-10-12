@@ -49,7 +49,7 @@ const SubWalletModalForm: React.FC<ModalProps> = ({ handleWithdrawIntoWallet, ha
                 <p className="text-xs text-gray-500">Today, {new Date().toISOString().slice(0, 10)}</p>
             </div>
             <div className='mt-5 mb-3'>
-                <h2 className="font-semibold">$ <span className='text-5xl'>{subWalletData?.balance}.0</span>{subWalletData?.currency?.code}</h2>
+                <h2 className="font-semibold">{subWalletData?.currency?.symbol} <span className='text-5xl'>{subWalletData?.balance}.0</span>{subWalletData?.currency?.code}</h2>
             </div>
             <div className='w-full flex flex-row justify-between items-center gap-10 my-5'>
                 <div className='w-5/6 flex flex-row gap-2 text-xs'>

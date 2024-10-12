@@ -9,6 +9,7 @@ import toast from 'react-hot-toast';
 
 interface ModalProps {
     handleForgetPIN: (value: any) => void;
+    setDepositModalOpen: (value: any) => void;
 }
 interface FormData {
     amount: string;
@@ -16,7 +17,7 @@ interface FormData {
     transactionID: string;
     pin: number;
 }
-const DepositForm: React.FC<ModalProps> = ({ handleForgetPIN }) => {
+const DepositForm: React.FC<ModalProps> = ({ handleForgetPIN, setDepositModalOpen }) => {
     const [loading, setLoading] = useState(false);
     const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>();
     const [pin, setPin] = useState(false);
@@ -39,7 +40,8 @@ const DepositForm: React.FC<ModalProps> = ({ handleForgetPIN }) => {
             if (res.status === 200) {
                 reset();
                 mainWalletRefetch();
-                toast.success(`${res?.data?.message}`);
+                toast.success(`Your deposit is under review`);
+                setDepositModalOpen(false);
             }
         } catch (error: any) {
             if (error) {
@@ -56,7 +58,7 @@ const DepositForm: React.FC<ModalProps> = ({ handleForgetPIN }) => {
                 <h3 className="">Available Balance</h3>
             </div>
             <div className='mt-1 mb-5'>
-                <h2 className="font-semibold">$ <span className='text-5xl'>{mainWallet?.balance}.0</span>USD</h2>
+                <h2 className="font-semibold">{mainWallet?.currency?.symbol} <span className='text-5xl'>{mainWallet?.balance}.0</span>{mainWallet?.currency?.code}</h2>
             </div>
             <form onSubmit={handleSubmit(onSubmit)} className='space-y-4'>
                 {/* Amount Field */}
