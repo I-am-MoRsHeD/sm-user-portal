@@ -27,7 +27,7 @@ const RecipientsCards = () => {
 
     const id = useSearchParams().get('id');
     //Add recipient
-    const { data, isSuccess, isPending: isAddRecipientPending, isError, mutate } = useMutation({
+    const { data, isSuccess, isPending: isAddRecipientPending, isError, mutate, error } = useMutation({
         mutationFn: async () => {
             const response = await axiosInstance.post(`/transaction/wallet-to-bank/add-recipient/${id}`, {
                 "recipientId": selectID
@@ -63,24 +63,31 @@ const RecipientsCards = () => {
 
     useEffect(() => {
         if (isError) {
-            toast.error('Add recipient Error');
+            toast.error(error.message);
         }
         if (isSuccess) {
             toast.success('Recipient added successfully');
             redirect(`/user/send-money/wallet-payment-confirmation-card?id=${id}`);
         }
-    }, [isSuccess, isError, id]);
+    }, [isSuccess, isError, id, error]);
 
     return (
         <>
 
             {isLoading ? <SkeletonForRecipient /> :
                 recipients?.map((data: any) => (
-                    <div key={data.id} className={`${select[data.recipientId] ? 'bg-[#abd2e9]' : 'bg-white'} px-2 py-2 lg:px-6 lg:py-4 mb-5 rounded-2xl cursor-pointer ${open[data.id] ? ' shadow-md shadow-neutral-400' : ''}`}>
+                    <div key={data.id} className={`${select[data.recipientId] ? 'bg-[#abd2e9]' : 'bg-white'} px-2 py-2 lg:px-6 lg:py-4 mb-5 rounded-2xl group cursor-pointer ${open[data.id] ? ' shadow-md shadow-neutral-400' : ''}`}>
                         <div className="flex flex-row justify-between items-center w-full">
                             <div onClick={() => toggleCard(data.id)} className="flex flex-row gap-3 lg:gap-4 items-start w-[85%]">
-                                <div className="bg-gray-200 rounded-[50%] w-6 lg:w-9 h-6 lg:h-9 flex justify-center items-center hover:bg-[#723EEB] hover:stroke-white">
-                                    {/* {data.icon} */}
+                                <div className="bg-gray-200 rounded-[50%] w-6 lg:w-9 h-6 lg:h-9 flex justify-center items-center ">
+                                    <div
+                                        className={`${open[(data.id)] ? "rotate-0" : "-rotate-180"
+                                            } duration-500 bg-gray-200 rounded-full w-6 lg:w-9 h-6 lg:h-9 flex justify-center items-center text-black group-hover:bg-[#723EEB] group-hover:text-white`}
+                                    >
+                                        <svg width="12" height="12" viewBox="0 0 16 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M8 0L7.37627 0.59661L0 7.97288L1.24746 9.22034L7.1322 3.33559V20.7458H8.8678V3.33559L14.7525 9.22034L16 7.97288L8.62373 0.59661L8 0Z" fill="currentColor" />
+                                        </svg>
+                                    </div>
                                 </div>
                                 <div className="lg:w-36 w-24">
                                     <h3 className="text-[10px] lg:text-base font-bold">{data.fullName}</h3>

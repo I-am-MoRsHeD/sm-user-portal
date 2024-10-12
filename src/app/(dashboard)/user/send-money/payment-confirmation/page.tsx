@@ -8,8 +8,6 @@ import { useSearchParams } from 'next/navigation';
 const PaymentConfirmationMassagePage = () => {
     const id = useSearchParams().get('transactionID');
 
-    console.log(id, 'usafuiaywer')
-
     return (
         <div>
             <Topbar>Payment Confirmation</Topbar>

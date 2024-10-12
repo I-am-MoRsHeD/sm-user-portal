@@ -1,7 +1,10 @@
+import useTransactions from '@/components/hooks/useTransactions';
+import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import CompletePayment from '../ProgressPayment/CompletePayment';
 import ProcessingPayment from '../ProgressPayment/ProcessingPayment';
-import useTransactions from '@/components/hooks/useTransactions';
+
+import AssetEmptyBox from '../../../../public/empty-box.png';
 
 interface Transaction {
     id: number;
@@ -126,8 +129,9 @@ const TransactionTable = () => {
                         </tbody>
                     </table>
                 ) : (
-                    <div className='flex justify-center items-center h-80 py-5 rounded-xl bg-white'>
-                        <h3 className="font-semibold text-black">You have no transactions</h3>
+                    <div className='flex justify-center flex-col items-center gap-2 h-[calc(100vh-30vh)] py-5 rounded-xl bg-white'>
+                        <Image src={AssetEmptyBox} alt='empty' width={200} height={200} />
+                        <p className='text-cyan-500 font-semibold text-xl'>Data Not Found</p>
                     </div>
                 )
             }

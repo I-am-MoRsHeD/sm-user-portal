@@ -62,7 +62,7 @@ const WalletToBankPage: React.FC = () => {
   });
 
   //Initiate Transaction
-  const { data: transactionPostData, isSuccess: isTransactionSuccess, isPending: isTransactionPending, isError: transactionError, mutate: initiateTransactionMutate } = useMutation({
+  const { data: transactionPostData, isSuccess: isTransactionSuccess, isPending: isTransactionPending, isError: transactionError, mutate: initiateTransactionMutate, error } = useMutation({
     mutationFn: async (value: {}) => {
       const response = await axiosInstance.post(`/transaction/wallet-to-bank/initiate-transaction`, value);
       return response.data;
@@ -113,6 +113,10 @@ const WalletToBankPage: React.FC = () => {
       "sendingCurrencyId": sendingCurrency?.id,
       "receivingCurrencyId": receivingCurrency?.id
     }
+    if (!wallet?.category || !sendingAmount || !sendingCurrency || !receivingCurrency) {
+      toast.error('All fields are required');
+      return;
+    }
     initiateTransactionMutate(newTransfer);
   }
 
@@ -130,13 +134,13 @@ const WalletToBankPage: React.FC = () => {
       toast.error('Get User Currency Error');
     }
     if (transactionError) {
-      toast.error('Something went wrong posting transaction');
+      toast.error(error?.message);
     }
     if (isTransactionSuccess) {
       toast.success('Transaction Initiated');
       redirect(`/user/recipients/select-recipients?id=${transactionPostData?.data?.id}`);
     }
-  }, [isUserWalletError, isGetCurrencyError, transactionError, isTransactionSuccess, router, transactionPostData]);
+  }, [isUserWalletError, isGetCurrencyError, transactionError, isTransactionSuccess, router, transactionPostData, error]);
 
 
   return (

@@ -68,6 +68,12 @@ const WalletToWalletpage = () => {
             walletId: wallet?.id
         }
 
+
+        if (!wallet?.category || !data?.sendingAmount || !data?.walletNumber) {
+            toast.error('All fields are required')
+            return;
+        };
+
         try {
             setLoading(true)
             const res = await axiosInstance.post('/transaction/wallet-to-wallet/initiate-transaction', walletInfo);
