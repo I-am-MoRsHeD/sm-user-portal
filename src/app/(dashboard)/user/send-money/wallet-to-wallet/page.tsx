@@ -2,34 +2,70 @@
 import LoaderSpinner from '@/components/LoaderSpinner';
 import TopBar from '@/components/Topbar';
 import SendMoneyCard from '@/components/common/SendMoneyCard/SendMoneyCard';
-import TransferOptionSelect from '@/components/common/SendMoneyCard/TransferOptionSelect';
-import WalletOptionSelect from '@/components/common/SendMoneyCard/WalletOptionSelect';
 import CardSubTitle from '@/components/common/cardSubTitle/CardSubTitle';
+import SelectDropdown from '@/components/common/dropdown/SelectDropdown';
 import SendMoneyModal from '@/components/common/sendMoneyModal/SendMoneyModal';
 import useAxiosSecure from '@/components/hooks/useAxiosSecure';
 import WalletToWalletModalForm, { TransactionPreparedTypes } from '@/components/send-money/WalletToWalletModalForm';
-import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
 const WalletToWalletpage = () => {
+
+    const transferOptions = [{
+        name: 'Wallet to Wallet',
+        value: 'WALLET_TO_WALLET',
+    }, {
+        name: 'Wallet to Bank',
+        value: 'WALLET_TO_BANK',
+    }, {
+        name: 'Bank to Bank',
+        value: 'BANK_TO_BANK',
+    }];
+
     const [walletModalOpen, setWalletModalOpen] = useState(false);
     const [loading, setLoading] = useState(false)
     const [transactionPreparedData, setTransactionPreparedData] = useState<TransactionPreparedTypes | null>(null);
     const { register, control, handleSubmit, formState: { errors } } = useForm<any>();
     const axiosInstance = useAxiosSecure();
+    const [transferType, setTransferType] = useState(transferOptions[0].value);
+    const [openDropdown, setOpenDropdown] = useState<number | null>(null);
+    const [walletOptions, setWalletOptions] = useState([]);
+    const [wallet, setWallet] = useState({} as any);
 
     const handleCloseModal = () => {
         setWalletModalOpen(false);
     };
 
+    const { data: userWalletData, isError: isUserWalletError, isLoading, error } = useQuery({
+        queryKey: ['user-wallet'],
+        queryFn: async () => {
+            const res = await axiosInstance.get(`/wallet/user-wallets`);
+            return res?.data?.data;
+        },
+    });
+    // wallet options
+    useEffect(() => {
+        const options = userWalletData?.map((item: any) => {
+            return {
+                value: {
+                    ...item
+                },
+                name: item?.category === 'PRIMARY' ? `Main: ${item?.walletName}` : `Sub: ${item?.walletName}`
+            }
+        })
+        setWalletOptions(options);
+    }, [userWalletData]);
+
     const onSubmit = async (data: any) => {
         const walletInfo = {
-            transactionType: data?.transactionType?.value,
-            walletType: data?.walletType.value.category,
+            transactionType: transferType,
+            walletType: wallet?.category,
             amount: parseInt(data?.sendingAmount),
             recipientsWalletNumber: data.walletNumber,
-            walletId: data?.walletType?.value.id
+            walletId: wallet?.id
         }
 
         try {
@@ -49,6 +85,17 @@ const WalletToWalletpage = () => {
 
     }
 
+    const handleDropdownToggle = (index: number) => {
+        setOpenDropdown(openDropdown === index ? null : index); // Close if it's already open
+    };
+
+    useEffect(() => {
+        if (isUserWalletError) {
+            toast.error(error.message);
+        }
+
+    }, [isUserWalletError, error]);
+
     return (
         <div className='min-h-screen max-h-auto'>
             <TopBar>Send Money</TopBar>
@@ -56,19 +103,30 @@ const WalletToWalletpage = () => {
             <div>
                 <SendMoneyCard title='Wallet To Wallet Transfer'>
                     {/* form */}
-                    <form onSubmit={handleSubmit(onSubmit)} className='w-[95%] lg:w-[45%] mx-auto mt-5'>
-                        <div className="w-full text-xs mb-[14px]">
-                            <label className="block mb-2 font-semibold">Select Transfer Type</label>
-                            <TransferOptionSelect control={control} />
-                        </div>
-                        <div className="w-full text-xs mb-3">
-                            <label className="block mb-2 font-semibold">Select Sending Wallet</label>
-                            <WalletOptionSelect control={control} />
-                        </div>
+                    <form onSubmit={handleSubmit(onSubmit)} className='w-[95%] lg:w-[45%] mx-auto mt-5 space-y-4'>
+                        <SelectDropdown
+                            label="Transfer Type"
+                            options={transferOptions}
+                            selectedValue={transferType}
+                            setSelectedValue={setTransferType}
+                            isOpen={openDropdown === 0}
+                            onToggle={() => handleDropdownToggle(0)}
+                            fixedValue={true}
+                        />
+                        <SelectDropdown
+                            label="Select Sending Wallet"
+                            options={walletOptions}
+                            selectedValue={wallet}
+                            setSelectedValue={setWallet}
+                            isOpen={openDropdown === 1}
+                            onToggle={() => handleDropdownToggle(1)}
+                            placeholder='Select Sending Wallet'
+                            isLoading={isLoading}
+                        />
                         {/* <h3 className="text-red-600 text-xs">Your Transferring Currency is USD $</h3> */}
                         {/* Sending amount Field */}
-                        <div className="mb-3">
-                            <label className="font-semibold text-xs">Sending Amount</label>
+                        <div className="">
+                            <label className="font-semibold text-xs xl:text-sm">Sending Amount</label>
                             <input
                                 type="number"
                                 {...register("sendingAmount", {
@@ -82,8 +140,8 @@ const WalletToWalletpage = () => {
                             )}
                         </div>
                         {/* Wallet Number Field */}
-                        <div className="mb-3">
-                            <label className="font-semibold text-xs mb-2">Recipients Wallet Number</label>
+                        <div className="">
+                            <label className="font-semibold text-xs xl:text-sm mb-2">Recipients Wallet Number</label>
                             <input
                                 type="number"
                                 {...register("walletNumber", {

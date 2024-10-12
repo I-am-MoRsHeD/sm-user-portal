@@ -1,3 +1,5 @@
+import SkeletonCurrencyDropdawn from "../skeleton/SkeletonCurrencyDropdawn";
+
 type DropdownProps = {
     label: string;
     options: { name: string; value: string; }[];
@@ -7,6 +9,7 @@ type DropdownProps = {
     onToggle?: () => void;
     fixedValue?: boolean;
     placeholder?: string;
+    isLoading?: boolean
 };
 
 const SelectDropdown: React.FC<DropdownProps> = ({
@@ -17,7 +20,8 @@ const SelectDropdown: React.FC<DropdownProps> = ({
     isOpen,
     onToggle,
     fixedValue,
-    placeholder
+    placeholder,
+    isLoading
 }) => {
     const selectedOption: { name: string; value: string; } | undefined = options?.find(option => option.value === selectedValue);
 
@@ -37,14 +41,16 @@ const SelectDropdown: React.FC<DropdownProps> = ({
             </div>
 
             <div className={`${isOpen ? 'visible top-[2.8rem] bg-white opacity-100' : 'invisible top-0 opacity-0'} absolute mx-auto my-4 w-full z-50 rounded-xl py-2 space-y-2 border duration-300 ${fixedValue ? 'hidden' : 'block'}`}>
-                {options?.map((option, idx) => (
+                {isLoading ? (
+                    <div className='w-full py-4'><SkeletonCurrencyDropdawn /></div>
+                ) : options?.map((option, idx) => (
                     <div
                         key={idx}
                         onClick={() => {
                             setSelectedValue(option.value);
                             onToggle && onToggle(); // Close the dropdown
                         }}
-                        className="px-6 py-2 text-gray-500 hover:bg-gray-100 cursor-pointer bg-gray-50"
+                        className="px-6 py-2 text-gray-500 hover:bg-gray-2s00 cursor-pointer bg-gray-100"
                     >
                         {option.name}
                     </div>

@@ -163,6 +163,7 @@ const WalletToBankPage: React.FC = () => {
             isOpen={openDropdown === 1}
             onToggle={() => handleDropdownToggle(1)}
             placeholder='Select Sending Wallet'
+            isLoading={isLoading}
           />
           <CurrencyDropdown
             label="Sending Currency"

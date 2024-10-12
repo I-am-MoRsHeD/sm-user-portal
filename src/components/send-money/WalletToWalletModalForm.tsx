@@ -37,9 +37,9 @@ const WalletToWalletModalForm = ({ transferInfo, setWalletModalOpen }: TransferT
             setIsLoading(true)
             const res = await axiosInstance.post(`transaction/wallet-to-wallet/completed/${transferInfo?.id}`, password);
             if (res.status === 200) {
-                toast.success("Your Transaction Successful");
                 router.push(`/user/send-money/payment-confirmation?transactionId=${res?.data.data.transactionId}`);
                 setWalletModalOpen(false);
+                toast.success("Your Transaction Successful");
             } else {
                 toast.error(res?.data.message);
             }
