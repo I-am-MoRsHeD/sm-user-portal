@@ -23,14 +23,6 @@ const RecipientsCards = () => {
     const router = useRouter();
     const axiosInstance = useAxiosSecure();
 
-    // if (isLoading) {
-    //     return (
-    //         <div className="flex justify-center items-center h-[80vh]">
-    //             <LoadingSpinner className="h-4 w-4" />
-    //         </div>
-    //     )
-    // }
-
     const toggleCard = (id: string) => {
         setOpen((prevState) => ({
             ...prevState,

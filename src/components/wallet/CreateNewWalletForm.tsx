@@ -64,8 +64,8 @@ const securityQuestionOptions = [
         value: 'What is your favourite hobby?',
     },
     {
-        name: 'In what city were you born?',
-        value: 'In what city were you born?',
+        name: 'In which city were you born?',
+        value: 'In which city were you born?',
     },
     {
         name: 'What was your childhood nickname?',
@@ -81,7 +81,7 @@ const CreateNewWalletForm = () => {
     const [loading, setLoading] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const [currency] = useCurrency();
-    const [securityQuestion, setSecurityQuestion] = useState(securityQuestionOptions[1].value);
+    const [securityQuestion, setSecurityQuestion] = useState(securityQuestionOptions[0].value);
     const [currencyValue, setCurrencyValue] = useState();
     const [mainWallet] = useMainWallet();
     const [, refetch] = useSubWallets();
@@ -263,7 +263,7 @@ const CreateNewWalletForm = () => {
                     <label className="text-gray-600 font-semibold">Create New PIN</label>
                     <div className="relative">
                         <input
-                            type={'number'}
+                            type={pin ? 'text' : 'number'}
                             {...register("newPin", {
                                 required: "Pin is required",
                                 minLength: 4,

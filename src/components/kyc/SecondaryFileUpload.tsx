@@ -11,11 +11,11 @@ const SecondaryFileUpload = ({ control, errors }: { control: any, errors: any })
     const handleFileChange = (e: any, onChange: any) => {
         const file = e.target.files[0];
         if (e.target.name === 'secondaryKycDocument') {
-            onChange(file); 
+            onChange(file);
         } else {
             const fileURL = URL.createObjectURL(file);
             setProfile(URL.createObjectURL(file));
-            onChange(file); 
+            onChange(file);
             setProfile(fileURL);
         }
     };
@@ -27,46 +27,80 @@ const SecondaryFileUpload = ({ control, errors }: { control: any, errors: any })
                     <label className="mb-3 block">Front Part*</label>
                     <div className="">
                         <div className={`p-5 h-[220px] border-[1.5px] ${errors.secondaryKycDocument ? 'border-red-500' : 'border-gray-200'} rounded-xl border-dashed flex flex-col justify-center h-44`}>
-                        <Controller
-                            control={control}
-                            name="secondaryKycDocument"
-                            rules={{ required: 'Front part document is required' }}
-                            render={({ field: { onChange, value }}) => (
-                                <>
-                                    <input
-                                        type="file"
-                                        onChange={(e) => handleFileChange(e, onChange)}
-                                        name="secondaryKycDocument"
-                                        className="hidden"
-                                    />
-                                    <div className="cursor-pointer px-3">
-                                        {
-                                            value ? <div className="text-center">{value.name}</div>
-                                                :
-                                            <>
-                                                <svg
-                                                className="text-[#723EEB] w-5 mx-auto mb-2"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                fill="none"
-                                                viewBox="0 0 24 24"
-                                                stroke="currentColor"
-                                            >
-                                                <path
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                    strokeWidth="2"
-                                                    d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                                                />
-                                                </svg>
-                                                <div className="text-center ">
-                                                    Drop your file or <span className="text-[#723EEB] font-semibold underline">Click</span> to select
-                                                </div>
-                                            </>
-                                        }
-                                    </div>
-                                </>
-                            )}
-                        />
+                            <Controller
+                                control={control}
+                                name="secondaryKycDocument"
+                                rules={{ required: 'Front part document is required' }}
+                                render={({ field: { onChange, value } }) => (
+                                    <>
+                                        <input
+                                            type="file"
+                                            onChange={(e) => handleFileChange(e, onChange)}
+                                            name="secondaryKycDocument"
+                                            className="hidden"
+                                            id="fileInput" // Give an id to the input
+                                        />
+                                        <label htmlFor="fileInput" className="cursor-pointer px-3">
+                                            {value ? (
+                                                <div className="text-center">{value.name}</div>
+                                            ) : (
+                                                <>
+                                                    <svg
+                                                        className="text-[#723EEB] w-5 mx-auto mb-2"
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        fill="none"
+                                                        viewBox="0 0 24 24"
+                                                        stroke="currentColor"
+                                                    >
+                                                        <path
+                                                            strokeLinecap="round"
+                                                            strokeLinejoin="round"
+                                                            strokeWidth="2"
+                                                            d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                                                        />
+                                                    </svg>
+                                                    <div className="text-center">
+                                                        Drop your file or <span className="text-[#723EEB] font-semibold underline">Click</span> to select
+                                                    </div>
+                                                </>
+                                            )}
+                                        </label>
+                                    </>
+                                    // <>
+                                    //     <input
+                                    //         type="file"
+                                    //         onChange={(e) => handleFileChange(e, onChange)}
+                                    //         name="secondaryKycDocument"
+                                    //         className="hidden"
+                                    //     />
+                                    //     <div className="cursor-pointer px-3">
+                                    //         {
+                                    //             value ? <div className="text-center">{value.name}</div>
+                                    //                 :
+                                    //             <>
+                                    //                 <svg
+                                    //                 className="text-[#723EEB] w-5 mx-auto mb-2"
+                                    //                 xmlns="http://www.w3.org/2000/svg"
+                                    //                 fill="none"
+                                    //                 viewBox="0 0 24 24"
+                                    //                 stroke="currentColor"
+                                    //             >
+                                    //                 <path
+                                    //                     strokeLinecap="round"
+                                    //                     strokeLinejoin="round"
+                                    //                     strokeWidth="2"
+                                    //                     d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                                    //                 />
+                                    //                 </svg>
+                                    //                 <div className="text-center ">
+                                    //                     Drop your file or <span className="text-[#723EEB] font-semibold underline">Click</span> to select
+                                    //                 </div>
+                                    //             </>
+                                    //         }
+                                    //     </div>
+                                    // </>
+                                )}
+                            />
                         </div>
                         {errors.secondaryKycDocument && (
                             <p className="text-red-500 text-xs mt-1 ml-1">{errors.secondaryKycDocument.message}</p>
@@ -116,9 +150,9 @@ const SecondaryFileUpload = ({ control, errors }: { control: any, errors: any })
                         />
                     )}
                 />
-            <label htmlFor="checkbox" className={`font-semibold ml-1`}>
-                Confirm that I uploaded valid government-issued photo ID. This ID includes my picture, signature, name, date of birth, and address.
-            </label>
+                <label htmlFor="checkbox" className={`font-semibold ml-1`}>
+                    Confirm that I uploaded valid government-issued photo ID. This ID includes my picture, signature, name, date of birth, and address.
+                </label>
             </div>
         </>
     );
