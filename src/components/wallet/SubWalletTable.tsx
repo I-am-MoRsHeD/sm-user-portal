@@ -111,7 +111,7 @@ const SubWalletTable: React.FC<ModalProps> = ({ handleMakeMainWallet, isSubWalle
                                         <td
                                             onClick={() => handleSubWallet(data)} className='w-72 py-2 pl-2'>{data?.currency?.name}</td>
                                         <td
-                                            onClick={() => handleSubWallet(data)} className='w-[30%] py-2 px-2'>{data?.balance}.0 {data?.currency?.code}</td>
+                                            onClick={() => handleSubWallet(data)} className='w-[30%] py-2 px-2'>{data?.balance ? data?.balance : '0.0'} {data?.currency?.code}</td>
                                     </span>
                                     <td onClick={() => handleMakeMainWallet(data)} className='w-14 py-2'>
                                         <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">

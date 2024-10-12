@@ -1,4 +1,5 @@
 'use client'
+import LoadingSpinner from '@/components/LoaderSpinner';
 import axios from 'axios';
 import Link from 'next/link';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
@@ -15,6 +16,7 @@ interface FormData {
 const Page = () => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>();
     const [newPassword, setNewPassword] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [confirmNewPassword, setConfirmNewPassword] = useState(false);
     const router = useRouter();
     const searchParams = useSearchParams();
@@ -30,7 +32,7 @@ const Page = () => {
         const changedPasswordInfo = {
             password,
         };
-
+        setLoading(true);
         try {
             if (password !== confirmPassword) {
                 toast.error("New Password doesn't match");
@@ -48,6 +50,7 @@ const Page = () => {
             console.log(error);
             toast.error("There is something wrong");
         }
+        setLoading(false);
     }
 
     return (
@@ -136,7 +139,9 @@ const Page = () => {
                             <button
                                 type="submit"
                                 className="w-full bg-[#723EEB] text-white p-2 rounded text-[10px]">
-                                Confirm
+                                {
+                                    loading ? <LoadingSpinner className='w-4 h-4' /> : 'Confirm'
+                                }
                             </button>
                         </div>
                     </form>

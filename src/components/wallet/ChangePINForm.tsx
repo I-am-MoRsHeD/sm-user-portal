@@ -53,11 +53,11 @@ const ChangePINForm: React.FC<ModalProps> = ({ handleForgetPIN, mainWallet, setC
                 }
             }
         } catch (error: any) {
-            setLoading(false);
             if (error) {
-                toast.error("There is something wrong");
+                toast.error("Your pin is wrong");
             }
         }
+        setLoading(false);
     }
 
     return (

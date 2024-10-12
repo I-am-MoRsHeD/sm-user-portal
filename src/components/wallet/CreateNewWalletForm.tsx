@@ -29,11 +29,11 @@ const Dropdown: React.FC<DropdownProps> = ({ label, options, selectedValue, setS
     const selectedOption = options?.find(option => option.value === selectedValue);
 
     return (
-        <div className="relative w-full text-xs">
-            <label className="block mb-2 font-semibold">{label}</label>
+        <div className="relative w-full text-[10px] sm:text-sm">
+            <label className="block mb-1 text-gray-600 font-semibold">{label}</label>
             <div
                 onClick={() => setIsOpen(!isOpen)}
-                className="mx-auto flex w-full items-center justify-between rounded-xl px-3 py-1 border border-gray-400 cursor-pointer"
+                className="mx-auto flex w-full items-center justify-between rounded-xl px-3 py-0.5 border border-gray-400 cursor-pointer"
             >
                 <h1 className="font-medium">{selectedOption ? selectedOption.name : 'select'}</h1>
                 <svg className={`${isOpen ? '-rotate-180' : 'rotate-0'} duration-300`} width={25} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M7 10L12 15L17 10" stroke="#4B5563" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>{' '}</g></svg>
@@ -64,8 +64,8 @@ const securityQuestionOptions = [
         value: 'What is your favourite hobby?',
     },
     {
-        name: 'In what city were you born?',
-        value: 'In what city were you born?',
+        name: 'In which city were you born?',
+        value: 'In which city were you born?',
     },
     {
         name: 'What was your childhood nickname?',
@@ -79,17 +79,20 @@ const securityQuestionOptions = [
 
 const CreateNewWalletForm = () => {
     const [loading, setLoading] = useState(false);
-    const [securityQuestion, setSecurityQuestion] = useState(securityQuestionOptions[1].value);
+    const [isOpen, setIsOpen] = useState(false);
     const [currency] = useCurrency();
+    const [securityQuestion, setSecurityQuestion] = useState(securityQuestionOptions[0].value);
+    const [currencyValue, setCurrencyValue] = useState();
     const [mainWallet] = useMainWallet();
     const [, refetch] = useSubWallets();
     const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>();
     const [pin, setPin] = useState(false);
     const axiosInstance = useAxiosSecure();
+    console.log(currency);
 
 
     const onSubmit = async (data: any) => {
-        const currencyId = await currency.filter((c: any) => c.name === data.currency);
+        const currencyId = await currency.filter((c: any) => c.name === currencyValue);
         setLoading(true);
         try {
             if (!mainWallet?.userId) {
@@ -118,6 +121,7 @@ const CreateNewWalletForm = () => {
                     answer: data?.answer,
                     pinNumber: parseInt(data?.newPin)
                 };
+                console.log(walletInfo)
                 const res = await axiosInstance.post('/wallet/create-wallet', walletInfo);
                 console.log(res);
                 if (res.status === 200) {
@@ -130,6 +134,7 @@ const CreateNewWalletForm = () => {
         } catch (error: any) {
             if (error) {
                 toast.error("There is something wrong");
+                setLoading(false);
             }
         }
     }
@@ -155,7 +160,7 @@ const CreateNewWalletForm = () => {
                 </div>
                 {/* Email Field */}
                 <div className="mb-3">
-                    <label className="text-gray-600  font-semibold">Email</label>
+                    <label className="text-gray-600 font-semibold">Email</label>
                     <input
                         type="email"
                         {...register("email", {
@@ -169,14 +174,13 @@ const CreateNewWalletForm = () => {
                     )}
                 </div>
                 {/* currency */}
-                <div className="mb-3 mt-1 w-full">
+                {/* <div className="mb-3 mt-1 w-full">
                     <label className="text-gray-600  font-semibold">Select Currency*</label>
                     <select
                         className="mt-1 w-full px-3 py-[5px] border border-gray-400 rounded-[10px] cursor-pointer focus:outline-none placeholder:text-xs"
                         {...register("currency", {
                             required: 'Please select a currency'
                         })}
-                    // value={filter}
                     >
                         {currency?.map((data: any) => (
                             <option className='text-xs' value={data?.name} key={data._id}>
@@ -187,14 +191,44 @@ const CreateNewWalletForm = () => {
                     {errors.currency?.type === 'required' && (
                         <p className="text-red-500 text-xs">Currency is required</p>
                     )}
+                </div> */}
+                <div className='mb-3'>
+                    <div className="relative w-full text-[10px] sm:text-sm">
+                        <label className="block mb-1 text-gray-600 font-semibold">Select Currency</label>
+                        <div
+                            onClick={() => setIsOpen(!isOpen)}
+                            className="mx-auto flex w-full items-center justify-between rounded-xl px-3 py-0.5 border border-gray-400 cursor-pointer"
+                        >
+                            <h1 className="font-medium">{currencyValue ? currencyValue : 'select'}</h1>
+                            <svg className={`${isOpen ? '-rotate-180' : 'rotate-0'} duration-300`} width={25} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M7 10L12 15L17 10" stroke="#4B5563" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>{' '}</g></svg>
+                        </div>
+
+                        <div className={`${isOpen ? 'visible top-12 bg-white opacity-100' : 'invisible -top-4 opacity-0'} absolute mx-auto my-4 w-full z-50 rounded-xl py-4 border duration-300`}>
+                            {currency?.map((data: any) => (
+                                <div
+                                    key={data?.id}
+                                    onClick={() => {
+                                        setCurrencyValue(data?.name);
+                                        setIsOpen(false);
+                                    }}
+                                    className="px-6 py-2 text-gray-500 hover:bg-gray-100 cursor-pointer"
+                                >
+                                    {data?.name}
+                                </div>
+                            ))}
+                        </div>
+
+                    </div>
                 </div>
                 {/* security question Field */}
-                <Dropdown
-                    label="Select Transfer Type"
-                    options={securityQuestionOptions}
-                    selectedValue={securityQuestion}
-                    setSelectedValue={setSecurityQuestion}
-                />
+                <div className='mb-2'>
+                    <Dropdown
+                        label="Select a Security Question"
+                        options={securityQuestionOptions}
+                        selectedValue={securityQuestion}
+                        setSelectedValue={setSecurityQuestion}
+                    />
+                </div>
                 {/* <div className="mb-3">
                     <label className="text-gray-600 font-semibold">Enter a Security Question</label>
                     <input
@@ -229,7 +263,7 @@ const CreateNewWalletForm = () => {
                     <label className="text-gray-600 font-semibold">Create New PIN</label>
                     <div className="relative">
                         <input
-                            type={'number'}
+                            type={pin ? 'text' : 'number'}
                             {...register("newPin", {
                                 required: "Pin is required",
                                 minLength: 4,

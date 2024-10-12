@@ -79,8 +79,8 @@ const RegistrationForm = () => {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-lg px-6 py-6 my-5 w-full">
-      <h3 className="text-black text-sm font-medium">Register</h3>
+    <div className="bg-white rounded-xl shadow-lg p-6 my-10 lg-my-0 max-w-xl w-full mx-auto">
+      <h3 className="text-black font-semibold">Register</h3>
 
       <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
         {/* Full Name Field */}
@@ -294,8 +294,11 @@ const RegistrationForm = () => {
             {loading ? <LoadingSpinner className="h-4 w-4" /> : 'Register'}
           </button>
         </div>
-        <SocialLogin />
       </form>
+      {/* Social Login */}
+      <div>
+        <SocialLogin />
+      </div>
     </div>
   );
 };

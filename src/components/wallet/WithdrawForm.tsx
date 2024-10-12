@@ -47,7 +47,7 @@ const WithdrawForm: React.FC<ModalProps> = ({ handleForgetPIN, setWithdrawModalO
             }
         } catch (error: any) {
             if (error) {
-                toast.error("There is something wrong");
+                toast.error("There is something wrong.Please try again");
             }
         }
         setLoading(false);

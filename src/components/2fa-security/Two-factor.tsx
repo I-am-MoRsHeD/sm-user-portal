@@ -2,11 +2,12 @@ import CardSubTitle from '@/components/common/cardSubTitle/CardSubTitle';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import Swal from 'sweetalert2';
 import Modal from '../common/Modal/Modal';
+import SkeletonQR from '../common/skeleton/SkeletonQR';
 import useAxiosSecure from '../hooks/useAxiosSecure';
 import LoadingSpin from './LoadingSpin';
-import toast from 'react-hot-toast';
 
 const TwoFactor = () => {
     const [isOpenEnableModal, setIsOpenEnableModal] = useState(false);
@@ -146,7 +147,7 @@ const TwoFactor = () => {
                 </div>
                 <div className='flex flex-col justify-center items-center mt-5'>
                     {
-                        isLoading ? <LoadingSpin height='2rem' width='2rem' borderWidth='0.425rem' color='#723EEB' /> : <Image src={data?.qrCodeUrl} width={150} height={150} alt='QrCode' />
+                        isLoading ? <SkeletonQR /> : <Image src={data?.qrCodeUrl} width={150} height={150} alt='QrCode' />
                     }
                     <div className='w-3/4 my-5'>
                         <button disabled={userData?.twoFactorEnabled} onClick={() => setIsOpenEnableModal(true)} className={`text-xs ${userData?.twoFactorEnabled ? 'bg-[#9c7aea]' : 'bg-[#723EEB]'}  text-white w-full p-1.5 rounded font-semibold`}>{
