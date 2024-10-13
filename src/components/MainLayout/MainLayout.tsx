@@ -1,6 +1,5 @@
 'use client'
 import { ReactNode } from 'react';
-import { Toaster } from 'react-hot-toast';
 import useAuthContext from '../AuthContext/useAuthContext';
 import useNavigationContext from '../NavigationContext/useNavigationContext';
 import LoaderWithLottie from '../common/loader/LoaderWithLottie';
@@ -54,7 +53,7 @@ const MainLayout = ({ children }: LayoutProps) => {
                     </div>
                 </div>
 
-                <Toaster />
+                {/* <Toaster /> */}
             </div>
         </div>
     );

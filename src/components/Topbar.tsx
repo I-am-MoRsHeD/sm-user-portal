@@ -129,7 +129,7 @@ const Topbar = ({ children }: { children: string }) => {
             </div>
             {/* profile dropdown options  */}
             <div className={`${profileDropdown ? 'visible top-9 right-0 bg-white opacity-100' : 'invisible top-12 opacity-0 right-0'} absolute transition-all mx-auto max-w-40 z-50 rounded border duration-300 ease-in-out cursor-pointer divide-y pb-3`}>
-              <p className='px-2 py-2 text-sm text-center w-full break-all'>{user && JSON.parse(user)?.email}</p>
+              <p className='px-2 py-2 text-sm text-center w-full break-all'>{user && JSON.parse(user)?.name}</p>
               <ul id="dropdownMenu" className='space-y-2 pt-1' >
                 <Link href={'/user/user-profile'} >
                   <li className='py-1 px-4 text-nowrap flex items-center hover:bg-gray-100 text-[#333] text-sm cursor-pointer'>

@@ -3,7 +3,7 @@ import LoadingSpinner from '@/components/LoaderSpinner';
 import axios from 'axios';
 import Link from 'next/link';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
-import React, { Suspense, useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { LiaEyeSlashSolid, LiaEyeSolid } from 'react-icons/lia';
@@ -64,7 +64,7 @@ const Page = () => {
 
                         {/* New Password Field */}
                         <div className="mb-3">
-                            <label className="">Enter New Password</label>
+                            <label className="text-sm">Enter New Password</label>
                             <div className="relative">
                                 <input
                                     type={newPassword ? 'text' : 'password'}

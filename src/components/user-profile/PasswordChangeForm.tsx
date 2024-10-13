@@ -1,9 +1,10 @@
 'use client'
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { LiaEyeSlashSolid, LiaEyeSolid } from 'react-icons/lia';
-import useAxiosSecure from '../hooks/useAxiosSecure';
 import toast from 'react-hot-toast';
+import { LiaEyeSlashSolid, LiaEyeSolid } from 'react-icons/lia';
+import LoadingSpinner from '../common/Loading/LoadingSpinner';
+import useAxiosSecure from '../hooks/useAxiosSecure';
 
 interface FormData {
     currentPassword: string;
@@ -17,6 +18,7 @@ const PasswordChangeForm = () => {
     const [confirmPassword, setConfirmPassword] = useState(false);
     const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>();
     const axiosInstance = useAxiosSecure();
+    const [loading, setLoading] = useState(false);
 
     const onSubmit = async (data: FormData) => {
         const oldPassword = data.currentPassword;
@@ -27,10 +29,12 @@ const PasswordChangeForm = () => {
             oldPassword,
             newPassword,
         };
-        console.log(changedPasswordInfo)
+        setLoading(true);
         try {
             if (newPassword !== confirmPassword) {
                 toast.error("New Password doesn't match");
+                setLoading(false);
+                return
             }
             else {
                 const res = await axiosInstance.post('/auth/change-password', changedPasswordInfo);
@@ -38,12 +42,13 @@ const PasswordChangeForm = () => {
                     reset();
 
                     toast.success("Password has been changed");
+                    setLoading(false);
                 }
             }
         } catch (error: any) {
-            console.log(error);
             if (error) {
-                toast.error("There is something wrong");
+                toast.error(error?.response?.data?.message);
+                setLoading(false);
             }
 
         }
@@ -156,7 +161,7 @@ const PasswordChangeForm = () => {
                         type="submit"
                         className="w-full bg-[#723EEB] text-white p-1 rounded text-sm"
                     >
-                        Change
+                        {loading ? <LoadingSpinner className='h-4 w-4' /> : 'Change'}
                     </button>
                 </div>
             </form>

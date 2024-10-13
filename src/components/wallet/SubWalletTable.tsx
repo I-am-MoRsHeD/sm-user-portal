@@ -1,15 +1,14 @@
-import { WalletTableData } from '@/utils/data/walletTableData';
-import React, { useState } from 'react';
-import Modal from '../common/Modal/Modal';
-import SubWalletModalForm from './SubWalletModalForm';
 import Link from 'next/link';
-import WithdrawIntoWalletModal from './WithdrawIntoWalletModal';
-import ChangePINForm from './ChangePINForm';
-import ForgetPINModal from '../common/ForgetPINModal/ForgetPINModal';
-import EditWalletModal from './EditWalletModal';
-import useSubWallets from '../hooks/useSubWallets';
+import React, { useState } from 'react';
 import useNavigationContext from '../NavigationContext/useNavigationContext';
+import ForgetPINModal from '../common/ForgetPINModal/ForgetPINModal';
+import Modal from '../common/Modal/Modal';
+import useSubWallets from '../hooks/useSubWallets';
+import ChangePINForm from './ChangePINForm';
 import DeleteSubWalletModal from './DeleteSubWalletModal';
+import EditWalletModal from './EditWalletModal';
+import SubWalletModalForm from './SubWalletModalForm';
+import WithdrawIntoWalletModal from './WithdrawIntoWalletModal';
 
 interface ModalProps {
     isSubWalletModalOpen: boolean;
@@ -87,7 +86,7 @@ const SubWalletTable: React.FC<ModalProps> = ({ handleMakeMainWallet, isSubWalle
                     />
                 </Modal>
 
-                <table className="mt-3">
+                <table className="mt-3 w-full">
                     {/* head */}
                     <thead>
                         <tr>
