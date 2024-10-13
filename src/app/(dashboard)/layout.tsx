@@ -1,7 +1,6 @@
 "use client"
 import MainLayout from '@/components/MainLayout/MainLayout';
 import KYCProvider from '@/context/useKyc';
-import { Toaster } from 'react-hot-toast';
 import '.././../styles/globals.css';
 
 export default function RootLayout({
@@ -15,39 +14,7 @@ export default function RootLayout({
                 <MainLayout>
                     {children}
                 </MainLayout>
-                <Toaster
-                    position="top-center"
-                    // reverseOrder={true}
-                    toastOptions={{
-                        style: {
-                            padding: '0.725rem',
-                            color: '#5A5278',
-                        },
-                        success: {
-                            style: {
-                                border: '1px solid #723eeb',
-                            },
-                            iconTheme: {
-                                primary: '#723eeb',
-                                secondary: '#fff',
-                            },
-                        },
-                        error: {
-                            style: {
-                                border: '1px solid #dc3545',
-                                color: '#dc3545',
-                            },
-                            iconTheme: {
-                                primary: '#dc3545',
-                                secondary: '#fff',
-                            },
-                        },
-                        iconTheme: {
-                            primary: '#723eeb',
-                            secondary: '#FFFAEE',
-                        },
-                    }}
-                />
+
             </section>
         </KYCProvider>
 

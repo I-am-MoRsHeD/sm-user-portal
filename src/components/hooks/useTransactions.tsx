@@ -1,17 +1,21 @@
-import React from 'react';
-import useAxiosSecure from './useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
+import useAxiosSecure from './useAxiosSecure';
 
-const useTransactions = () => {
+const useTransactions = (page?: number, limit?: number) => {
     const axiosInstance = useAxiosSecure();
-    const { data: transactions = [], refetch, isPending} = useQuery({
+    const { data: transactions = [], refetch, isPending, isLoading } = useQuery({
         queryKey: ['transactions'],
         queryFn: async () => {
-            const res = await axiosInstance.get('/transaction/transaction-history');
-            return res?.data?.data;
+            const res = await axiosInstance.get('/transaction/transaction-history?searchTerm=morshed', {
+                params: {
+                    limit,
+                    page,
+                }
+            });
+            return res?.data;
         },
     })
-    return [transactions, refetch, isPending];
+    return [transactions, refetch, isPending, isLoading];
 };
 
 export default useTransactions;
