@@ -28,7 +28,7 @@ const PaymentConfirmationPage = () => {
     });
 
     //Add confirm transaction
-    const { data: pendingTransactionData, isSuccess, isPending: isPendingTransaction, isError: isPendingTransactionError, mutate } = useMutation({
+    const { data: pendingTransactionData, isSuccess, isPending: isPendingTransaction, isError: isPendingTransactionError, mutate, error: pendingTransactionError } = useMutation({
         mutationFn: async () => {
             const response = await axiosInstance.post(`/transaction/wallet-to-bank/pending/${id}`, {
                 "pinNumber": parseInt(pin)
@@ -45,6 +45,17 @@ const PaymentConfirmationPage = () => {
     // handle confirm payment
 
     const handleConfirmPayment = () => {
+        const pinRegex = /^[0-9]{4}$/;
+        if (!pin || pin === '') {
+            toast.error('Please enter your PIN');
+            return;
+        }
+
+        if (!pinRegex.test(pin)) {
+            toast.error('Please enter a valid pin');
+            return;
+        }
+
         mutate();
     }
 
@@ -54,13 +65,13 @@ const PaymentConfirmationPage = () => {
             toast.error(error.message);
         }
         if (isPendingTransactionError) {
-            toast.error('confirm transaction Error');
+            toast.error(pendingTransactionError?.message);
         }
         if (isSuccess) {
             toast.success('Transaction confirmed successfully');
             redirect(`/user/send-money/payment-confirmation?transactionID=${pendingTransactionData?.data?.transactionId}`);
         }
-    }, [isError, isSuccess, isPendingTransactionError, pendingTransactionData, error]);
+    }, [isError, isSuccess, isPendingTransactionError, pendingTransactionData, error, pendingTransactionError]);
 
     // 
     return (
