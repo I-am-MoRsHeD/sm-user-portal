@@ -20,9 +20,27 @@ export default function RootLayout({
                     // reverseOrder={true}
                     toastOptions={{
                         style: {
-                            border: '1px solid #723eeb',
                             padding: '0.725rem',
                             color: '#5A5278',
+                        },
+                        success: {
+                            style: {
+                                border: '1px solid #723eeb',
+                            },
+                            iconTheme: {
+                                primary: '#723eeb',
+                                secondary: '#fff',
+                            },
+                        },
+                        error: {
+                            style: {
+                                border: '1px solid #dc3545',
+                                color: '#dc3545',
+                            },
+                            iconTheme: {
+                                primary: '#dc3545',
+                                secondary: '#fff',
+                            },
                         },
                         iconTheme: {
                             primary: '#723eeb',

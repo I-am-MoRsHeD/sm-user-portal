@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { LiaEyeSlashSolid, LiaEyeSolid } from 'react-icons/lia';
+import { FaEye, FaEyeSlash } from 'react-icons/fa6';
 import LoadingSpinner from '../common/Loading/LoadingSpinner';
 import useAxiosSecure from '../hooks/useAxiosSecure';
 import useMainWallet from '../hooks/useMainWallet';
@@ -108,28 +108,33 @@ const DepositForm: React.FC<ModalProps> = ({ handleForgetPIN, setDepositModalOpe
                 </div>
                 {/* Pin Field */}
                 <div className="mb-3">
-                    <label className="text-[14px]">Enter Your PIN</label>
+                    <label className="text-gray-600 text-sm">Enter Your PIN</label>
                     <div className="relative">
                         <input
-                            type={'number'}
+                            type={pin ? 'text' : 'password'}
                             {...register("pin", {
                                 required: "Pin is required",
                                 minLength: 4,
+                                pattern: /^[0-9]*$/
                             })}
-                            className={`mt-1 w-full px-3 py-1 border border-gray-400 rounded-2xl focus:outline-none font-semibold text-[14px]`}
+                            className={`mt-1 w-full px-3 py-1 border border-gray-400 rounded-[10px] focus:outline-none placeholder:text-xs text-sm`}
                             placeholder="Enter PIN...."
                         />
                         <button
                             type="button"
                             onClick={() => setPin(!pin)}
-                            className="absolute top-2.5 right-4 text-[11px]"
+                            className="absolute top-3 right-4 text-[14px]"
                         >
-                            {pin ? <LiaEyeSolid className='text-base' /> : <LiaEyeSlashSolid className='text-base' />}
+                            {pin ? <FaEye /> : <FaEyeSlash />}
                         </button>
                     </div>
 
                     {errors.pin?.type === 'required' && (
                         <p className="text-red-500 text-xs">Pin is required</p>
+                    )}
+
+                    {errors.pin?.type === 'pattern' && (
+                        <p className="text-red-500 text-xs">Pin must be a number</p>
                     )}
                     {errors.pin?.type === 'minLength' && (
                         <p className="text-red-500 text-xs">Pin must be at least 4 numbers</p>
