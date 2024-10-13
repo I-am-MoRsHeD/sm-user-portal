@@ -66,8 +66,6 @@ const WalletPage = () => {
         setTimeout(() => {
             setCopyId(false)
         }, 2000)
-
-
     }
 
     return (
