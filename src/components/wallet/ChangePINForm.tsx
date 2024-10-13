@@ -1,12 +1,11 @@
 'use client'
 import React, { useState } from 'react';
-import ForgetPINModal from '../common/ForgetPINModal/ForgetPINModal';
-import { FaEye, FaEyeSlash } from 'react-icons/fa6';
 import { useForm } from 'react-hook-form';
-import useAxiosSecure from '../hooks/useAxiosSecure';
-import LoadingSpinner from '../common/Loading/LoadingSpinner';
 import toast from 'react-hot-toast';
+import { FaEye, FaEyeSlash } from 'react-icons/fa6';
 import useNavigationContext from '../NavigationContext/useNavigationContext';
+import LoadingSpinner from '../common/Loading/LoadingSpinner';
+import useAxiosSecure from '../hooks/useAxiosSecure';
 
 interface ModalProps {
     handleForgetPIN: () => void;
@@ -24,6 +23,9 @@ interface FormData {
 const ChangePINForm: React.FC<ModalProps> = ({ handleForgetPIN, mainWallet, setChangePINModalOpen }) => {
     const [loading, setLoading] = useState(false);
     const [pin, setPin] = useState(false);
+    const [showCurrentPin, setShowCurrentPin] = useState(false);
+    const [showNewPin, setShowNewPin] = useState(false);
+    const [showConfirmNewPin, setShowConfirmNewPin] = useState(false);
     const axiosInstance = useAxiosSecure();
     const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>();
     const { subWalletData }: any = useNavigationContext();
@@ -73,28 +75,33 @@ const ChangePINForm: React.FC<ModalProps> = ({ handleForgetPIN, mainWallet, setC
             <form onSubmit={handleSubmit(onSubmit)}>
                 {/* Current Pin Field */}
                 <div className="mb-3">
-                    <label className="">Enter Current PIN</label>
+                    <label className="text-gray-600 font-semibold">Enter Current PIN</label>
                     <div className="relative">
                         <input
-                            type={'number'}
+                            type={showCurrentPin ? 'text' : 'password'}
                             {...register("currentPin", {
                                 required: "Pin is required",
                                 minLength: 4,
+                                pattern: /^[0-9]*$/
                             })}
-                            className={`w-full mt-1 px-3 py-1 border border-gray-400 rounded-full focus:outline-none placeholder:text-gray-400 text-xs`}
-                            placeholder="PIN Here...."
+                            className={`mt-1 w-full px-3 py-1 border border-gray-400 rounded-[10px] focus:outline-none placeholder:text-xs`}
+                            placeholder="Enter PIN...."
                         />
                         <button
                             type="button"
-                            onClick={() => setPin(!pin)}
-                            className="absolute top-4 right-4 text-[11px]"
+                            onClick={() => setShowCurrentPin(!showCurrentPin)}
+                            className="absolute top-3 right-4 text-[14px]"
                         >
-                            {pin ? <FaEye /> : <FaEyeSlash />}
+                            {showCurrentPin ? <FaEye /> : <FaEyeSlash />}
                         </button>
                     </div>
 
                     {errors.currentPin?.type === 'required' && (
                         <p className="text-red-500 text-xs">Pin is required</p>
+                    )}
+
+                    {errors.currentPin?.type === 'pattern' && (
+                        <p className="text-red-500 text-xs">Pin must be a number</p>
                     )}
                     {errors.currentPin?.type === 'minLength' && (
                         <p className="text-red-500 text-xs">Pin must be at least 4 numbers</p>
@@ -110,28 +117,33 @@ const ChangePINForm: React.FC<ModalProps> = ({ handleForgetPIN, mainWallet, setC
                 </div>
                 {/* New Pin Field */}
                 <div className="mb-3">
-                    <label className="">Enter New PIN</label>
+                    <label className="text-gray-600 font-semibold">Enter New PIN</label>
                     <div className="relative">
                         <input
-                            type={'number'}
+                            type={showNewPin ? 'text' : 'password'}
                             {...register("newPin", {
                                 required: "Pin is required",
                                 minLength: 4,
+                                pattern: /^[0-9]*$/
                             })}
-                            className={`w-full mt-1 px-3 py-1 border border-gray-400 rounded-full focus:outline-none placeholder:text-gray-400 text-xs`}
-                            placeholder="PIN Here...."
+                            className={`mt-1 w-full px-3 py-1 border border-gray-400 rounded-[10px] focus:outline-none placeholder:text-xs`}
+                            placeholder="Enter PIN...."
                         />
                         <button
                             type="button"
-                            onClick={() => setPin(!pin)}
-                            className="absolute top-4 right-4 text-[11px]"
+                            onClick={() => setShowNewPin(!showNewPin)}
+                            className="absolute top-3 right-4 text-[14px]"
                         >
-                            {pin ? <FaEye /> : <FaEyeSlash />}
+                            {showNewPin ? <FaEye /> : <FaEyeSlash />}
                         </button>
                     </div>
 
                     {errors.newPin?.type === 'required' && (
                         <p className="text-red-500 text-xs">Pin is required</p>
+                    )}
+
+                    {errors.newPin?.type === 'pattern' && (
+                        <p className="text-red-500 text-xs">Pin must be a number</p>
                     )}
                     {errors.newPin?.type === 'minLength' && (
                         <p className="text-red-500 text-xs">Pin must be at least 4 numbers</p>
@@ -139,28 +151,33 @@ const ChangePINForm: React.FC<ModalProps> = ({ handleForgetPIN, mainWallet, setC
                 </div>
                 {/* Confirm New Pin Field */}
                 <div className="mb-3">
-                    <label className="">Confirm New PIN</label>
+                    <label className="text-gray-600 font-semibold">Confirm New PIN</label>
                     <div className="relative">
                         <input
-                            type={'number'}
+                            type={showConfirmNewPin ? 'text' : 'password'}
                             {...register("confirmNewPin", {
                                 required: "Pin is required",
                                 minLength: 4,
+                                pattern: /^[0-9]*$/
                             })}
-                            className={`w-full mt-1 px-3 py-1 border border-gray-400 rounded-full focus:outline-none placeholder:text-gray-400 text-xs`}
-                            placeholder="PIN Here...."
+                            className={`mt-1 w-full px-3 py-1 border border-gray-400 rounded-[10px] focus:outline-none placeholder:text-xs`}
+                            placeholder="Enter PIN...."
                         />
                         <button
                             type="button"
-                            onClick={() => setPin(!pin)}
-                            className="absolute top-4 right-4 text-[11px]"
+                            onClick={() => setShowConfirmNewPin(!showConfirmNewPin)}
+                            className="absolute top-3 right-4 text-[14px]"
                         >
-                            {pin ? <FaEye /> : <FaEyeSlash />}
+                            {showConfirmNewPin ? <FaEye /> : <FaEyeSlash />}
                         </button>
                     </div>
 
                     {errors.confirmNewPin?.type === 'required' && (
                         <p className="text-red-500 text-xs">Pin is required</p>
+                    )}
+
+                    {errors.confirmNewPin?.type === 'pattern' && (
+                        <p className="text-red-500 text-xs">Pin must be a number</p>
                     )}
                     {errors.confirmNewPin?.type === 'minLength' && (
                         <p className="text-red-500 text-xs">Pin must be at least 4 numbers</p>
@@ -170,7 +187,7 @@ const ChangePINForm: React.FC<ModalProps> = ({ handleForgetPIN, mainWallet, setC
                 <div className="w-full mx-auto py-5 ">
                     <button
                         type="submit"
-                        className="w-full bg-[#ea5455] text-white p-2 rounded text-[10px]"
+                        className="w-full bg-[#ea5455] text-white p-2 rounded text-xs"
                     >
 
                         {loading ? <LoadingSpinner className='h-4 w-4' /> : 'Confirm'}

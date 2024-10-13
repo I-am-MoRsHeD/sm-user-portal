@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import Modal from '../common/Modal/Modal';
 import { useForm } from 'react-hook-form';
-import useCurrency from '../hooks/useCurrency';
-import { LiaEyeSlashSolid, LiaEyeSolid } from 'react-icons/lia';
-import LoadingSpinner from '../common/Loading/LoadingSpinner';
-import useNavigationContext from '../NavigationContext/useNavigationContext';
-import useAxiosSecure from '../hooks/useAxiosSecure';
 import toast from 'react-hot-toast';
+import { LiaEyeSlashSolid, LiaEyeSolid } from 'react-icons/lia';
+import useNavigationContext from '../NavigationContext/useNavigationContext';
+import LoadingSpinner from '../common/Loading/LoadingSpinner';
+import Modal from '../common/Modal/Modal';
+import useAxiosSecure from '../hooks/useAxiosSecure';
+import useCurrency from '../hooks/useCurrency';
 import useSubWallets from '../hooks/useSubWallets';
 
 interface FormData {
@@ -28,7 +28,7 @@ const EditWalletModal: React.FC<ModalProps> = ({ isEditWalletModalOpen, setEditW
     const { subWalletData }: any = useNavigationContext();
     const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm<FormData>();
     const axiosInstance = useAxiosSecure();
-    console.log(subWalletData?.currency?.name);
+
 
     useEffect(() => {
         setValue('walletName', subWalletData?.walletName);

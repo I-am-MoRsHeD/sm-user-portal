@@ -14,22 +14,22 @@ import DepositModal from '@/components/wallet/DepositModal';
 import MakeMainWalletModal from '@/components/wallet/MakeMainWalletModal';
 import SubWalletTable from '@/components/wallet/SubWalletTable';
 import WithdrawModal from '@/components/wallet/WithdrawModal';
-import { walletLogData } from '@/utils/data/walletLogData';
 import Link from 'next/link';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
+import toast from 'react-hot-toast';
 import { GoDotFill } from 'react-icons/go';
 
 const WalletPage = () => {
     const [mainWallet, , , isLoading] = useMainWallet();
     const [subWallets] = useSubWallets();
     const [walletLog, , isPending] = useWalletLog();
-    console.log(walletLog)
+
 
     const [isChangePINModalOpen, setChangePINModalOpen] = useState(false);
     const [isForgetPINModalOpen, setForgetPINModalOpen] = useState(false);
     const [isMakeMaintWalletModalOpen, setMakeMaintWalletModalOpen] = useState(false);
     const [isSubWalletModalOpen, setSubWalletModalOpen] = useState(false);
-
+    const [copyId, setCopyId] = useState(false)
     const [subWalletData, setSubWalletData] = useState({});
 
     const handleChangePIN = () => {
@@ -55,6 +55,19 @@ const WalletPage = () => {
     const handleCloseModal = () => {
         setChangePINModalOpen(false);
         setForgetPINModalOpen(false);
+    }
+
+
+    const handleCopy = (e: any) => {
+        e.preventDefault()
+        navigator.clipboard.writeText(mainWallet?.walletId as string)
+        toast.success("Copied ID!")
+        setCopyId(true)
+        setTimeout(() => {
+            setCopyId(false)
+        }, 2000)
+
+
     }
 
     return (
@@ -84,10 +97,12 @@ const WalletPage = () => {
                                     <div className='flex flex-row lg:flex-wrap  lg:gap-2 xl:gap-0 justify-between items-center px-2 lg:px-5 pt-5'>
                                         <div className="font-semibold flex flex-row items-center text-xs lg:text-base">Wallet ID :
                                             <span className='border border-gray-400 px-[3px]'>{mainWallet?.walletId}</span>
-                                            <div className='border border-gray-300 p-[3px] lg:p-[7px]'>
-                                                <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M0 0V8.33333H2.91667V7.5H0.833333V0.833333H5.83333V1.25H6.66667V0H0ZM3.33333 1.66667V10H10V1.66667H3.33333ZM4.16667 2.5H9.16667V9.16667H4.16667V2.5Z" fill="#723EEB" />
-                                                </svg>
+                                            <div onClick={handleCopy} className='border cursor-pointer border-gray-300 p-[3px] lg:p-[7px]'>
+                                                {
+                                                    !copyId ? <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M0 0V8.33333H2.91667V7.5H0.833333V0.833333H5.83333V1.25H6.66667V0H0ZM3.33333 1.66667V10H10V1.66667H3.33333ZM4.16667 2.5H9.16667V9.16667H4.16667V2.5Z" fill="#723EEB" />
+                                                    </svg> : <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                                }
                                             </div>
                                             <div className='border border-gray-300 p-[3px] lg:p-[7px]'>
                                                 <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">

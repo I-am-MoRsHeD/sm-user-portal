@@ -41,7 +41,6 @@ const WalletToBankPage: React.FC = () => {
   const [receivingCurrency, setReceivingCurrency] = useState({} as any);
   const [sendingAmount, setSendingAmount] = useState('');
 
-  console.log(wallet, 'wallet')
 
 
   // fetching data from the server

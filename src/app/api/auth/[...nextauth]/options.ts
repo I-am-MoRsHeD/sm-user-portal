@@ -1,4 +1,4 @@
-import NextAuth, { NextAuthOptions } from 'next-auth';
+import { NextAuthOptions } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import { cookies } from 'next/headers';
 
@@ -115,7 +115,7 @@ export const authOptions: NextAuthOptions = {
                 });
 
                 const { data } = await response.json();
-                console.log('response ache' , response.ok);
+              
                 if (response.ok && data.accessToken && data.refreshToken) {
 
                     user.id = data.user.id
