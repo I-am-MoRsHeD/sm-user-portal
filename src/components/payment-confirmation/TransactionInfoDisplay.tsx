@@ -3,7 +3,7 @@ import { useSearchParams } from "next/navigation"
 import { useState } from "react"
 import toast from "react-hot-toast"
 
-const TransactionInfoDisplay = () => {
+const TransactionInfoDisplay = ({ transactionID }: { transactionID: string }) => {
     const [copyId, setCopyId] = useState(false)
     const [copyLink, setCopyLink] = useState(false)
     const id = useSearchParams().get('transactionId');
@@ -38,7 +38,7 @@ const TransactionInfoDisplay = () => {
                         className='w-full px-3 py-2.5 border-[1px] border-gray-300  text-xs outline-0 rounded-tl-[15px] rounded-bl-[15px]'
                         type="text"
                         name="transactionId"
-                        placeholder={`${id}`}
+                        placeholder={`${id || transactionID}`}
                         readOnly
                     />
                 </div>

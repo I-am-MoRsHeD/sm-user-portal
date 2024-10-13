@@ -19,7 +19,7 @@ const PaymentConfirmationMassagePage = () => {
                         </svg>
                     </div>
                     <h3 className="text-sm lg:text-base font-semibold">Your Withdraw Is Successfully Completed</h3>
-                    <TransactionInfoDisplay />
+                    <TransactionInfoDisplay transactionID={id || ''} />
                     <div className='flex flex-row gap-3 w-full px-5'>
                         <Link href={"/user/send-money"} className='w-[50%]'>
                             <button className="text-xs bg-[#723EEB] text-white w-full p-2 lg:p-3 rounded-full font-semibold">Send Money Again</button>
