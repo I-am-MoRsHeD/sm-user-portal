@@ -34,9 +34,9 @@ const RecipientsPage = () => {
         <div>
             <Topbar>Recipients</Topbar>
             <div className='max-h-auto min-h-[90vh] '>
-                <div className='mt-1 mb-3 flex flex-row justify-between items-center'>
+                <div className='mt-1 mb-3 flex flex-row justify-between items-end gap-3 flex-wrap'>
                     {/* Search Existing Recipient */}
-                    <div className="flex flex-row gap-3 items-end lg:w-1/2 mb-6">
+                    <div className="flex flex-row gap-3 items-end lg:w-1/2 ">
                         <div className="lg:w-1/2">
                             <label className="block mb-3 font-medium">Search Existing Recipient</label>
                             <input
@@ -55,11 +55,13 @@ const RecipientsPage = () => {
                             </button>
                         </div>
                     </div>
-                    <Link href={"/user/recipients/create-recipient"} className='w-[50%] lg:w-[20%]'>
-                        <button className="text-xs bg-[#723EEB] text-white w-full p-1.5 rounded-2xl font-semibold">+Add New Recipient</button>
+                    <Link href={"/user/recipients/create-recipient"} className=''>
+                        <button className="text-xs bg-[#723EEB] text-white w-full py-1.5 px-5 md:px-8 rounded-2xl font-semibold">+Add New Recipient</button>
                     </Link>
                 </div>
-                <RecipientsCards recipientsData={recipientsData} isLoading={isLoading} refetch={refetch} />
+                <div className='pt-6'>
+                    <RecipientsCards recipientsData={recipientsData} isLoading={isLoading} refetch={refetch} />
+                </div>
             </div>
         </div>
     );

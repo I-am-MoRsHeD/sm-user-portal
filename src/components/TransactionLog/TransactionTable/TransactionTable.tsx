@@ -1,4 +1,3 @@
-import useTransactions from '@/components/hooks/useTransactions';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import CompletePayment from '../ProgressPayment/CompletePayment';
@@ -20,10 +19,16 @@ interface Transaction {
     receipt: string;
 }
 
-const TransactionTable = () => {
+interface TransactionTableProps {
+    transactions?: any;
+    isPending?: boolean;
+    isLoading?: boolean;
+}
+
+const TransactionTable: React.FC<TransactionTableProps> = ({ transactions, isPending, isLoading }) => {
     // const [transactions, setTransactions] = useState<Transaction[]>([]);
     const [expandedRow, setExpandedRow] = useState<number | null>(null);
-    const [transactions, , isPending] = useTransactions();
+    // const [transactions, , isPending] = useTransactions();
 
     useEffect(() => {
         fetch('/data/transactionsData.json')
@@ -39,24 +44,24 @@ const TransactionTable = () => {
     return (
         <div className="w-full overflow-auto custom-scrollbar">
             {
-                isPending ? <div className='overflow-hidden'>
+                isLoading ? <div className='overflow-hidden'>
                     <SkeletonForTransaction />
                 </div> : (
-                    transactions?.length > 0 ? (
-                        <table className="bg-white text-nowrap w-full">
-                            <thead>
-                                <tr className="">
-                                    <th className="px-4 py-2 text-left text-gray-700">Time</th>
-                                    <th className="px-4 py-2 text-left text-gray-700">T.Type</th>
-                                    <th className="px-4 py-2 text-left text-gray-700">Amount Send</th>
-                                    <th className="px-4 py-2 text-left text-gray-700 ">Recipient Get</th>
-                                    <th className="px-4 py-2 text-left text-gray-700">Sender</th>
-                                    <th className="px-4 py-2 text-left text-gray-700">Recipient</th>
-                                    <th className="px-4 py-2 text-left text-gray-700">Agent</th>
-                                    <th className="px-4 py-2 text-left text-gray-700">Status</th>
-                                    <th className="px-4 py-2 text-left text-gray-700">Receipt</th>
-                                </tr>
-                            </thead>
+                    <table className="bg-white text-nowrap w-full">
+                        <thead>
+                            <tr className="">
+                                <th className="px-4 py-2 text-left text-gray-700">Time</th>
+                                <th className="px-4 py-2 text-left text-gray-700">T.Type</th>
+                                <th className="px-4 py-2 text-left text-gray-700">Amount Send</th>
+                                <th className="px-4 py-2 text-left text-gray-700 ">Recipient Get</th>
+                                <th className="px-4 py-2 text-left text-gray-700">Sender</th>
+                                <th className="px-4 py-2 text-left text-gray-700">Recipient</th>
+                                <th className="px-4 py-2 text-left text-gray-700">Agent</th>
+                                <th className="px-4 py-2 text-left text-gray-700">Status</th>
+                                <th className="px-4 py-2 text-left text-gray-700">Receipt</th>
+                            </tr>
+                        </thead>
+                        {transactions?.length > 0 ? (
                             <tbody className="divide-y divide-gray-300">
                                 {transactions?.map((transaction: any) => (
                                     <React.Fragment key={transaction?.id}>
@@ -130,14 +135,22 @@ const TransactionTable = () => {
                                         )}
                                     </React.Fragment>
                                 ))}
-                            </tbody>
-                        </table>
-                    ) : (
-                        <div className='flex justify-center flex-col items-center gap-2 h-[calc(100vh-30vh)] py-5 rounded-xl bg-white'>
-                            <Image src={AssetEmptyBox} alt='empty' width={200} height={200} />
-                            <p className='text-[#0F30B9] font-semibold text-xl'>Data Not Found!!!</p>
-                        </div>
-                    )
+                            </tbody>) :
+                            (
+                                <tbody>
+                                    <tr>
+                                        <td colSpan={9}>
+                                            <div className='flex justify-center flex-col items-center gap-2 h-[calc(100vh-45vh)] py-5 rounded-xl bg-white w-full'>
+                                                <Image src={AssetEmptyBox} alt='empty' width={150} height={150} />
+                                                <p className='text-[#0F30B9]/60 font-semibold text-xl'>No Data!!!</p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            )
+                        }
+                    </table>
+
                 )
             }
 

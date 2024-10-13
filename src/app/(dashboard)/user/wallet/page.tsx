@@ -21,8 +21,9 @@ import { GoDotFill } from 'react-icons/go';
 
 const WalletPage = () => {
     const [mainWallet, , , isLoading] = useMainWallet();
-    const [subWallets] = useSubWallets();
+    const [subWallets, , isSubWalletPending] = useSubWallets();
     const [walletLog, , isPending] = useWalletLog();
+
 
 
     const [isChangePINModalOpen, setChangePINModalOpen] = useState(false);

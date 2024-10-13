@@ -5,6 +5,7 @@ import LoaderWithLottie from '@/components/common/loader/LoaderWithLottie';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { SessionProvider } from 'next-auth/react';
 import { ReactNode, useEffect, useState } from 'react';
+import { Toaster } from 'react-hot-toast';
 import '../styles/globals.css';
 
 const queryClient = new QueryClient();
@@ -60,6 +61,39 @@ const Layout = ({ children }: LayoutProps) => {
 
               <QueryClientProvider client={queryClient}>
                 {children}
+                <Toaster
+                  position="top-center"
+                  // reverseOrder={true}
+                  toastOptions={{
+                    style: {
+                      padding: '0.725rem',
+                      color: '#5A5278',
+                    },
+                    success: {
+                      style: {
+                        // border: '1px solid #723eeb',
+                      },
+                      iconTheme: {
+                        primary: '#723eeb',
+                        secondary: '#fff',
+                      },
+                    },
+                    error: {
+                      style: {
+                        // border: '1px solid #dc3545',
+                        color: '#dc3545',
+                      },
+                      iconTheme: {
+                        primary: '#dc3545',
+                        secondary: '#fff',
+                      },
+                    },
+                    iconTheme: {
+                      primary: '#723eeb',
+                      secondary: '#FFFAEE',
+                    },
+                  }}
+                />
               </QueryClientProvider>
 
             </NavigationContextProvider>

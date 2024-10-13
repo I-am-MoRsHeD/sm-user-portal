@@ -1,13 +1,14 @@
 'use client'
 import Image from 'next/image';
 
-import UserCover from '../../../public/user-cover.png';
-import UserProfile from '../../../public/user-avater.png';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import useUserProfile from '../hooks/useUserProfile';
-import { useEffect } from 'react';
-import useAxiosSecure from '../hooks/useAxiosSecure';
 import toast from 'react-hot-toast';
+import UserProfile from '../../../public/user-avater.png';
+import UserCover from '../../../public/user-cover.png';
+import LoadingSpinner from '../common/Loading/LoadingSpinner';
+import useAxiosSecure from '../hooks/useAxiosSecure';
+import useUserProfile from '../hooks/useUserProfile';
 
 interface FormData {
     country: string;
@@ -27,6 +28,7 @@ const UserUpdateForm = () => {
     console.log(user);
     const axiosInstance = useAxiosSecure();
     const { city, address, phoneNumber, state, zipCode, country } = user;
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
 
@@ -52,15 +54,20 @@ const UserUpdateForm = () => {
         };
 
         formData.append('data', JSON.stringify(userUpdateInfo));
-
-        const res = await axiosInstance.post('/user/profile', formData, {
+        setLoading(true);
+        axiosInstance.post('/user/profile', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
-        });
-        if (res.status === 200) {
+        }).then((res) => {
+            refetch();
             toast.success("Your information has been updated");
-        }
+            setLoading(false);
+        }).catch((error) => {
+            toast.error(error?.response?.data?.message);
+            setLoading(false);
+        });
+
     }
 
     return (
@@ -178,7 +185,7 @@ const UserUpdateForm = () => {
                         <button
                             type="submit"
                             className="w-full cursor-pointer bg-[#723EEB] text-white p-1 rounded-[5px] text-sm">
-                            Update
+                            {loading ? <LoadingSpinner className='h-4 w-4' /> : 'Update'}
                         </button>
                     </div>
                 </form>
