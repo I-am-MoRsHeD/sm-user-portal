@@ -23,7 +23,6 @@ const Topbar = ({ children }: { children: string }) => {
 
   const user = typeof window !== "undefined" ? localStorage.getItem('user') : '';
 
-
   useEffect(() => {
     const close = () => {
       setDropdown(false);
@@ -66,6 +65,8 @@ const Topbar = ({ children }: { children: string }) => {
     });
   }
 
+
+
   return (
     <div>
       <div className="flex justify-between items-center py-4 flex-wrap">
@@ -88,7 +89,10 @@ const Topbar = ({ children }: { children: string }) => {
           </div>
           {/* language */}
           <div className="relative sm:w-24 w-16 text-xs">
-            <div onClick={() => setDropdown(true)} className="mx-auto flex w-full items-center justify-between rounded sm:px-3 px-1 py-0.5 border-[1.5px] border-gray-300 cursor-pointer">
+            <div onClick={() => {
+              setProfileDropdown(false)
+              setDropdown(true)
+            }} className="mx-auto flex w-full items-center justify-between rounded sm:px-3 px-1 py-0.5 border-[1.5px] border-gray-300 cursor-pointer">
               <h1 className="font-medium text-sm">{dropdownSelectedValue}</h1>
 
               <svg className={`${dropdown ? '-rotate-180' : 'rotate-0'} duration-300`} width={25} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M7 10L12 15L17 10" stroke="#4B5563" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>{' '}</g></svg>
@@ -128,7 +132,7 @@ const Topbar = ({ children }: { children: string }) => {
               {/* <svg className={`${profileDropdown ? '-rotate-180' : 'rotate-0'} duration-300`} width={25} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M7 10L12 15L17 10" stroke="#4B5563" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>{' '}</g></svg> */}
             </div>
             {/* profile dropdown options  */}
-            <div className={`${profileDropdown ? 'visible top-9 right-0 bg-white opacity-100' : 'invisible top-12 opacity-0 right-0'} absolute transition-all mx-auto max-w-40 z-50 rounded border duration-300 ease-in-out cursor-pointer divide-y pb-3`}>
+            <div className={`${profileDropdown ? 'visible top-9 right-0 bg-white opacity-100' : 'invisible top-12 opacity-0 right-0'} absolute transition-all mx-auto max-w-40 z-50 rounded border duration-300 ease-in-out cursor-pointer divide-y pb-3 `}>
               <p className='px-2 py-2 text-sm text-center w-full break-all'>{user && JSON.parse(user)?.name}</p>
               <ul id="dropdownMenu" className='space-y-2 pt-1' >
                 <Link href={'/user/user-profile'} >
