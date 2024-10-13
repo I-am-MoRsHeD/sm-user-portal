@@ -1,24 +1,18 @@
 "use client";
-import React from "react"
-import { GoDotFill } from "react-icons/go";
-import { RecipientsDataType } from "@/utils/data/recipientsData";
-import RecipientsTable from "./RecipientsTable";
-import { useState } from "react";
-import Link from "next/link";
-import useRecipients from "../hooks/useRecipients";
-import useDeleteRecipient from "../hooks/useDeleteRecipients";
-import { redirect } from "next/dist/server/api-utils";
 import { useRouter } from "next/navigation";
-import LoadingSpinner from "../common/Loading/LoadingSpinner";
-import useAxiosSecure from "../hooks/useAxiosSecure";
+import { useState } from "react";
+import { GoDotFill } from "react-icons/go";
 import Swal from "sweetalert2";
 import SkeletonForRecipient from "../common/skeleton/SkeletonForRecipient";
+import useAxiosSecure from "../hooks/useAxiosSecure";
+import useDeleteRecipient from "../hooks/useDeleteRecipients";
+import RecipientsTable from "./RecipientsTable";
 
 
 
-const RecipientsCards = () => {
+const RecipientsCards = ({ recipientsData, isLoading, refetch }: { recipientsData: any, isLoading?: boolean, refetch?: any }) => {
     const [open, setOpen] = useState<Record<string, boolean>>({});
-    const [recipients, refetch, isPending, isLoading] = useRecipients();
+    // const [recipients, refetch, isPending, isLoading] = useRecipients();
     const { deleteRecipient, isDeleting } = useDeleteRecipient();
     const router = useRouter();
     const axiosInstance = useAxiosSecure();
@@ -63,7 +57,7 @@ const RecipientsCards = () => {
         <>
             {
                 isLoading ? <SkeletonForRecipient /> : (
-                    recipients?.map((data: any) => (
+                    recipientsData?.map((data: any) => (
                         <div
                             key={String(data.id)}
                             className={`bg-white px-2 py-2 lg:px-6 lg:py-4 mb-5 rounded-2xl cursor-pointer group ${open[String(data.id)] ? "shadow-md shadow-neutral-400" : ""

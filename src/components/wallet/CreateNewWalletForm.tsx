@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import { FaEye, FaEyeSlash } from 'react-icons/fa6';
+import LoadingSpinner from '../common/Loading/LoadingSpinner';
 import useAxiosSecure from '../hooks/useAxiosSecure';
 import useCurrency from '../hooks/useCurrency';
 import useMainWallet from '../hooks/useMainWallet';
 import useSubWallets from '../hooks/useSubWallets';
-import LoadingSpinner from '../common/Loading/LoadingSpinner';
-import toast from 'react-hot-toast';
 
 interface FormData {
     walletName: string;
@@ -88,7 +88,6 @@ const CreateNewWalletForm = () => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>();
     const [pin, setPin] = useState(false);
     const axiosInstance = useAxiosSecure();
-    console.log(currency);
 
 
     const onSubmit = async (data: any) => {
@@ -121,9 +120,9 @@ const CreateNewWalletForm = () => {
                     answer: data?.answer,
                     pinNumber: parseInt(data?.newPin)
                 };
-                console.log(walletInfo)
+
                 const res = await axiosInstance.post('/wallet/create-wallet', walletInfo);
-                console.log(res);
+
                 if (res.status === 200) {
                     setLoading(false);
                     refetch();
@@ -263,10 +262,11 @@ const CreateNewWalletForm = () => {
                     <label className="text-gray-600 font-semibold">Create New PIN</label>
                     <div className="relative">
                         <input
-                            type={pin ? 'text' : 'number'}
+                            type={pin ? 'text' : 'password'}
                             {...register("newPin", {
                                 required: "Pin is required",
                                 minLength: 4,
+                                pattern: /^[0-9]*$/
                             })}
                             className={`mt-1 w-full px-3 py-1 border border-gray-400 rounded-[10px] focus:outline-none placeholder:text-xs`}
                             placeholder="Enter PIN...."
@@ -274,7 +274,7 @@ const CreateNewWalletForm = () => {
                         <button
                             type="button"
                             onClick={() => setPin(!pin)}
-                            className="absolute top-3 right-4 text-[11px]"
+                            className="absolute top-3 right-4 text-[14px]"
                         >
                             {pin ? <FaEye /> : <FaEyeSlash />}
                         </button>
@@ -282,6 +282,10 @@ const CreateNewWalletForm = () => {
 
                     {errors.newPin?.type === 'required' && (
                         <p className="text-red-500 text-xs">Pin is required</p>
+                    )}
+
+                    {errors.newPin?.type === 'pattern' && (
+                        <p className="text-red-500 text-xs">Pin must be a number</p>
                     )}
                     {errors.newPin?.type === 'minLength' && (
                         <p className="text-red-500 text-xs">Pin must be at least 4 numbers</p>

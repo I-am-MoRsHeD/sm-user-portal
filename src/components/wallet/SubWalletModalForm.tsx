@@ -1,12 +1,7 @@
-import React, { useState } from 'react';
-import Modal from '../common/Modal/Modal';
-import ChangePINForm from './ChangePINForm';
-import WithdrawIntoWalletModal from './WithdrawIntoWalletModal';
-import EditWalletModal from './EditWalletModal';
-import ForgetPINModal from '../common/ForgetPINModal/ForgetPINModal';
 import Link from 'next/link';
-import useCurrency from '../hooks/useCurrency';
+import React, { useState } from 'react';
 import LoadingSpinner from '../common/Loading/LoadingSpinner';
+import useCurrency from '../hooks/useCurrency';
 
 interface ModalProps {
     handleWithdrawIntoWallet: () => void;
@@ -20,7 +15,7 @@ interface ModalProps {
 const SubWalletModalForm: React.FC<ModalProps> = ({ handleWithdrawIntoWallet, handleChangePIN, handleForgetPIN, handleEditSubWallet, handleDeleteSubWallet, subWalletData }) => {
     const [loading, setLoading] = useState(false);
     const [currency] = useCurrency();
-    console.log(subWalletData);
+
 
     return (
         <div className='relative'>

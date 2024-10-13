@@ -4,10 +4,9 @@ import Link from "next/link";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import { LiaEyeSlashSolid, LiaEyeSolid } from "react-icons/lia";
 import useAuthContext from "../AuthContext/useAuthContext";
 import LoadingSpinner from "../common/Loading/LoadingSpinner";
-import { useRouter } from "next/navigation";
-import { LiaEyeSlashSolid, LiaEyeSolid } from "react-icons/lia";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 
 
@@ -36,7 +35,7 @@ const RegistrationForm = () => {
     setLoading(true);
     try {
       if (data.password !== data.repassword) {
-        console.log("Please fill the correct password");
+        toast.error("Please fill the correct password");
       } else {
         const userInfo = {
           name: data.fullName,
@@ -44,7 +43,6 @@ const RegistrationForm = () => {
           password: data.password,
         };
         const res = await axiosIntance.post('/auth/register', userInfo);
-        console.log(res);
         if (res.status === 200) {
           toast.success("Please Check Your mail");
           setLoading(false);
