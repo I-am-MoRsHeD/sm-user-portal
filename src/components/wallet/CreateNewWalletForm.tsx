@@ -88,7 +88,6 @@ const CreateNewWalletForm = () => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>();
     const [pin, setPin] = useState(false);
     const axiosInstance = useAxiosSecure();
-    console.log(currency);
 
 
     const onSubmit = async (data: any) => {
@@ -121,9 +120,9 @@ const CreateNewWalletForm = () => {
                     answer: data?.answer,
                     pinNumber: parseInt(data?.newPin)
                 };
-                console.log(walletInfo)
+
                 const res = await axiosInstance.post('/wallet/create-wallet', walletInfo);
-                console.log(res);
+
                 if (res.status === 200) {
                     setLoading(false);
                     refetch();

@@ -1,13 +1,13 @@
 'use client'
 import React, { useState } from 'react';
-import { Close } from '../icons/Icon';
-import { LiaEyeSlashSolid, LiaEyeSolid } from 'react-icons/lia';
 import { useForm } from 'react-hook-form';
-import LoadingSpinner from '../common/Loading/LoadingSpinner';
-import useNavigationContext from '../NavigationContext/useNavigationContext';
-import useAxiosSecure from '../hooks/useAxiosSecure';
 import toast from 'react-hot-toast';
+import { LiaEyeSlashSolid, LiaEyeSolid } from 'react-icons/lia';
+import useNavigationContext from '../NavigationContext/useNavigationContext';
+import LoadingSpinner from '../common/Loading/LoadingSpinner';
+import useAxiosSecure from '../hooks/useAxiosSecure';
 import useSubWallets from '../hooks/useSubWallets';
+import { Close } from '../icons/Icon';
 
 interface ModalProps {
     isDeleteSubWalletModalOpen: boolean;
@@ -34,10 +34,10 @@ const DeleteSubWalletModal: React.FC<ModalProps> = ({ isDeleteSubWalletModalOpen
             pinNumber: Number(data.confirmPin)
         } as any;
         setLoading(true);
-        console.log(pin);
+
         try {
             const res = await axiosInstance.post(`/wallet/delete-wallet/${subWalletData?.id}`, pin);
-            console.log(res);
+
             if (res.status === 200) {
                 toast.success('Wallet deleted successfully');
                 refetch();

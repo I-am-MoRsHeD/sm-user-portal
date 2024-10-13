@@ -4,8 +4,8 @@ import React, { useEffect, useState } from 'react';
 import CompletePayment from '../ProgressPayment/CompletePayment';
 import ProcessingPayment from '../ProgressPayment/ProcessingPayment';
 
+import SkeletonForTransaction from '@/components/common/skeleton/SkeletonForTransaction';
 import AssetEmptyBox from '../../../../public/empty-box.png';
-import SkeletonForRecipient from '@/components/common/skeleton/SkeletonForRecipient';
 
 interface Transaction {
     id: number;
@@ -39,7 +39,9 @@ const TransactionTable = () => {
     return (
         <div className="w-full overflow-auto custom-scrollbar">
             {
-                isPending ? <SkeletonForRecipient /> : (
+                isPending ? <div className='overflow-hidden'>
+                    <SkeletonForTransaction />
+                </div> : (
                     transactions?.length > 0 ? (
                         <table className="bg-white text-nowrap w-full">
                             <thead>
@@ -133,7 +135,7 @@ const TransactionTable = () => {
                     ) : (
                         <div className='flex justify-center flex-col items-center gap-2 h-[calc(100vh-30vh)] py-5 rounded-xl bg-white'>
                             <Image src={AssetEmptyBox} alt='empty' width={200} height={200} />
-                            <p className='text-cyan-500 font-semibold text-xl'>Data Not Found</p>
+                            <p className='text-[#0F30B9] font-semibold text-xl'>Data Not Found!!!</p>
                         </div>
                     )
                 )

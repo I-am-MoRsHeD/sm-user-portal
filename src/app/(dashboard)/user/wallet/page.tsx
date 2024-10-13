@@ -23,7 +23,7 @@ const WalletPage = () => {
     const [mainWallet, , , isLoading] = useMainWallet();
     const [subWallets] = useSubWallets();
     const [walletLog, , isPending] = useWalletLog();
-    console.log(walletLog)
+
 
     const [isChangePINModalOpen, setChangePINModalOpen] = useState(false);
     const [isForgetPINModalOpen, setForgetPINModalOpen] = useState(false);

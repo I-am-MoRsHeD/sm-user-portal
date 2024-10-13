@@ -1,10 +1,10 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import Topbar from "../Topbar";
 import CardSubTitle from "../common/cardSubTitle/CardSubTitle";
 import { CreateRecipient } from "../hooks/recipientApi";
-import toast from "react-hot-toast";
 import useCurrency from "../hooks/useCurrency";
 
 
@@ -38,7 +38,7 @@ const CreateRecipientForm: React.FC = () => {
     try {
       setSubmitError("");
       const createdRecipient = await CreateRecipient(data);
-      console.log("Recipient created:", createdRecipient);
+
       toast.success("Recipient created successfully");
       reset();
     } catch (error) {

@@ -1,16 +1,15 @@
 'use client'
-import Image from 'next/image';
-import Link from 'next/link';
 import Topbar from '@/components/Topbar';
-import UserProfile from '../../../../../../public/user-avater.png';
-import { useRouter, useSearchParams } from 'next/navigation';
-import useSingleRecipient from '@/components/hooks/useSingleRecipient';
-import { useForm } from 'react-hook-form';
-import useCurrency from '@/components/hooks/useCurrency';
-import useAxiosSecure from '@/components/hooks/useAxiosSecure';
-import { useEffect, useState } from 'react';
 import LoadingSpinner from '@/components/common/Loading/LoadingSpinner';
+import useAxiosSecure from '@/components/hooks/useAxiosSecure';
+import useCurrency from '@/components/hooks/useCurrency';
+import useSingleRecipient from '@/components/hooks/useSingleRecipient';
+import Image from 'next/image';
+import { useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
+import UserProfile from '../../../../../../public/user-avater.png';
 
 interface FormData {
     fullName: string;
@@ -46,15 +45,15 @@ const EditRecipientPage = () => {
 
     const onSubmit = async (data: any) => {
         const updatedInfo = {
-           fullName: data?.fullName,
-           email: data?.email,
-           phone: data?.phoneNumber,
-           city: data?.city,
-           bankName: data?.bankName,
-           accountNumber: data?.accountNumber,
-           country: data?.country,
+            fullName: data?.fullName,
+            email: data?.email,
+            phone: data?.phoneNumber,
+            city: data?.city,
+            bankName: data?.bankName,
+            accountNumber: data?.accountNumber,
+            country: data?.country,
         }
-        console.log(updatedInfo);
+
         setLoading(true);
         try {
             const res = await axiosInstance.patch(`/recipient/${id}`, updatedInfo);

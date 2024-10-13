@@ -2,12 +2,33 @@
 import Link from 'next/link';
 // import RecipientsCards from '../../components/recipients/RecipientsCards';
 import Topbar from '@/components/Topbar';
-import RecipientsCards from '@/components/recipients/RecipientsCards';
 import useRecipients from '@/components/hooks/useRecipients';
+import RecipientsCards from '@/components/recipients/RecipientsCards';
+import { useEffect, useState } from 'react';
 
 
 const RecipientsPage = () => {
+    const [recipientsData, setRecipientsData] = useState([]);
+    const [searchId, setSearchId] = useState('');
+
     const [recipients, refetch, isPending, isLoading] = useRecipients();
+
+
+    useEffect(() => {
+        if (recipients) {
+            setRecipientsData(recipients);
+        }
+    }, [recipients]);
+
+    const handleSearch = (ID: string) => {
+
+        const searchResult = recipients?.filter((recipient: any) => recipient?.recipientId?.includes(ID));
+        if (searchResult.length > 0) {
+            setRecipientsData(searchResult);
+        } else {
+            setRecipientsData([]);
+        }
+    }
 
     return (
         <div>
@@ -20,14 +41,16 @@ const RecipientsPage = () => {
                             <label className="block mb-3 font-medium">Search Existing Recipient</label>
                             <input
                                 type="text"
-                                value={''}
-                                // onChange={(e) => setSearchId(e.target.value)}
-                                className="w-full px-3 py-0.5 border border-gray-300 outline-none"
+                                onChange={(e) => {
+                                    handleSearch(e.target.value)
+                                }
+                                }
+                                className="w-full px-3 py-0.5 border rounded-2xl border-gray-300 outline-none"
                                 placeholder="Enter ID ..."
                             />
                         </div>
                         <div className="w-1/2">
-                            <button className="bg-[#723EEB] w-full px-4 py-1 text-sm text-white">
+                            <button className="bg-[#723EEB] w-full px-4 py-1 rounded-2xl text-sm text-white">
                                 Search
                             </button>
                         </div>
@@ -36,7 +59,7 @@ const RecipientsPage = () => {
                         <button className="text-xs bg-[#723EEB] text-white w-full p-1.5 rounded-2xl font-semibold">+Add New Recipient</button>
                     </Link>
                 </div>
-                <RecipientsCards />
+                <RecipientsCards recipientsData={recipientsData} isLoading={isLoading} refetch={refetch} />
             </div>
         </div>
     );

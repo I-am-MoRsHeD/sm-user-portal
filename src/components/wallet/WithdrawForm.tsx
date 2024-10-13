@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import ForgetPINModal from '../common/ForgetPINModal/ForgetPINModal';
 import { useForm } from 'react-hook-form';
-import { LiaEyeSlashSolid, LiaEyeSolid } from 'react-icons/lia';
-import useMainWallet from '../hooks/useMainWallet';
-import useAxiosSecure from '../hooks/useAxiosSecure';
-import LoadingSpinner from '../common/Loading/LoadingSpinner';
 import toast from 'react-hot-toast';
+import { LiaEyeSlashSolid, LiaEyeSolid } from 'react-icons/lia';
+import LoadingSpinner from '../common/Loading/LoadingSpinner';
+import useAxiosSecure from '../hooks/useAxiosSecure';
+import useMainWallet from '../hooks/useMainWallet';
 
 interface ModalProps {
     handleForgetPIN: (value: any) => void;
@@ -38,7 +37,7 @@ const WithdrawForm: React.FC<ModalProps> = ({ handleForgetPIN, setWithdrawModalO
         setLoading(true);
         try {
             const res = await axiosInstance.post('/wallet/create-withdraw', withdrawInfo);
-            console.log(res);
+
             if (res.status === 200) {
                 reset();
                 mainWalletRefetch();
