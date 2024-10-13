@@ -13,6 +13,7 @@ const TwoFactor = () => {
     const [isOpenEnableModal, setIsOpenEnableModal] = useState(false);
     const [isOpenWithCodeModal, setIsOpenWithCodeModal] = useState(false);
     const queryClient = useQueryClient();
+    const [copyId, setCopyId] = useState(false)
 
     const axiosInstance = useAxiosSecure();
 
@@ -24,6 +25,7 @@ const TwoFactor = () => {
             return res?.data?.data;
         },
     });
+
     // user Data
     const { data: userData, refetch } = useQuery({
         queryKey: ['userData'],
@@ -66,6 +68,18 @@ const TwoFactor = () => {
         });
         setIsOpenWithCodeModal(false);
     }
+
+
+    const handleCopy = (e: any) => {
+        e.preventDefault()
+        navigator.clipboard.writeText(data?.secret ? data?.secret : 'MBCE2JDRJQI77J5X')
+        toast.success("Copied ID!")
+        setCopyId(true)
+        setTimeout(() => {
+            setCopyId(false)
+        }, 2000)
+    }
+
 
     useEffect(() => {
         if (verifyError) {
@@ -132,12 +146,14 @@ const TwoFactor = () => {
                         type="text"
                         name="qrcode"
                         placeholder='MBCE2JDRJQI77J5X'
-                        defaultValue={data?.secret}
+                        value={data?.secret ? data?.secret : 'MBCE2JDRJQI77J5X'}
                     />
-                    <div className='border border-gray-300 w-[25.5px] h-[25.5px] flex justify-center items-center'>
-                        <svg width="13" height="13" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M0 0V8.33333H2.91667V7.5H0.833333V0.833333H5.83333V1.25H6.66667V0H0ZM3.33333 1.66667V10H10V1.66667H3.33333ZM4.16667 2.5H9.16667V9.16667H4.16667V2.5Z" fill="#723EEB" />
-                        </svg>
+                    <div onClick={handleCopy} className='border border-gray-300 w-[25.5px] h-[25.5px] flex justify-center items-center cursor-pointer'>
+                        {
+                            !copyId ? <svg width="11" height="11" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M0 0V8.33333H2.91667V7.5H0.833333V0.833333H5.83333V1.25H6.66667V0H0ZM3.33333 1.66667V10H10V1.66667H3.33333ZM4.16667 2.5H9.16667V9.16667H4.16667V2.5Z" fill="#723EEB" />
+                            </svg> : <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        }
                     </div>
                     <div className='border border-gray-300  w-[25.5px] h-[25.5px] flex justify-center items-center rounded-r bg-[#723EEB]'>
                         <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">

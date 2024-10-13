@@ -16,15 +16,12 @@ const Topbar = ({ children }: { children: string }) => {
   const { toggleNavigation }: any = useNavigationContext();
   const pathName = usePathname();
   const router = useRouter();
-  console.log(profileDropdown, 'profileDropdown');
   const selectOptions = ['English', 'Hindi', 'Spanish'];
 
   const [dropdown, setDropdown] = useState(false);
   const [dropdownSelectedValue, setDropdownSelectedValue] = useState(selectOptions[0]);
 
   const user = typeof window !== "undefined" ? localStorage.getItem('user') : '';
-
-  console.log(user, 'user');
 
 
   useEffect(() => {
