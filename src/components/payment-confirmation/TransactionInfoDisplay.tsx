@@ -10,9 +10,8 @@ const TransactionInfoDisplay = ({ transactionID }: { transactionID: string }) =>
 
 
 
-    const handleCopy = (e: any) => {
-        e.preventDefault()
-        if (e.target.id === 'copyId') {
+    const handleCopy = (item: 'copyId' | 'copyLink') => {
+        if (item === 'copyId') {
             navigator.clipboard.writeText(id as string)
             toast.success("Copied ID!")
             setCopyId(true)
@@ -42,7 +41,7 @@ const TransactionInfoDisplay = ({ transactionID }: { transactionID: string }) =>
                         readOnly
                     />
                 </div>
-                <div onClick={handleCopy} id="copyId" className='cursor-pointer border-y-[1px] border-gray-400 w-12 h-[38px] flex justify-center items-center'>
+                <div onClick={() => handleCopy('copyId')} id="copyId" className='cursor-pointer border-y-[1px] border-gray-400 w-12 h-[38px] flex justify-center items-center'>
                     {
                         !copyId ? <svg width="13" height="13" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M0 0V8.33333H2.91667V7.5H0.833333V0.833333H5.83333V1.25H6.66667V0H0ZM3.33333 1.66667V10H10V1.66667H3.33333ZM4.16667 2.5H9.16667V9.16667H4.16667V2.5Z" fill="#723EEB" />
@@ -65,7 +64,7 @@ const TransactionInfoDisplay = ({ transactionID }: { transactionID: string }) =>
                         placeholder={'www.diasporex.com/something/3232434'}
                     />
                 </div>
-                <div onClick={handleCopy} id="copyLink" className='cursor-pointer border-y border-gray-300 w-12 h-[38px] flex justify-center items-center'>
+                <div onClick={() => handleCopy('copyId')} id="copyLink" className='cursor-pointer border-y border-gray-300 w-12 h-[38px] flex justify-center items-center'>
                     {
                         !copyLink ? <svg width="13" height="13" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M0 0V8.33333H2.91667V7.5H0.833333V0.833333H5.83333V1.25H6.66667V0H0ZM3.33333 1.66667V10H10V1.66667H3.33333ZM4.16667 2.5H9.16667V9.16667H4.16667V2.5Z" fill="#723EEB" />

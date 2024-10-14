@@ -1,5 +1,6 @@
 "use client"
 import MainLayout from '@/components/MainLayout/MainLayout';
+import { TransactionSearchProvider } from '@/context/TransactionSearchContext';
 import KYCProvider from '@/context/useKyc';
 import '.././../styles/globals.css';
 
@@ -10,12 +11,14 @@ export default function RootLayout({
 }) {
     return (
         <KYCProvider>
-            <section>
-                <MainLayout>
-                    {children}
-                </MainLayout>
+            <TransactionSearchProvider>
+                <section>
+                    <MainLayout>
+                        {children}
+                    </MainLayout>
 
-            </section>
+                </section>
+            </TransactionSearchProvider>
         </KYCProvider>
 
     );

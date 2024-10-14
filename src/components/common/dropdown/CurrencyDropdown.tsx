@@ -11,6 +11,7 @@ type CurrencyDropdownProps = {
     isLoading?: boolean;
     placeholder?: string;
     errorMassage?: string
+    isSubmitted?: boolean;
 };
 
 
@@ -23,7 +24,8 @@ const CurrencyDropdown: React.FC<CurrencyDropdownProps & { isOpen?: boolean; onT
     isOpen,
     onToggle,
     placeholder,
-    errorMassage
+    errorMassage,
+    isSubmitted
 }) => {
     const [searchTerm, setSearchTerm] = useState('');
 
@@ -113,7 +115,7 @@ const CurrencyDropdown: React.FC<CurrencyDropdownProps & { isOpen?: boolean; onT
                 </div>
             </div>
             {
-                Object.keys(selectedValue).length === 0 && <p className='text-red-500 font-medium text-xs'>{errorMassage}</p>
+                isSubmitted && Object.keys(selectedValue).length === 0 && <p className='text-red-500 font-medium text-xs'>{errorMassage}</p>
             }
         </div>
     );
