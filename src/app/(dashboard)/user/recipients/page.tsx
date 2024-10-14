@@ -42,7 +42,7 @@ const RecipientsPage = () => {
                             <input
                                 type="text"
                                 onChange={(e) => {
-                                    handleSearch(e.target.value)
+                                    setSearchId(e.target.value)
                                 }
                                 }
                                 className="w-full px-3 py-0.5 border rounded-2xl border-gray-300 outline-none"
@@ -50,7 +50,7 @@ const RecipientsPage = () => {
                             />
                         </div>
                         <div className="w-1/2">
-                            <button className="bg-[#723EEB] w-full px-4 py-1 rounded-2xl text-sm text-white">
+                            <button onClick={() => handleSearch(searchId)} className="bg-[#723EEB] w-full px-4 py-1 rounded-2xl text-sm text-white">
                                 Search
                             </button>
                         </div>

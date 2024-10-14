@@ -28,16 +28,22 @@ const WalletToWalletpage = () => {
     const [walletModalOpen, setWalletModalOpen] = useState(false);
     const [loading, setLoading] = useState(false)
     const [transactionPreparedData, setTransactionPreparedData] = useState<TransactionPreparedTypes | null>(null);
-    const { register, control, handleSubmit, formState: { errors } } = useForm<any>();
+    const { register, control, handleSubmit, formState: { errors, isSubmitted: isFormSubmitted } } = useForm<any>();
     const axiosInstance = useAxiosSecure();
     const [transferType, setTransferType] = useState(transferOptions[0].value);
     const [openDropdown, setOpenDropdown] = useState<number | null>(null);
     const [walletOptions, setWalletOptions] = useState([]);
     const [wallet, setWallet] = useState({} as any);
+    const [isSubmitted, setIsSubmitted] = useState(false);
 
     const handleCloseModal = () => {
         setWalletModalOpen(false);
     };
+
+
+    useEffect(() => {
+        setIsSubmitted(isFormSubmitted);
+    }, [isFormSubmitted]);
 
     const { data: userWalletData, isError: isUserWalletError, isLoading, error } = useQuery({
         queryKey: ['user-wallet'],
@@ -60,6 +66,7 @@ const WalletToWalletpage = () => {
     }, [userWalletData]);
 
     const onSubmit = async (data: any) => {
+
         const walletInfo = {
             transactionType: transferType,
             walletType: wallet?.category,
@@ -68,9 +75,7 @@ const WalletToWalletpage = () => {
             walletId: wallet?.id
         }
 
-
         if (!wallet?.category || !data?.sendingAmount || !data?.walletNumber) {
-            toast.error('All fields are required')
             return;
         };
 
@@ -81,12 +86,15 @@ const WalletToWalletpage = () => {
                 const preparedRes = await axiosInstance.get(`/transaction/wallet-to-wallet/prepared/${res.data.data.id}`);
                 setTransactionPreparedData(preparedRes.data.data);
                 setWalletModalOpen(true);
+                setIsSubmitted(false);
             }
         } catch (error) {
             toast.error((error as any)?.response?.data?.message)
             setLoading(false)
+            setIsSubmitted(false);
         } finally {
             setLoading(false)
+            setIsSubmitted(false);
         }
 
     }
@@ -129,6 +137,7 @@ const WalletToWalletpage = () => {
                             placeholder='Select Sending Wallet'
                             isLoading={isLoading}
                             errorMassage='wallet is required'
+                            isSubmitted={isSubmitted}
                         />
                         {/* <h3 className="text-red-600 text-xs">Your Transferring Currency is USD $</h3> */}
                         {/* Sending amount Field */}

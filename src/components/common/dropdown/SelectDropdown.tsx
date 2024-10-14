@@ -9,8 +9,9 @@ type DropdownProps = {
     onToggle?: () => void;
     fixedValue?: boolean;
     placeholder?: string;
-    isLoading?: boolean
-    errorMassage?: string
+    isLoading?: boolean;
+    errorMassage?: string;
+    isSubmitted?: boolean;
 };
 
 const SelectDropdown: React.FC<DropdownProps> = ({
@@ -23,7 +24,8 @@ const SelectDropdown: React.FC<DropdownProps> = ({
     fixedValue,
     placeholder,
     isLoading,
-    errorMassage
+    errorMassage,
+    isSubmitted
 }) => {
     const selectedOption: { name: string; value: string; } | undefined = options?.find(option => option.value === selectedValue);
 
@@ -59,7 +61,7 @@ const SelectDropdown: React.FC<DropdownProps> = ({
                 ))}
             </div>
             {
-                Object.keys(selectedValue).length === 0 && <p className='text-red-500 font-medium text-xs'>{errorMassage}</p>
+                isSubmitted && Object.keys(selectedValue).length === 0 && <p className='text-red-500 font-medium text-xs'>{errorMassage}</p>
             }
         </div>
     );

@@ -15,15 +15,14 @@ import MakeMainWalletModal from '@/components/wallet/MakeMainWalletModal';
 import SubWalletTable from '@/components/wallet/SubWalletTable';
 import WithdrawModal from '@/components/wallet/WithdrawModal';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { GoDotFill } from 'react-icons/go';
 
 const WalletPage = () => {
-    const [mainWallet, , , isLoading] = useMainWallet();
+    const [mainWallet, , , isLoading, isSuccess] = useMainWallet();
     const [subWallets, , isSubWalletPending] = useSubWallets();
     const [walletLog, , isPending] = useWalletLog();
-
 
 
     const [isChangePINModalOpen, setChangePINModalOpen] = useState(false);
@@ -32,10 +31,22 @@ const WalletPage = () => {
     const [isSubWalletModalOpen, setSubWalletModalOpen] = useState(false);
     const [copyId, setCopyId] = useState(false)
     const [subWalletData, setSubWalletData] = useState({});
+    const [isWalletLoading, setWalletLoading] = useState(false);
 
     const handleChangePIN = () => {
         setChangePINModalOpen(true);
     };
+
+    // set setIntervals 2000 iswalletloading to false
+    useEffect(() => {
+        if (isSuccess && mainWallet?.userId) {
+            setWalletLoading(true)
+            const i = setInterval(() => {
+                setWalletLoading(false)
+            }, 2000)
+            return () => clearInterval(i)
+        }
+    }, [isSuccess, mainWallet])
 
     const handleForgetPIN = () => {
         setForgetPINModalOpen(true);
@@ -87,7 +98,7 @@ const WalletPage = () => {
             <CardSubTitle fontSize='1rem' title='Wallet Balance' />
             <div className='w-full my-5 flex flex-col lg:flex-row gap-5'>
                 {
-                    isLoading ? <Skeleton /> : (
+                    isWalletLoading ? <Skeleton /> : (
 
                         mainWallet?.userId && (
                             <div className='bg-white rounded-xl w-full lg:w-2/4'>
