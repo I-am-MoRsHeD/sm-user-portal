@@ -6,7 +6,7 @@ const useTransactions = (page?: number, limit?: number) => {
     const { data: transactions = [], refetch, isPending, isLoading } = useQuery({
         queryKey: ['transactions'],
         queryFn: async () => {
-            const res = await axiosInstance.get('/transaction/transaction-history?searchTerm=morshed', {
+            const res = await axiosInstance.get('/transaction/transaction-history', {
                 params: {
                     limit,
                     page,
