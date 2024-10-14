@@ -57,7 +57,7 @@ const RegistrationForm = () => {
         } else if (error.response.status === 409) {
           toast.error("Email is already registered. Please try logging in.");
         } else if (error.response.status === 500) {
-          toast.error("Please try again later.");
+          toast.error('Server Error');
         } else {
           toast.error(`Unexpected error: ${error.response.status}`);
         }

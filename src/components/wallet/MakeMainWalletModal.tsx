@@ -1,12 +1,12 @@
 'use client'
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import LoadingSpinner from '../common/Loading/LoadingSpinner';
-import { LiaEyeSlashSolid, LiaEyeSolid } from 'react-icons/lia';
-import useAxiosSecure from '../hooks/useAxiosSecure';
 import toast from 'react-hot-toast';
-import useSubWallets from '../hooks/useSubWallets';
+import { LiaEyeSlashSolid, LiaEyeSolid } from 'react-icons/lia';
+import LoadingSpinner from '../common/Loading/LoadingSpinner';
+import useAxiosSecure from '../hooks/useAxiosSecure';
 import useMainWallet from '../hooks/useMainWallet';
+import useSubWallets from '../hooks/useSubWallets';
 
 interface ModalProps {
     isMakeMainWalletModalOpen: boolean;
@@ -30,7 +30,6 @@ const MakeMainWalletModal: React.FC<ModalProps> = ({ isMakeMainWalletModalOpen, 
         const updatedInfo = {
             pinNumber: data.confirmPin
         };
-        setLoading(true);
         try {
             const res = await axiosInstance.put(`/wallet/set-main/${subWalletData?.id}`, updatedInfo);
             if (res.status === 200) {
@@ -40,10 +39,9 @@ const MakeMainWalletModal: React.FC<ModalProps> = ({ isMakeMainWalletModalOpen, 
                 refetch();
                 setMakeMainWalletModalOpen(false);
             }
-        } catch (error) {
-            toast.error('There is something error');
+        } catch (error: any) {
+            toast.error(error?.response?.data?.message);
         };
-        setLoading(false);
     }
 
     return (

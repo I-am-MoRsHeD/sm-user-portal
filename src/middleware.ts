@@ -1,6 +1,6 @@
 import { jwtDecode } from 'jwt-decode';
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
+import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
 
 // src > middleware.ts 
 
@@ -11,12 +11,17 @@ const roleBasedPrivateRoutes = {
     SUPER_ADMIN: [/^\/dashboard\/super_admin/],
 };
 
+const hybridRoutes = ["/auth/login", "/auth/register", "/auth/forget-password", "/auth/verify-email", "/auth/reset-password"];
+
 export function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
     const accessToken = request.cookies.get('accessToken')?.value;
     // console.log(accessToken);
     if (!accessToken) {
         return NextResponse.redirect(new URL('/auth/login', request.url))
+    }
+    if (accessToken && hybridRoutes.includes(pathname)) {
+        return NextResponse.redirect(new URL('/user/dashboard', request.url));
     }
     if (accessToken) {
         return NextResponse.next();
@@ -39,6 +44,6 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-    matcher: ['/user/:path*'],
+    matcher: ['/user/:path*', '/auth/:path*'],
     // matcher: ['/'],
 }
