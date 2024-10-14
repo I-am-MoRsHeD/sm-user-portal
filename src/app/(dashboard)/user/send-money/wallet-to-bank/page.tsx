@@ -40,6 +40,7 @@ const WalletToBankPage: React.FC = () => {
   const [sendingCurrency, setSendingCurrency] = useState(wallet?.currency?.id || {} as any);
   const [receivingCurrency, setReceivingCurrency] = useState({} as any);
   const [sendingAmount, setSendingAmount] = useState('');
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
 
 
@@ -101,6 +102,7 @@ const WalletToBankPage: React.FC = () => {
 
   // handle form submission
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    setIsSubmitted(true);
     e.preventDefault();
     const target = e.target as HTMLFormElement;
     const newTransfer = {
@@ -113,7 +115,6 @@ const WalletToBankPage: React.FC = () => {
       "receivingCurrencyId": receivingCurrency?.id
     }
     if (!wallet?.category || !sendingAmount || !sendingCurrency || !receivingCurrency) {
-      toast.error('All fields are required');
       return;
     }
     initiateTransactionMutate(newTransfer);
@@ -134,10 +135,12 @@ const WalletToBankPage: React.FC = () => {
     }
     if (transactionError) {
       toast.error(error?.message);
+      setIsSubmitted(false);
     }
     if (isTransactionSuccess) {
       toast.success('Transaction Initiated');
       redirect(`/user/recipients/select-recipients?id=${transactionPostData?.data?.id}`);
+      setIsSubmitted(false);
     }
   }, [isUserWalletError, isGetCurrencyError, transactionError, isTransactionSuccess, router, transactionPostData, error]);
 
@@ -168,6 +171,7 @@ const WalletToBankPage: React.FC = () => {
             placeholder='Select Sending Wallet'
             isLoading={isLoading}
             errorMassage='wallet is required'
+            isSubmitted={isSubmitted}
           />
           <CurrencyDropdown
             label="Sending Currency"
@@ -178,6 +182,7 @@ const WalletToBankPage: React.FC = () => {
             isOpen={openDropdown === 2}
             onToggle={() => handleDropdownToggle(2)}
             errorMassage='currency is required'
+            isSubmitted={isSubmitted}
           />
           <CurrencyDropdown
             label="Receiving Currency"
@@ -188,6 +193,7 @@ const WalletToBankPage: React.FC = () => {
             isOpen={openDropdown === 3}
             onToggle={() => handleDropdownToggle(3)}
             errorMassage='currency is required'
+            isSubmitted={isSubmitted}
           />
           <div className='w-full'>
             <label className="block mb-1 font-semibold text-xs xl:text-sm">Sending Amount</label>

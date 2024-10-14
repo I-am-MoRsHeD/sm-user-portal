@@ -140,9 +140,9 @@ const TransactionTable: React.FC<TransactionTableProps> = ({ transactions, isPen
                                 <tbody>
                                     <tr>
                                         <td colSpan={9}>
-                                            <div className='flex justify-center flex-col items-center gap-2 h-[calc(100vh-45vh)] py-5 rounded-xl bg-white w-full'>
+                                            <div className='flex animate-pulse justify-center flex-col items-center gap-2 h-[calc(100vh-45vh)] py-5 rounded-xl bg-white w-full'>
                                                 <Image src={AssetEmptyBox} alt='empty' width={150} height={150} />
-                                                <p className='text-[#0F30B9]/60 font-semibold text-xl'>No Data!!!</p>
+                                                <p className='text-[#0F30B9]/60 font-semibold text-xl'>No Data!</p>
                                             </div>
                                         </td>
                                     </tr>

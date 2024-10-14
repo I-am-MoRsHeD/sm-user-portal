@@ -8,11 +8,8 @@ import { useState } from 'react';
 
 const TransactionsPage: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const limit = 12; // Items per page
-  const [transactions, , isPending, isLoading] = useTransactions(currentPage, limit);
+  const [transactions, , isPending, isLoading] = useTransactions(currentPage, 10);
 
-
-  // Use TanStack Query to fetch transactions with Axios
 
 
   // Handle page navigation
@@ -39,19 +36,19 @@ const TransactionsPage: React.FC = () => {
       </div>
 
       {/* pagination */}
-      <div className='px-4 flex-1 w-full'>
+      <div className={`px-4 flex-1 w-full ${transactions?.data ? 'block' : 'hidden'}`}>
         {/* Pagination Controls */}
         <div className="pagination">
           <div id="pagination" className="flex items-center font-semibold">
             {/* Previous Button */}
-            {currentPage > 1 && (
-              <p
-                onClick={handlePrevPage}
-                className="px-3 py-1 border-2 border-[#723EEB] cursor-pointer bg-white text-black"
-              >
-                {'<<'}
-              </p>
-            )}
+
+            <p
+              onClick={handlePrevPage}
+              className={`px-3 py-1 border-2 border-[#723EEB] cursor-pointer bg-white text-black ${currentPage > 1 ? 'cursor-pointer' : 'cursor-not-allowed'}`}
+            >
+              {'<<'}
+            </p>
+
 
             {/* Page Numbers */}
             {Array.from({ length: transactions?.meta?.totalPages }, (_, index) => {
@@ -69,14 +66,14 @@ const TransactionsPage: React.FC = () => {
             })}
 
             {/* Next Button */}
-            {currentPage < transactions?.meta?.totalPages && (
-              <p
-                onClick={handleNextPage}
-                className="px-3 py-1 border-2 border-[#723EEB] cursor-pointer bg-white text-black"
-              >
-                {'>>'}
-              </p>
-            )}
+
+            <p
+              onClick={handleNextPage}
+              className={`px-3 py-1 border-2 border-[#723EEB] cursor-pointer bg-white text-black ${currentPage < transactions?.meta?.totalPages ? 'cursor-pointer' : 'cursor-not-allowed'}`}
+            >
+              {'>>'}
+            </p>
+
           </div>
 
         </div>

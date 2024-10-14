@@ -59,9 +59,9 @@ const RecipientsCards = ({ recipientsData, isLoading, refetch }: { recipientsDat
             {
                 isLoading ? <SkeletonForRecipient /> :
                     recipientsData?.length === 0 ? (
-                        <div className='flex justify-center flex-col items-center gap-2  py-5 rounded-xl bg-white w-full'>
-                            <Image src={AssetEmptyBox} alt='empty' width={150} height={150} />
-                            <p className='text-[#0F30B9]/60 font-semibold text-xl'>No Data!!!</p>
+                        <div className='flex animate-pulse justify-center flex-col items-center gap-2  py-5 rounded-xl bg-white w-full'>
+                            <Image src={AssetEmptyBox} alt='empty' width={90} height={90} />
+                            <p className='text-[#0F30B9]/60 font-semibold text-lg'>No Data!</p>
                         </div>
                     )
                         :
