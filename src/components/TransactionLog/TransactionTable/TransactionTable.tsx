@@ -98,7 +98,7 @@ const TransactionTable: React.FC<TransactionTableProps> = ({ transactions, isPen
                                             <td className="px-4 py-2 text-sm text-gray-700">{transaction?.agent}</td>
                                             <td className="px-4 py-2 text-sm">
                                                 <span
-                                                    className={`inline-block px-3 py-1 text-xs font-semibold rounded-full ${transaction?.status === 'COMPLETED'
+                                                    className={`inline-block px-3 py-[2px] text-[10px] font-semibold rounded-full ${transaction?.status === 'COMPLETED'
                                                         ? 'bg-[#3EAE50] text-white'
                                                         : 'bg-[#FF9F43] text-white'
                                                         }`}

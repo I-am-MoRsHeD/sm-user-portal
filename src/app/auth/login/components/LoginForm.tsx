@@ -2,7 +2,6 @@
 import useAxiosSecure from "@/components/hooks/useAxiosSecure";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { FaEye, FaEyeSlash } from "react-icons/fa6";
 import SocialLogin from "./SocialLogin";
 
 import useAuthContext from "@/components/AuthContext/useAuthContext";
@@ -77,7 +76,7 @@ const LoginForm = () => {
         setServerError("Invalid email or password");
         toast.error("Invalid email or password");
       } else {
-        toast.error("There is something error");
+        toast.error(error.message);
       }
       setLoading(false);
     }
