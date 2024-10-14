@@ -6,7 +6,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 import useNavigationContext from './NavigationContext/useNavigationContext';
-import SearchField from './common/searchField/SearchField';
+import TransactionSearchField from './common/searchField/TransactionSearchField';
 import { BellIcon } from './icons/Icon';
 
 
@@ -84,7 +84,7 @@ const Topbar = ({ children }: { children: string }) => {
           {/* SearchField   */}
           <div className=''>
             {
-              pathName === '/user/transactions' ? <SearchField /> : ''
+              pathName === '/user/transactions' ? <TransactionSearchField /> : ''
             }
           </div>
           {/* language */}

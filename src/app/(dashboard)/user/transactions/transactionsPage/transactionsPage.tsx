@@ -1,5 +1,6 @@
 import TransactionTable from '@/components/TransactionLog/TransactionTable/TransactionTable';
 import useTransactions from '@/components/hooks/useTransactions';
+import { useSearchTransaction } from '@/context/TransactionSearchContext';
 import React from 'react';
 
 
@@ -8,7 +9,8 @@ import { useState } from 'react';
 
 const TransactionsPage: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [transactions, , isPending, isLoading] = useTransactions(currentPage, 10);
+  const { searchTerm } = useSearchTransaction();
+  const [transactions, , isPending, isLoading] = useTransactions(currentPage, 10, searchTerm);
 
 
 
