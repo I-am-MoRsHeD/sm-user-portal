@@ -204,6 +204,9 @@ const WalletToBankPage: React.FC = () => {
               className="w-full px-3 py-2 text-xs border rounded-[10px] focus:outline-none"
               placeholder="Type Amount....."
             />
+            {
+              isSubmitted && sendingAmount === '' && <p className='text-red-500 font-medium text-xs'>Amount is required</p>
+            }
           </div>
           <div className='flex flex-row justify-between items-center text-xs'>
             <h5 className="text-[#733ebc] font-semibold">Have a coupon code? </h5>
