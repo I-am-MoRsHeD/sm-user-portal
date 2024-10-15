@@ -30,10 +30,10 @@ const Dropdown: React.FC<DropdownProps> = ({ label, options, selectedValue, setS
 
     return (
         <div className="relative w-full text-[10px] sm:text-sm">
-            <label className="block mb-1 text-gray-600 font-semibold">{label}</label>
+            <label className="block mb-1 text-gray-600 font-semibold ">{label}</label>
             <div
                 onClick={() => setIsOpen(!isOpen)}
-                className="mx-auto flex w-full items-center justify-between rounded-xl px-3 py-0.5 border border-gray-400 cursor-pointer"
+                className="mx-auto flex w-full items-center justify-between rounded-xl px-3 py-1 border border-gray-400 cursor-pointer"
             >
                 <h1 className="font-medium">{selectedOption ? selectedOption.name : 'select'}</h1>
                 <svg className={`${isOpen ? '-rotate-180' : 'rotate-0'} duration-300`} width={25} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M7 10L12 15L17 10" stroke="#4B5563" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>{' '}</g></svg>
@@ -144,14 +144,14 @@ const CreateNewWalletForm = () => {
                 <h3 className="font-semibold pb-3 text-base">Create {mainWallet ? 'New Sub' : 'New'} Wallet</h3>
                 {/* wallet name Field */}
                 <div className="mb-3">
-                    <label className="text-gray-600  font-semibold">Wallet Name</label>
+                    <label className="text-gray-700 font-semibold">Wallet Name</label>
                     <input
                         type="text"
                         {...register("walletName", {
                             required: "Wallet Name is required",
                         })}
-                        className={`mt-1 w-full px-3 py-1  border border-gray-400 rounded-[10px] focus:outline-none placeholder:text-xs`}
-                        placeholder="Enter Wallet Name....."
+                        className={`mt-1 w-full px-3 py-[6px]  border border-gray-400 rounded-xl focus:outline-none text-gray-700 placeholder:text-xs`}
+                        placeholder="Enter Wallet Name..."
                     />
                     {errors.walletName?.type === 'required' && (
                         <p className="text-red-500 text-xs">Wallet name is required</p>
@@ -159,14 +159,14 @@ const CreateNewWalletForm = () => {
                 </div>
                 {/* Email Field */}
                 <div className="mb-3">
-                    <label className="text-gray-600 font-semibold">Email</label>
+                    <label className="text-gray-700 font-semibold">Email</label>
                     <input
                         type="email"
                         {...register("email", {
                             required: "Email is required",
                         })}
-                        className={`mt-1 w-full px-3 py-1 border border-gray-400 rounded-[10px] focus:outline-none placeholder:text-xs`}
-                        placeholder="Enter Wallet Email....."
+                        className={`mt-1 w-full px-3 py-[6px] border border-gray-400 rounded-xl focus:outline-none placeholder:text-xs`}
+                        placeholder="Enter Wallet Email..."
                     />
                     {errors.email?.type === 'required' && (
                         <p className="text-red-500 text-xs">Email is required</p>
@@ -193,12 +193,12 @@ const CreateNewWalletForm = () => {
                 </div> */}
                 <div className='mb-3'>
                     <div className="relative w-full text-[10px] sm:text-sm">
-                        <label className="block mb-1 text-gray-600 font-semibold">Select Currency</label>
+                        <label className="block mb-1 text-gray-700 font-semibold">Select Currency</label>
                         <div
                             onClick={() => setIsOpen(!isOpen)}
-                            className="mx-auto flex w-full items-center justify-between rounded-xl px-3 py-0.5 border border-gray-400 cursor-pointer"
+                            className="mx-auto flex w-full items-center justify-between rounded-xl px-3 py-0.5 border border-gray-400 cursor-pointer py-1"
                         >
-                            <h1 className="font-medium">{currencyValue ? currencyValue : 'select'}</h1>
+                            <h1 className="font-medium text-sm">{currencyValue ? currencyValue : <span className='text-gray-500'>Select</span>}</h1>
                             <svg className={`${isOpen ? '-rotate-180' : 'rotate-0'} duration-300`} width={25} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M7 10L12 15L17 10" stroke="#4B5563" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>{' '}</g></svg>
                         </div>
 
@@ -210,7 +210,7 @@ const CreateNewWalletForm = () => {
                                         setCurrencyValue(data?.name);
                                         setIsOpen(false);
                                     }}
-                                    className="px-6 py-2 text-gray-500 hover:bg-gray-100 cursor-pointer"
+                                    className="px-6 py-2 text-xs text-gray-500 hover:bg-gray-100 cursor-pointer"
                                 >
                                     {data?.name}
                                 </div>
@@ -244,13 +244,13 @@ const CreateNewWalletForm = () => {
                 </div> */}
                 {/* Answer Field */}
                 <div className="mb-3">
-                    <label className="text-gray-600 font-semibold">Answer</label>
+                    <label className="text-gray-700 font-semibold">Answer</label>
                     <input
                         type="text"
                         {...register("answer", {
                             required: "Answer is required",
                         })}
-                        className={`mt-1 w-full px-3 py-1 border border-gray-400 rounded-[10px] focus:outline-none placeholder:text-xs`}
+                        className={`mt-1 w-full px-3 py-[6px] border border-gray-400 rounded-xl focus:outline-none placeholder:text-xs`}
                         placeholder="Enter Answer....."
                     />
                     {errors.answer?.type === 'required' && (
@@ -259,7 +259,7 @@ const CreateNewWalletForm = () => {
                 </div>
                 {/* Pin Field */}
                 <div className="mb-3">
-                    <label className="text-gray-600 font-semibold">Create New PIN</label>
+                    <label className="text-gray-700 font-semibold">Create New PIN</label>
                     <div className="relative">
                         <input
                             type={pin ? 'text' : 'password'}
@@ -268,7 +268,7 @@ const CreateNewWalletForm = () => {
                                 minLength: 4,
                                 pattern: /^[0-9]*$/
                             })}
-                            className={`mt-1 w-full px-3 py-1 border border-gray-400 rounded-[10px] focus:outline-none placeholder:text-xs`}
+                            className={`mt-1 w-full px-3 py-[6px] border border-gray-400 rounded-xl focus:outline-none placeholder:text-xs`}
                             placeholder="Enter PIN...."
                         />
                         <button
