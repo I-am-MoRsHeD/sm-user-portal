@@ -2,6 +2,7 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 import LoadingSpinner from '../common/Loading/LoadingSpinner';
 import useCurrency from '../hooks/useCurrency';
+import toast from 'react-hot-toast';
 
 interface ModalProps {
     handleWithdrawIntoWallet: () => void;
@@ -14,8 +15,18 @@ interface ModalProps {
 
 const SubWalletModalForm: React.FC<ModalProps> = ({ handleWithdrawIntoWallet, handleChangePIN, handleForgetPIN, handleEditSubWallet, handleDeleteSubWallet, subWalletData }) => {
     const [loading, setLoading] = useState(false);
+    const [copyId, setCopyId] = useState(false)
     const [currency] = useCurrency();
 
+    const handleCopy = (e: any) => {
+        e.preventDefault()
+        navigator.clipboard.writeText(subWalletData?.walletId as string)
+        toast.success("Copied ID!")
+        setCopyId(true)
+        setTimeout(() => {
+            setCopyId(false)
+        }, 2000)
+    }
 
     return (
         <div className='relative'>
@@ -23,10 +34,12 @@ const SubWalletModalForm: React.FC<ModalProps> = ({ handleWithdrawIntoWallet, ha
             <div className='-mt-1 mb-2'>
                 <div className=" text-xs flex flex-row items-center">Wallet ID :
                     <span className='border border-gray-400 px-[3px]'>{subWalletData?.walletId}</span>
-                    <div className='border border-gray-300 p-[3px]'>
-                        <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M0 0V8.33333H2.91667V7.5H0.833333V0.833333H5.83333V1.25H6.66667V0H0ZM3.33333 1.66667V10H10V1.66667H3.33333ZM4.16667 2.5H9.16667V9.16667H4.16667V2.5Z" fill="#723EEB" />
-                        </svg>
+                    <div onClick={handleCopy} className='border cursor-pointer border-gray-300 p-[3px]'>
+                        {
+                            !copyId ? <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M0 0V8.33333H2.91667V7.5H0.833333V0.833333H5.83333V1.25H6.66667V0H0ZM3.33333 1.66667V10H10V1.66667H3.33333ZM4.16667 2.5H9.16667V9.16667H4.16667V2.5Z" fill="#723EEB" />
+                            </svg> : <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        }
                     </div>
                     <div className='border border-gray-300 p-[3px]'>
                         <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">

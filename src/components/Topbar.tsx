@@ -3,11 +3,12 @@ import Cookies from 'js-cookie';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Swal from 'sweetalert2';
 import useNavigationContext from './NavigationContext/useNavigationContext';
 import TransactionSearchField from './common/searchField/TransactionSearchField';
 import { BellIcon } from './icons/Icon';
+import RecipientSearchField from './common/searchField/RecipientSearchField';
 
 
 
@@ -21,23 +22,24 @@ const Topbar = ({ children }: { children: string }) => {
   const [dropdown, setDropdown] = useState(false);
   const [dropdownSelectedValue, setDropdownSelectedValue] = useState(selectOptions[0]);
 
+  const dropdownRef = useRef<HTMLDivElement | null>(null); 
+  const profileDropdownRef = useRef<HTMLDivElement | null>(null);
+
   const user = typeof window !== "undefined" ? localStorage.getItem('user') : '';
 
   useEffect(() => {
-    const close = () => {
-      setDropdown(false);
-    }
-    document.addEventListener('mousedown', close);
-    return () => document.removeEventListener('mousedown', close)
-  }, [dropdown]);
+    const closeDropdown = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setDropdown(false);
+      }
+      if (profileDropdownRef.current && !profileDropdownRef.current.contains(e.target as Node)) {
+        setProfileDropdown(false);
+      }
+    };
 
-  // useEffect(() => {
-  //   const close = () => {
-  //     setProfileDropdown(false);
-  //   }
-  //   document.addEventListener('mousedown', close);
-  //   return () => document.removeEventListener('mousedown', close)
-  // }, [profileDropdown]);
+    document.addEventListener('mousedown', closeDropdown);
+    return () => document.removeEventListener('mousedown', closeDropdown);
+  }, []);
 
   const handleLogout = () => {
     setProfileDropdown(false);
@@ -86,12 +88,15 @@ const Topbar = ({ children }: { children: string }) => {
             {
               pathName === '/user/transactions' ? <TransactionSearchField /> : ''
             }
+            {
+              pathName === '/user/recipients' ? <RecipientSearchField /> : ''
+            }
           </div>
           {/* language */}
-          <div className="relative sm:w-24 w-16 text-xs">
+          <div ref={dropdownRef} className="relative sm:w-24 w-16 text-xs">
             <div onClick={() => {
-              setProfileDropdown(false)
-              setDropdown(true)
+              // setProfileDropdown(false)
+              setDropdown(!dropdown)
             }} className="mx-auto flex w-full items-center justify-between rounded sm:px-3 px-1 py-0.5 border-[1.5px] border-gray-300 cursor-pointer">
               <h1 className="font-medium text-sm">{dropdownSelectedValue}</h1>
 
@@ -119,7 +124,8 @@ const Topbar = ({ children }: { children: string }) => {
             width={100}
           />
         </Link> */}
-          <div className='relative'>
+        {/* profile dropdown */}
+          <div className='relative' ref={profileDropdownRef}>
             <div className='rounded-md cursor-pointer flex justify-center items-center'>
               <Image
                 onClick={() => setProfileDropdown(!profileDropdown)}

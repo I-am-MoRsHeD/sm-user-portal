@@ -10,10 +10,13 @@ import useDeleteRecipient from "../hooks/useDeleteRecipients";
 import RecipientsTable from "./RecipientsTable";
 
 import AssetEmptyBox from '../../../public/empty-box.png';
+import useRecipients from "../hooks/useRecipients";
+import { useSearchTransaction } from "@/context/TransactionSearchContext";
 
-const RecipientsCards = ({ recipientsData, isLoading, refetch }: { recipientsData: any, isLoading?: boolean, refetch?: any }) => {
+const RecipientsCards = () => {
     const [open, setOpen] = useState<Record<string, boolean>>({});
-    // const [recipients, refetch, isPending, isLoading] = useRecipients();
+    const {recipientSearchTerm} = useSearchTransaction();
+    const [recipients, refetch, isPending, isLoading] = useRecipients(recipientSearchTerm);
     const { deleteRecipient, isDeleting } = useDeleteRecipient();
     const router = useRouter();
     const axiosInstance = useAxiosSecure();
@@ -58,7 +61,7 @@ const RecipientsCards = ({ recipientsData, isLoading, refetch }: { recipientsDat
         <>
             {
                 isLoading ? <SkeletonForRecipient /> :
-                    recipientsData?.length === 0 ? (
+                    recipients?.length === 0 ? (
                         <div className='flex animate-pulse justify-center flex-col items-center gap-2  py-5 rounded-xl bg-white w-full'>
                             <Image src={AssetEmptyBox} alt='empty' width={90} height={90} />
                             <p className='text-[#0F30B9]/60 font-semibold text-lg'>No Data!</p>
@@ -66,7 +69,7 @@ const RecipientsCards = ({ recipientsData, isLoading, refetch }: { recipientsDat
                     )
                         :
                         (
-                            recipientsData?.map((data: any) => (
+                            recipients?.map((data: any) => (
                                 <div
                                     key={String(data.id)}
                                     className={`bg-white px-2 py-2 lg:px-6 lg:py-4 mb-5 rounded-2xl cursor-pointer group ${open[String(data.id)] ? "shadow-md shadow-neutral-400" : ""
