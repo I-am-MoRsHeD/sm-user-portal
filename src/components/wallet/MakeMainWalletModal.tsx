@@ -2,11 +2,11 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { LiaEyeSlashSolid, LiaEyeSolid } from 'react-icons/lia';
 import LoadingSpinner from '../common/Loading/LoadingSpinner';
 import useAxiosSecure from '../hooks/useAxiosSecure';
 import useMainWallet from '../hooks/useMainWallet';
 import useSubWallets from '../hooks/useSubWallets';
+import { FaEye, FaEyeSlash } from 'react-icons/fa6';
 
 interface ModalProps {
     isMakeMainWalletModalOpen: boolean;
@@ -30,6 +30,7 @@ const MakeMainWalletModal: React.FC<ModalProps> = ({ isMakeMainWalletModalOpen, 
         const updatedInfo = {
             pinNumber: data.confirmPin
         };
+        setLoading(true);
         try {
             const res = await axiosInstance.put(`/wallet/set-main/${subWalletData?.id}`, updatedInfo);
             if (res.status === 200) {
@@ -42,6 +43,7 @@ const MakeMainWalletModal: React.FC<ModalProps> = ({ isMakeMainWalletModalOpen, 
         } catch (error: any) {
             toast.error(error?.response?.data?.message);
         };
+        setLoading(false)
     }
 
     return (
@@ -67,20 +69,21 @@ const MakeMainWalletModal: React.FC<ModalProps> = ({ isMakeMainWalletModalOpen, 
                                 <label className="">Confirm PIN*</label>
                                 <div className="relative">
                                     <input
-                                        type={'number'}
+                                        type={confirmNewPin ? 'text' : 'password'}
                                         {...register("confirmPin", {
                                             required: "Pin is required",
                                             minLength: 4,
+                                            pattern: /^[0-9]*$/
                                         })}
                                         className={`mt-1 w-full px-3 py-2  border border-gray-400 rounded-[10px] focus:outline-none`}
-                                        placeholder="Type Here...."
+                                        placeholder="Enter you main wallet PIN"
                                     />
                                     <button
                                         type="button"
                                         onClick={() => setConfirmNewPin(!confirmNewPin)}
-                                        className="absolute top-3 right-4 text-[11px]"
+                                        className="absolute top-3 right-4 text-[14px]"
                                     >
-                                        {confirmNewPin ? <LiaEyeSolid className='text-base' /> : <LiaEyeSlashSolid className='text-base' />}
+                                        {confirmNewPin ? <FaEye /> : <FaEyeSlash />}
                                     </button>
                                 </div>
 

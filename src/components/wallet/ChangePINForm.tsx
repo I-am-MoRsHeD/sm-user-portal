@@ -22,7 +22,7 @@ interface FormData {
 
 const ChangePINForm: React.FC<ModalProps> = ({ handleForgetPIN, mainWallet, setChangePINModalOpen }) => {
     const [loading, setLoading] = useState(false);
-    const [pin, setPin] = useState(false);
+    const [error, setError] = useState('');
     const [showCurrentPin, setShowCurrentPin] = useState(false);
     const [showNewPin, setShowNewPin] = useState(false);
     const [showConfirmNewPin, setShowConfirmNewPin] = useState(false);
@@ -56,7 +56,8 @@ const ChangePINForm: React.FC<ModalProps> = ({ handleForgetPIN, mainWallet, setC
             }
         } catch (error: any) {
             if (error) {
-                toast.error("Your pin is wrong");
+                setError("Your pin is wrong");
+                reset();
             }
         }
         setLoading(false);
@@ -106,6 +107,10 @@ const ChangePINForm: React.FC<ModalProps> = ({ handleForgetPIN, mainWallet, setC
                     {errors.currentPin?.type === 'minLength' && (
                         <p className="text-red-500 text-xs">Pin must be at least 4 numbers</p>
                     )}
+                    {error && (
+                        <p className="text-red-500 text-xs">Your pin is wrong</p>
+                    )}
+
                 </div>
                 {/* forget pin */}
                 <div className='flex flex-row justify-end'>

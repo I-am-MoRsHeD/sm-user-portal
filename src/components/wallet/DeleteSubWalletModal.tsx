@@ -8,6 +8,7 @@ import LoadingSpinner from '../common/Loading/LoadingSpinner';
 import useAxiosSecure from '../hooks/useAxiosSecure';
 import useSubWallets from '../hooks/useSubWallets';
 import { Close } from '../icons/Icon';
+import { FaEye, FaEyeSlash } from 'react-icons/fa6';
 
 interface ModalProps {
     isDeleteSubWalletModalOpen: boolean;
@@ -76,10 +77,11 @@ const DeleteSubWalletModal: React.FC<ModalProps> = ({ isDeleteSubWalletModalOpen
                                 <label className="">Confirm PIN*</label>
                                 <div className="relative">
                                     <input
-                                        type={'number'}
+                                        type={showPin ? 'text' : 'password'}
                                         {...register("confirmPin", {
                                             required: "Pin is required",
                                             minLength: 4,
+                                            pattern: /^[0-9]*$/
                                         })}
                                         className={`mt-1 w-full px-3 py-2  border border-gray-400 rounded-[10px] focus:outline-none`}
                                         placeholder="Type Here...."
@@ -87,9 +89,9 @@ const DeleteSubWalletModal: React.FC<ModalProps> = ({ isDeleteSubWalletModalOpen
                                     <button
                                         type="button"
                                         onClick={() => setShowPin(!showPin)}
-                                        className="absolute top-3 right-4 text-[11px]"
+                                        className="absolute top-3 right-4 text-[14px]"
                                     >
-                                        {showPin ? <LiaEyeSolid className='text-base' /> : <LiaEyeSlashSolid className='text-base' />}
+                                        {showPin ? <FaEye /> : <FaEyeSlash />}
                                     </button>
                                 </div>
 

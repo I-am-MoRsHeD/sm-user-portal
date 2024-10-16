@@ -6,6 +6,7 @@ import { LiaEyeSlashSolid, LiaEyeSolid } from 'react-icons/lia';
 import useAxiosSecure from '@/components/hooks/useAxiosSecure';
 import LoadingSpinner from '../Loading/LoadingSpinner';
 import toast from 'react-hot-toast';
+import { FaEye, FaEyeSlash } from 'react-icons/fa6';
 
 interface ModalProps {
     resetPinModalOpen: boolean;
@@ -79,10 +80,11 @@ const ResetPinModal: React.FC<ModalProps> = ({ resetPinModalOpen, setResetPinMod
                                 <label className="">Enter New PIN</label>
                                 <div className="relative">
                                     <input
-                                        type={'number'}
+                                        type={newPin ? 'text' : 'password'}
                                         {...register("newPin", {
                                             required: "Pin is required",
                                             minLength: 4,
+                                             pattern: /^[0-9]*$/
                                         })}
                                         className={`w-full mt-1 px-3 py-1 border border-gray-400 rounded-full focus:outline-none `}
                                         placeholder="Type Here...."
@@ -90,9 +92,9 @@ const ResetPinModal: React.FC<ModalProps> = ({ resetPinModalOpen, setResetPinMod
                                     <button
                                         type="button"
                                         onClick={() => setNewPin(!newPin)}
-                                        className="absolute top-4 right-4 text-[11px]"
+                                        className="absolute top-4 right-4 text-[14px]"
                                     >
-                                        {newPin ? <LiaEyeSolid className='text-base' /> : <LiaEyeSlashSolid className='text-base' />}
+                                        {newPin ? <FaEye /> : <FaEyeSlash />}
                                     </button>
                                 </div>
 
@@ -108,10 +110,11 @@ const ResetPinModal: React.FC<ModalProps> = ({ resetPinModalOpen, setResetPinMod
                                 <label className="">Confirm New PIN</label>
                                 <div className="relative">
                                     <input
-                                        type={'number'}
+                                        type={confirmNewPin ? 'text' : 'password'}
                                         {...register("confirmNewPin", {
                                             required: "Pin is required",
                                             minLength: 4,
+                                            pattern: /^[0-9]*$/
                                         })}
                                         className={`w-full mt-1 px-3 py-1 border border-gray-400 rounded-full focus:outline-none `}
                                         placeholder="Type Here...."
@@ -119,9 +122,9 @@ const ResetPinModal: React.FC<ModalProps> = ({ resetPinModalOpen, setResetPinMod
                                     <button
                                         type="button"
                                         onClick={() => setConfirmNewPin(!confirmNewPin)}
-                                        className="absolute top-4 right-4 text-[11px]"
+                                        className="absolute top-4 right-4 text-[14px]"
                                     >
-                                        {confirmNewPin ? <LiaEyeSolid className='text-base' /> : <LiaEyeSlashSolid className='text-base' />}
+                                        {confirmNewPin ? <FaEye /> : <FaEyeSlash />}
                                     </button>
                                 </div>
 
