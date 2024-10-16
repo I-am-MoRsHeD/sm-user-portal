@@ -35,7 +35,7 @@ const RecipientSearchField = () => {
                         type="search"
                         id="default-search"
                         className="block w-full py-1.5 pl-9 text-sm text-gray-900 border border-gray-400 rounded-[10px] bg-transparent focus:ring-0 focus:outline-0 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white  dark:focus:border-blue-500"
-                        placeholder="Enter Id..."
+                        placeholder="Enter Recipient Id..."
                     />
                 </div>
             </form>

@@ -121,13 +121,12 @@ const WithdrawForm: React.FC<ModalProps> = ({ handleForgetPIN, setWithdrawModalO
                             className={`mt-1 w-full px-3 py-1 border border-gray-400 rounded-[10px] focus:outline-none placeholder:text-xs text-sm`}
                             placeholder="Enter PIN...."
                         />
-                        <button
-                            type="button"
+                        <span
                             onClick={() => setPin(!pin)}
-                            className="absolute top-3 right-4 text-[14px]"
+                            className="absolute top-3 right-4 text-[14px] cursor-pointer"
                         >
                             {pin ? <FaEye /> : <FaEyeSlash />}
-                        </button>
+                        </span>
                     </div>
 
                     {errors.pin?.type === 'required' && (
@@ -142,11 +141,11 @@ const WithdrawForm: React.FC<ModalProps> = ({ handleForgetPIN, setWithdrawModalO
                     )}
                 </div>
                 <div className='flex flex-row justify-end'>
-                    <button
+                    <div
                         onClick={() => handleForgetPIN(mainWallet)}
-                        className='text-[#723EEB] text-right  text-xs pt-1'>
+                        className='text-[#723EEB] text-right cursor-pointer text-xs pt-1'>
                         Forget PIN?
-                    </button>
+                    </div>
                 </div>
                 {/* Deposit button */}
                 <div className="w-full mx-auto pb-5">

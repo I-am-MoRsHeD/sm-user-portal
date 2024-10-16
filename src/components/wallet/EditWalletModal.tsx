@@ -8,6 +8,7 @@ import Modal from '../common/Modal/Modal';
 import useAxiosSecure from '../hooks/useAxiosSecure';
 import useCurrency from '../hooks/useCurrency';
 import useSubWallets from '../hooks/useSubWallets';
+import { FaEye, FaEyeSlash } from 'react-icons/fa6';
 
 interface FormData {
     walletName: string;
@@ -132,10 +133,11 @@ const EditWalletModal: React.FC<ModalProps> = ({ isEditWalletModalOpen, setEditW
                         <label className="">Confirm PIN</label>
                         <div className="relative">
                             <input
-                                type={'number'}
+                                type={pin ? 'text' : 'password'}
                                 {...register("confirmPIN", {
                                     required: "Pin is required",
                                     minLength: 4,
+                                    pattern: /^[0-9]*$/
                                 })}
                                 className={`mt-1 w-full px-3 py-2  border border-gray-400 rounded-full focus:outline-none`}
                                 placeholder="Enter PIN...."
@@ -143,9 +145,9 @@ const EditWalletModal: React.FC<ModalProps> = ({ isEditWalletModalOpen, setEditW
                             <button
                                 type="button"
                                 onClick={() => setPin(!pin)}
-                                className="absolute top-2.5 right-4 text-[11px]"
+                                className="absolute top-3 right-4 text-[14px]"
                             >
-                                {pin ? <LiaEyeSolid className='text-base' /> : <LiaEyeSlashSolid className='text-base' />}
+                                {pin ? <FaEye /> : <FaEyeSlash />}
                             </button>
                         </div>
 

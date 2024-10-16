@@ -44,7 +44,8 @@ const DepositForm: React.FC<ModalProps> = ({ handleForgetPIN, setDepositModalOpe
             }
         } catch (error: any) {
             if (error) {
-                toast.error("There is something wrong");
+                toast.error("Your PIN is wrong");
+                reset();
             }
         }
         setLoading(false);
@@ -120,13 +121,12 @@ const DepositForm: React.FC<ModalProps> = ({ handleForgetPIN, setDepositModalOpe
                             className={`mt-1 w-full px-3 py-1 border border-gray-400 rounded-[10px] focus:outline-none placeholder:text-xs text-sm`}
                             placeholder="Enter PIN...."
                         />
-                        <button
-                            type="button"
+                        <span
                             onClick={() => setPin(!pin)}
-                            className="absolute top-3 right-4 text-[14px]"
+                            className="absolute top-3 right-4 text-[14px] cursor-pointer"
                         >
                             {pin ? <FaEye /> : <FaEyeSlash />}
-                        </button>
+                        </span>
                     </div>
 
                     {errors.pin?.type === 'required' && (
@@ -141,11 +141,11 @@ const DepositForm: React.FC<ModalProps> = ({ handleForgetPIN, setDepositModalOpe
                     )}
                 </div>
                 <div className='flex flex-row justify-end'>
-                    <button
+                    <div
                         onClick={() => handleForgetPIN(mainWallet)}
-                        className='text-[#723EEB] text-right  text-xs pt-1'>
+                        className='text-[#723EEB] text-right  text-xs pt-1 cursor-pointer'>
                         Forget PIN?
-                    </button>
+                    </div>
                 </div>
                 {/* Deposit */}
                 <div className="w-full mx-auto pb-5">

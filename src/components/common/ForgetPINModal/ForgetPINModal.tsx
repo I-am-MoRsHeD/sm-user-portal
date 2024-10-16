@@ -51,7 +51,8 @@ const ForgetPINModal: React.FC<ModalProps> = ({ setForgetPINModalOpen, isForgetP
                 reset();
                 setForgetPINModalOpen(false);
                 setResetPinModalOpen(true);
-                toast.success('Pin reseted successfully')
+                // toast.success('Pin reseted successfully')
+                toast.success('Varified successfully')
             }
         } catch (error: any) {
             toast.error('Answer is wrong')
