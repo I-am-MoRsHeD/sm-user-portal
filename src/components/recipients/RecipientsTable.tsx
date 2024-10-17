@@ -11,14 +11,14 @@ interface RecipientsTableProps {
 const RecipientsTable: React.FC<RecipientsTableProps> = ({ data }) => {
 
   const { fullName, email, country, city, phone, bankName, accountNumber } = data;
-  const recipientId = data?.recipientId || 'data'; 
+  const recipientId = data?.recipientId || 'data';
 
   return (
-   
+
     <div className='bg-gray-100 rounded-2xl p-4 mt-10'>
       <div>
         {/* 1st row */}
-        <p className='border-b border-black flex flex-row justify-between items-center text-xs pb-2'>
+        <div className='border-b border-black flex flex-row justify-between items-center text-xs pb-2'>
           <div className='flex flex-row gap-3 items-center'>
             <div className='border-[1.5px] border-[#723EEB] flex justify-center items-center w-6 h-6 rounded-full'>
               <svg
@@ -37,9 +37,9 @@ const RecipientsTable: React.FC<RecipientsTableProps> = ({ data }) => {
             <p>Name</p>
           </div>
           <p>{fullName}</p>
-        </p>
+        </div>
         {/* 2nd row */}
-        <p className='border-b border-black flex flex-row justify-between items-center py-3 text-xs'>
+        <div className='border-b border-black flex flex-row justify-between items-center py-3 text-xs'>
           <div className='flex flex-row gap-3 items-center'>
             <div className='border-[1.5px] border-[#723EEB] flex justify-center items-center w-6 h-6 rounded-full'>
               <svg
@@ -58,9 +58,9 @@ const RecipientsTable: React.FC<RecipientsTableProps> = ({ data }) => {
             <p>Email</p>
           </div>
           <p>{email}</p>
-        </p>
+        </div>
         {/* 3rd row */}
-        <p className='border-b border-black flex flex-row justify-between items-center py-3 text-xs'>
+        <div className='border-b border-black flex flex-row justify-between items-center py-3 text-xs'>
           <div className='flex flex-row gap-3 items-center'>
             <div className='border-[1.5px] border-[#723EEB] rounded-full flex justify-center items-center w-6 h-6'>
               <svg
@@ -79,9 +79,9 @@ const RecipientsTable: React.FC<RecipientsTableProps> = ({ data }) => {
             <p>Country</p>
           </div>
           <p>{country}</p>
-        </p>
+        </div>
         {/* 4th row */}
-        <p className='border-b border-black flex flex-row justify-between items-center py-3 text-xs'>
+        <div className='border-b border-black flex flex-row justify-between items-center py-3 text-xs'>
           <div className='flex flex-row gap-3 items-center'>
             <div className='border-[1.5px] border-[#723EEB] flex justify-center items-center w-6 h-6 rounded-full'>
               <svg
@@ -100,9 +100,9 @@ const RecipientsTable: React.FC<RecipientsTableProps> = ({ data }) => {
             <p>City</p>
           </div>
           <p>{city}</p>
-        </p>
+        </div>
         {/* 5th row */}
-        <p className='border-b border-black flex flex-row justify-between items-center py-3 text-xs'>
+        <div className='border-b border-black flex flex-row justify-between items-center py-3 text-xs'>
           <div className='flex flex-row gap-3 items-center'>
             <div className='border-[1.5px] border-[#723EEB] flex justify-center items-center w-6 h-6 rounded-full'>
               <svg
@@ -121,9 +121,9 @@ const RecipientsTable: React.FC<RecipientsTableProps> = ({ data }) => {
             <p>Phone</p>
           </div>
           <p>{phone}</p>
-        </p>
+        </div>
         {/* 6th row */}
-        <p className='border-b border-black flex flex-row justify-between items-center py-3 text-xs'>
+        <div className='border-b border-black flex flex-row justify-between items-center py-3 text-xs'>
           <div className='flex flex-row gap-3 items-center'>
             <div className='border-[1.5px] border-[#723EEB] flex justify-center items-center w-6 h-6 rounded-full'>
               <svg
@@ -142,9 +142,9 @@ const RecipientsTable: React.FC<RecipientsTableProps> = ({ data }) => {
             <p>Bank Name</p>
           </div>
           <p>{bankName}</p>
-        </p>
+        </div>
         {/* 7th row */}
-        <p className='border-b border-black flex flex-row justify-between items-center py-3 text-xs'>
+        <div className='border-b border-black flex flex-row justify-between items-center py-3 text-xs'>
           <div className='flex flex-row gap-3 items-center'>
             <div className='border-[1.5px] border-[#723EEB] flex justify-center items-center w-6 h-6 rounded-full'>
               <svg
@@ -163,10 +163,10 @@ const RecipientsTable: React.FC<RecipientsTableProps> = ({ data }) => {
             <p> Bank Account Number</p>
           </div>
           <p>{accountNumber}</p>
-        </p>
+        </div>
       </div>
       <Link href="/send-money">
-        
+
       </Link>
     </div>
   );

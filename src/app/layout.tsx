@@ -49,7 +49,7 @@ const Layout = ({ children }: LayoutProps) => {
   }
 
   return (
-    <html data-theme="light">
+    <html data-theme="light" suppressHydrationWarning={true}>
       <head>
         <link rel="icon" href="/favicon/favicon.ico" sizes="any" />
         <title>Diasporex - User</title>
