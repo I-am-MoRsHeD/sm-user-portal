@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import Topbar from "../Topbar";
 import CardSubTitle from "../common/cardSubTitle/CardSubTitle";
-import { CreateRecipient } from "../hooks/recipientApi";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 import useCurrency from "../hooks/useCurrency";
 
 
@@ -22,6 +22,7 @@ const CreateRecipientForm: React.FC = () => {
   const [searchId, setSearchId] = useState<string>("");
   const [submitError, setSubmitError] = useState<string>("");
   const [currency] = useCurrency();
+  const axiosInstance = useAxiosSecure();
 
 
   const {
@@ -37,10 +38,14 @@ const CreateRecipientForm: React.FC = () => {
 
     try {
       setSubmitError("");
-      const createdRecipient = await CreateRecipient(data);
-
-      toast.success("Recipient created successfully");
-      reset();
+      axiosInstance.post('/recipient', data).then((response) => {
+        toast.success("Recipient created successfully");
+        reset();
+      }).then((error) => {
+        toast.error("Failed to create recipient. Please try again.");
+        setSubmitError("Failed to create recipient. Please try again.");
+      });
+      // const createdRecipient = await CreateRecipient(data);
     } catch (error) {
       if (error instanceof Error && error.message.includes("Token not found")) {
         toast.error("Authentication failed. Please log in again.");
