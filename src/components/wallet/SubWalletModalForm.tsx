@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import React, { useState } from 'react';
+import toast from 'react-hot-toast';
 import LoadingSpinner from '../common/Loading/LoadingSpinner';
 import useCurrency from '../hooks/useCurrency';
-import toast from 'react-hot-toast';
 
 interface ModalProps {
     handleWithdrawIntoWallet: () => void;
@@ -105,8 +105,8 @@ const SubWalletModalForm: React.FC<ModalProps> = ({ handleWithdrawIntoWallet, ha
                             placeholder="Enter Amount"
                         />
                         <select className="flex-1 px-2 border border-gray-400 rounded-r-full bg-[#723EEB] text-white focus:outline-none select select-sm">
-                            {currency?.map((data: any) => (
-                                <option value={data?.name} key={data._id}>
+                            {currency?.map((data: any, index: number) => (
+                                <option value={data?.name} key={index}>
                                     {data?.name}
                                 </option>
                             ))}
@@ -123,8 +123,8 @@ const SubWalletModalForm: React.FC<ModalProps> = ({ handleWithdrawIntoWallet, ha
                             placeholder="Enter Amount"
                         />
                         <select className="flex-1 px-2 border border-gray-400 rounded-r-full bg-[#723EEB] text-white focus:outline-none select select-sm">
-                            {currency?.map((data: any) => (
-                                <option value={data?.name} key={data._id}>
+                            {currency?.map((data: any, index: number) => (
+                                <option value={data?.name} key={index}>
                                     {data?.name}
                                 </option>
                             ))}
