@@ -1,8 +1,8 @@
 'use client';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import LoadingSpinner from '../common/Loading/LoadingSpinner';
 import toast from 'react-hot-toast';
+import LoadingSpinner from '../common/Loading/LoadingSpinner';
 type VerifyEmailProps = 'verified' | 'not-verified' | null | 'pending';
 
 const VerifyEmail = () => {
@@ -13,41 +13,41 @@ const VerifyEmail = () => {
     const router = useRouter();
 
     useEffect(() => {
+        const verifyEmail = async (token: string) => {
+            try {
+                setIsLoading(true);
+                const response = await fetch(
+                    `https://diasporex-api.vercel.app/api/v1/auth/verify-email?token=${token}`,
+                    {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    }
+                );
+                // await emailVerify(token);
+                setMessage(
+                    'Your email has been verified successfully! You can now login.'
+                );
+                setIsVerified('verified');
+                toast.success('Email verified successfully');
+                router.push('/auth/login');
+            } catch (error) {
+                setMessage(
+                    'Verification failed. The token may have expired. Please request a new one.'
+                );
+                toast.error('Verification failed.');
+            } finally {
+                setIsVerified('not-verified');
+                setIsLoading(false);
+            }
+        };
+
         const token = searchParams.get('token');
         if (token) {
             verifyEmail(token);
         }
-    }, [searchParams]);
-
-    const verifyEmail = async (token: string) => {
-        try {
-            setIsLoading(true);
-            const response = await fetch(
-                `https://diasporex-api.vercel.app/api/v1/auth/verify-email?token=${token}`,
-                {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }
-            );
-            // await emailVerify(token);
-            setMessage(
-                'Your email has been verified successfully! You can now login.'
-            );
-            setIsVerified('verified');
-            toast.success('Email verified successfully');
-            router.push('/auth/login');
-        } catch (error) {
-            setMessage(
-                'Verification failed. The token may have expired. Please request a new one.'
-            );
-            toast.error('Verification failed.');
-        } finally {
-            setIsVerified('not-verified');
-            setIsLoading(false);
-        }
-    };
+    }, [searchParams, router]);
 
     return (
         <div className='bg-white rounded-xl shadow-lg px-5 py-7 w-full max-w-md md:w-[400px] text-center'>
