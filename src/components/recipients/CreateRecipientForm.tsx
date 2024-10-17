@@ -1,4 +1,5 @@
 "use client";
+import { redirect } from "next/navigation";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -7,6 +8,7 @@ import LoadingSpinner from "../common/Loading/LoadingSpinner";
 import CardSubTitle from "../common/cardSubTitle/CardSubTitle";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import useCurrency from "../hooks/useCurrency";
+
 
 
 interface FormValues {
@@ -37,31 +39,19 @@ const CreateRecipientForm: React.FC = () => {
 
 
   const onSubmit = async (data: FormValues) => {
-
-    try {
-      setLoading(true);
-      setSubmitError("");
-      axiosInstance.post('/recipient', data).then((response) => {
-        toast.success("Recipient created successfully");
-        reset();
-        setLoading(false);
-      }).then((error) => {
-        toast.error("Failed to create recipient. Please try again.");
-        setSubmitError("Failed to create recipient. Please try again.");
-        setLoading(false);
-      });
-      // const createdRecipient = await CreateRecipient(data);
-    } catch (error) {
-      if (error instanceof Error && error.message.includes("Token not found")) {
-        toast.error("Authentication failed. Please log in again.");
-        setSubmitError("Authentication failed. Please log in again.");
-        setLoading(false);
-      } else {
-        toast.error(error instanceof Error ? error.message : "Failed to create recipient. Please try again.");
-        setSubmitError(error instanceof Error ? error.message : "Failed to create recipient. Please try again.");
-        setLoading(false);
-      }
-    }
+    setSubmitError("");
+    setLoading(true);
+    axiosInstance.post('/recipient', data).then((response) => {
+      toast.success("Recipient created successfully");
+      reset();
+      setLoading(false);
+      redirect('/user/recipients');
+    }).then((error: any) => {
+      setLoading(false);
+      setSubmitError("An error occurred. Please try again later");
+      toast.error(error?.response?.data?.message || "An error occurred. Please try again later");
+    });
+    // const createdRecipient = await CreateRecipient(data);
   };
 
 
