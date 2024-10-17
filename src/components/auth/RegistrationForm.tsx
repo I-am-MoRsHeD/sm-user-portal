@@ -8,6 +8,7 @@ import { LiaEyeSlashSolid, LiaEyeSolid } from "react-icons/lia";
 import useAuthContext from "../AuthContext/useAuthContext";
 import LoadingSpinner from "../common/Loading/LoadingSpinner";
 import useAxiosSecure from "../hooks/useAxiosSecure";
+import './auth.css';
 
 
 interface FormData {
@@ -209,71 +210,19 @@ const RegistrationForm = () => {
 
         {/* Terms & Conditions Checkbox */}
         <div className="flex items-center text-sm justify-center text-black">
-          <div onClick={toggleCheckbox} className="cursor-pointer flex items-center mr-2">
-            {isChecked ? (
-              // Checked SVG
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 18 18"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <rect
-                  x="0.25"
-                  y="0.25"
-                  width="17.5"
-                  height="17.5"
-                  rx="6.75"
-                  fill="#723EEB"
-                />
-                <rect
-                  x="0.25"
-                  y="0.25"
-                  width="17.5"
-                  height="17.5"
-                  rx="6.75"
-                  stroke="#723EEB"
-                  strokeWidth="0.5"
-                />
-                <path
-                  d="M5 9L7.5 11.5L13 6"
-                  stroke="white"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            ) : (
-              // Unchecked SVG
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 18 18"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <rect
-                  x="0.25"
-                  y="0.25"
-                  width="17.5"
-                  height="17.5"
-                  rx="6.75"
-                  fill="black"
-                  fillOpacity="0.3"
-                />
-                <rect
-                  x="0.25"
-                  y="0.25"
-                  width="17.5"
-                  height="17.5"
-                  rx="6.75"
-                  stroke="#AAA9A9"
-                  strokeWidth="0.5"
-                />
-              </svg>
-            )}
+          <div className="custom-checkbox-container">
+            <input
+              type="checkbox"
+              id="customCheckbox"
+              className="hidden"
+              checked={isChecked}
+              onChange={toggleCheckbox}
+            />
+            <label htmlFor="customCheckbox" className="cursor-pointer flex items-center mr-2">
+              <span className={`checkbox-icon ${isChecked ? 'checked' : ''}`}></span>
+            </label>
           </div>
+
           <span>
             I have agreed with{" "}
             <Link href="/terms" className="underline ml-1 text-[#723EEB]">

@@ -189,6 +189,7 @@ const data = [
     },
 ];
 
+const yValue = data.reduce((acc, cur) => Math.max(acc, cur.Complete, cur.Pending), 0) + 10;
 
 const TotalTransactionsChart = () => {
     return (
@@ -204,8 +205,9 @@ const TotalTransactionsChart = () => {
                             left: -30,
                             bottom: -0,
                         }} width={1000} height={500} data={data}>
+                            {/* <CartesianGrid strokeDasharray="0 0" y={Infinity} /> */}
+                            <CartesianGrid strokeDasharray="0 0" y={isFinite(yValue) ? yValue : 0} />
 
-                            <CartesianGrid strokeDasharray="0 0" y={Infinity} />
                             <XAxis dataKey="name" axisLine={false} className="text-[8px]" axisType="radiusAxis" />
                             <YAxis className="text-xs" />
                             <Tooltip />
@@ -230,7 +232,9 @@ const TotalTransactionsChart = () => {
                             bottom: -0,
                         }} width={1000} height={300} data={data}>
 
-                            <CartesianGrid strokeDasharray="0 0" y={Infinity} />
+                            {/* <CartesianGrid strokeDasharray="0 0" y={Infinity} /> */}
+                            <CartesianGrid strokeDasharray="0 0" y={isFinite(yValue) ? yValue : 0} />
+
                             <XAxis dataKey="name" axisLine={false} className="text-[8px]" axisType="radiusAxis" />
                             <YAxis className="text-xs" />
                             <Tooltip />
