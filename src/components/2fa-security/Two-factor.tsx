@@ -145,7 +145,7 @@ const TwoFactor = () => {
                         className='w-full px-3 py-1 border text-gray-400 border-gray-300 text-xs outline-0 rounded-l'
                         type="text"
                         name="qrcode"
-                        value={data?.secret ? data?.secret : 'MBCE2JDRJQI77J5X'}
+                        defaultValue={data?.secret ? data?.secret : 'MBCE2JDRJQI77J5X'}
                     />
                     <div onClick={handleCopy} className='border border-gray-300 w-[25.5px] h-[25.5px] flex justify-center items-center cursor-pointer'>
                         {

@@ -90,11 +90,9 @@ const SubWalletTable: React.FC<ModalProps> = ({ handleMakeMainWallet, isSubWalle
                     {/* head */}
                     <thead>
                         <tr>
-                            <span className='w-full px-2'>
-                                <td className='w-[40%] pl-2'>Wallet Name</td>
-                                <td className='w-72 '>Currency</td>
-                                <td className='w-[30%]'>Balance</td>
-                            </span>
+                            <td className='w-[30%] pl-4'>Wallet Name</td>
+                            <td className='w-[30%]'>Currency</td>
+                            <td className='w-[30%]'>Balance</td>
                             <td className='w-[10%]'></td>
                         </tr>
                     </thead>
@@ -104,15 +102,15 @@ const SubWalletTable: React.FC<ModalProps> = ({ handleMakeMainWallet, isSubWalle
                                 <tr
                                     className='bg-[#f4f8fb] hover:bg-[#daeaf5] border-b border-gray-400 font-semibold cursor-pointer'
                                     key={data.id}>
-                                    <span className='py-3'>
-                                        <td
-                                            onClick={() => handleSubWallet(data)} className='w-[40%] py-2 pl-4'>{data?.walletName}</td>
-                                        <td
-                                            onClick={() => handleSubWallet(data)} className='w-72 py-2 pl-2'>{data?.currency?.name}</td>
-                                        <td
-                                            onClick={() => handleSubWallet(data)} className='w-[30%] py-2 px-2'>{data?.balance ? data?.balance : '0.0'} {data?.currency?.code}</td>
-                                    </span>
-                                    <td onClick={() => handleMakeMainWallet(data)} className='w-14 py-2'>
+
+                                    <td
+                                        onClick={() => handleSubWallet(data)} className='w-[30%] py-2 pl-4'>{data?.walletName}</td>
+                                    <td
+                                        onClick={() => handleSubWallet(data)} className='w-[30%] py-2'>{data?.currency?.name}</td>
+                                    <td
+                                        onClick={() => handleSubWallet(data)} className='w-[30%] py-2'>{data?.balance ? data?.balance : '0.0'} {data?.currency?.code}</td>
+
+                                    <td onClick={() => handleMakeMainWallet(data)} className='w-[10%] py-2'>
                                         <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M0 0V22H22V0H0ZM2 2H20V20H2V2ZM16.2812 6.28125L9 13.5625L5.71875 10.2812L4.28125 11.7188L8.28125 15.7188L9 16.4062L9.71875 15.7188L17.7188 7.71875L16.2812 6.28125Z" fill="#723EEB" />
                                         </svg>

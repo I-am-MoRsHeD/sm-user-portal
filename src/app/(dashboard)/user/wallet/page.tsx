@@ -197,8 +197,8 @@ const WalletPage = () => {
                                                                 </svg>
                                                             </div>
                                                             <div className="w-36 xxs:w-24 md:w-full">
-                                                                <h3 className="font-semibold xxs:text-sm">
-                                                                    <h3 className="text-green-500">Deposit</h3>
+                                                                <h3 className="font-semibold xxs:text-sm text-green-500">
+                                                                    Deposit
                                                                     {/* {
                                                             data.type === 'Deposit' ?
                                                                 <h3 className="text-green-500">{data.type}</h3> : <h3 className="text-red-500">{data.type}</h3>

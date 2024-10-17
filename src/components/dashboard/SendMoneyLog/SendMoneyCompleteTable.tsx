@@ -9,7 +9,7 @@ const SendMoneyCompleteTable = () => {
                     <div key={data.id} className='bg-gray-100 rounded-2xl p-4 mt-10'>
                         <div className=''>
                             {/* 1st row */}
-                            <p className='border-b border-black flex flex-row justify-between items-center text-xs pb-2 '>
+                            <div className='border-b border-black flex flex-row justify-between items-center text-xs pb-2 '>
                                 <div className='flex flex-row gap-3 items-center'>
                                     <div className='border border-indigo-600 flex justify-center items-center w-5 h-5 rounded-full p-1'>
                                         <svg width="14" height="15" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -19,9 +19,9 @@ const SendMoneyCompleteTable = () => {
                                     <p>Name</p>
                                 </div>
                                 <p >{data.name}</p>
-                            </p>
+                            </div>
                             {/* 2nd row */}
-                            <p className='border-b border-black flex flex-row justify-between items-center py-3 text-xs'>
+                            <div className='border-b border-black flex flex-row justify-between items-center py-3 text-xs'>
                                 <div className='flex flex-row gap-3 items-center'>
                                     <div className='border border-indigo-600  rounded-full flex justify-center items-center w-5 h-5 '>
                                         <svg width="12" height="12" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -31,9 +31,9 @@ const SendMoneyCompleteTable = () => {
                                     <p>Country</p>
                                 </div>
                                 <p >{data.country}</p>
-                            </p>
+                            </div>
                             {/* 3rd row */}
-                            <p className='border-b border-black flex flex-row justify-between items-center py-3 text-xs'>
+                            <div className='border-b border-black flex flex-row justify-between items-center py-3 text-xs'>
                                 <div className='flex flex-row gap-3 items-center'>
                                     <div className='border border-indigo-600 flex justify-center items-center w-5 h-5 rounded-full'>
 
@@ -45,9 +45,9 @@ const SendMoneyCompleteTable = () => {
                                     <p>Exchange Rate</p>
                                 </div>
                                 <p >{data.exchangeRate} $</p>
-                            </p>
+                            </div>
                             {/* 4th row */}
-                            <p className='border-b border-black flex flex-row justify-between items-center py-3 text-xs'>
+                            <div className='border-b border-black flex flex-row justify-between items-center py-3 text-xs'>
                                 <div className='flex flex-row gap-3 items-center'>
                                     <div className='border border-indigo-600 flex justify-center items-center w-5 h-5 rounded-full'>
                                         <svg width="11" height="11" viewBox="0 0 11 7" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -57,9 +57,9 @@ const SendMoneyCompleteTable = () => {
                                     <p>Total Send Money</p>
                                 </div>
                                 <p >{data.totalSendMoney} $</p>
-                            </p>
+                            </div>
                             {/* 5th row */}
-                            <p className='border-b border-black flex flex-row justify-between items-center py-3 text-xs'>
+                            <div className='border-b border-black flex flex-row justify-between items-center py-3 text-xs'>
                                 <div className='flex flex-row gap-3 items-center'>
                                     <div className='border border-indigo-600 flex justify-center items-center w-5 h-5 rounded-full'>
                                         <svg width="11" height="9" viewBox="0 0 11 9" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -69,9 +69,9 @@ const SendMoneyCompleteTable = () => {
                                     <p>Transaction Id</p>
                                 </div>
                                 <p >{data.transactionid}</p>
-                            </p>
+                            </div>
                             {/* 6th row */}
-                            <p className='border-b border-black flex flex-row justify-between items-center py-3 text-xs'>
+                            <div className='border-b border-black flex flex-row justify-between items-center py-3 text-xs'>
                                 <div className='flex flex-row gap-3 items-center'>
                                     <div className='border border-indigo-600 flex justify-center items-center w-5 h-5 rounded-full '>
                                         <svg width="11" height="9" viewBox="0 0 11 9" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -81,9 +81,9 @@ const SendMoneyCompleteTable = () => {
                                     <p>Recipient</p>
                                 </div>
                                 <p >{data.recipient}</p>
-                            </p>
+                            </div>
                             {/* 7th row */}
-                            <p className='border-b border-black flex flex-row justify-between items-center py-3 text-xs'>
+                            <div className='border-b border-black flex flex-row justify-between items-center py-3 text-xs'>
                                 <div className='flex flex-row gap-3 items-center'>
                                     <div className='border border-indigo-600 flex justify-center items-center w-5 h-5 rounded-full '>
                                         <svg width="11" height="9" viewBox="0 0 11 9" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -93,7 +93,7 @@ const SendMoneyCompleteTable = () => {
                                     <p>Recipient Bank and Account Number</p>
                                 </div>
                                 <p >{data.bank_And_accountNumber}</p>
-                            </p>
+                            </div>
 
                         </div>
                         <div className='flex flex-row justify-center items-center gap-5'>
