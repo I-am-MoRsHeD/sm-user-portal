@@ -32,7 +32,7 @@ const Layout = ({ children }: LayoutProps) => {
   }, []);
 
   // If the page is still loading, show a loader
-  if (true || initialLoading) {
+  if (initialLoading) {
     return (
       <html>
         <head>
