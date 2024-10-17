@@ -59,16 +59,15 @@ const PaymentConfirmationPage = () => {
         mutate();
     }
 
-
     useEffect(() => {
         if (isError) {
-            toast.error(error.message);
+            toast.error(error?.message);
         }
         if (isPendingTransactionError) {
             toast.error(pendingTransactionError?.message);
         }
         if (isSuccess) {
-            toast.success('Transaction confirmed successfully');
+            toast.success(pendingTransactionData?.message);
             redirect(`/user/send-money/payment-confirmation?transactionID=${pendingTransactionData?.data?.transactionId}`);
         }
     }, [isError, isSuccess, isPendingTransactionError, pendingTransactionData, error, pendingTransactionError]);
