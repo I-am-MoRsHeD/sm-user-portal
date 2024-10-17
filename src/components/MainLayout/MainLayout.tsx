@@ -23,7 +23,7 @@ const MainLayout = ({ children }: LayoutProps) => {
 
     if (loading) {
         return <div className='h-screen w-screen bg-gradient-to-tl from-cyan-200 to-pink-200 flex justify-center items-center'>
-            <LoaderWithLottie width={8} />
+            <LoaderWithLottie width={300} height={300} />
         </div>
     };
 

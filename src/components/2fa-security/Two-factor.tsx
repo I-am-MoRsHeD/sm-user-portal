@@ -141,12 +141,8 @@ const TwoFactor = () => {
             <div className='bg-white p-4 my-5 rounded-xl'>
                 <h5 className="lg:text-sm text-xs text-black font-semibold">QRcode Share</h5>
                 <div className="flex flex-row items-center text-xs lg:text-base my-2">
-                    <input
-                        className='w-full px-3 py-1 border text-gray-400 border-gray-300 text-xs outline-0 rounded-l'
-                        type="text"
-                        name="qrcode"
-                        defaultValue={data?.secret ? data?.secret : 'MBCE2JDRJQI77J5X'}
-                    />
+                    <p className='w-full px-3 py-1 border text-gray-400 border-gray-300 text-xs outline-0 rounded-l'>{data?.secret ? data?.secret : 'MBCE2JDRJQI77J5X'}</p>
+
                     <div onClick={handleCopy} className='border border-gray-300 w-[25.5px] h-[25.5px] flex justify-center items-center cursor-pointer'>
                         {
                             !copyId ? <svg width="11" height="11" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
