@@ -18,7 +18,7 @@ const PaymentConfirmationMassagePage = () => {
                             <path d="M26.533 0.731445L8.89749 18.367L1.46697 10.9365L0 12.4034L8.16401 20.5674L8.89749 21.269L9.63098 20.5674L28 2.19842L26.533 0.731445Z" fill="white" />
                         </svg>
                     </div>
-                    <h3 className="text-sm lg:text-base font-semibold">Your Withdraw Is Successfully Completed</h3>
+                    <h3 className="text-sm lg:text-base font-semibold">Your {id ? 'Transaction' : 'Withdraw'} Is Successfully Completed</h3>
                     <TransactionInfoDisplay transactionID={id || ''} />
                     <div className='flex flex-row gap-3 w-full px-5'>
                         <Link href={"/user/send-money"} className='w-[50%]'>

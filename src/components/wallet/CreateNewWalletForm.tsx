@@ -7,6 +7,7 @@ import useAxiosSecure from '../hooks/useAxiosSecure';
 import useCurrency from '../hooks/useCurrency';
 import useMainWallet from '../hooks/useMainWallet';
 import useSubWallets from '../hooks/useSubWallets';
+import { decodedUser } from '../hooks/useUser';
 
 interface FormData {
     walletName: string;
@@ -79,11 +80,12 @@ const securityQuestionOptions = [
 
 const CreateNewWalletForm = () => {
     const [loading, setLoading] = useState(false);
+    const user = decodedUser as any;
     const [isOpen, setIsOpen] = useState(false);
     const [currency] = useCurrency();
     const [securityQuestion, setSecurityQuestion] = useState(securityQuestionOptions[0].value);
     const [currencyValue, setCurrencyValue] = useState();
-    const [mainWallet] = useMainWallet();
+    const [mainWallet, mainWalletRefetch] = useMainWallet();
     const [, refetch] = useSubWallets();
     const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>();
     const [pin, setPin] = useState(false);
@@ -98,7 +100,7 @@ const CreateNewWalletForm = () => {
                 const walletInfo = {
                     currencyId: currencyId[0]?.id,
                     category: 'PRIMARY',
-                    walletEmail: data?.email,
+                    walletEmail: user?.email,
                     walletName: data?.walletName,
                     securityQuestion: securityQuestion,
                     answer: data?.answer,
@@ -106,6 +108,7 @@ const CreateNewWalletForm = () => {
                 };
                 const res = await axiosInstance.post('/wallet/create-wallet', walletInfo)
                 if (res.status === 200) {
+                    mainWalletRefetch();
                     setLoading(false);
                     reset();
                     toast.success('Wallet has been created successfully');
@@ -114,7 +117,7 @@ const CreateNewWalletForm = () => {
                 const walletInfo = {
                     currencyId: currencyId[0]?.id,
                     category: 'SECONDARY',
-                    walletEmail: data?.email,
+                    walletEmail: user?.email,
                     walletName: data?.walletName,
                     securityQuestion: securityQuestion,
                     answer: data?.answer,
@@ -164,9 +167,11 @@ const CreateNewWalletForm = () => {
                         type="email"
                         {...register("email", {
                             required: "Email is required",
+                            disabled: true
                         })}
-                        className={`mt-1 w-full px-3 py-[6px] border border-gray-400 rounded-xl focus:outline-none placeholder:text-xs`}
-                        placeholder="Enter Wallet Email..."
+                        className={`mt-1 w-full px-3 py-1 border border-gray-400 rounded-[10px] focus:outline-none placeholder:text-xs`}
+                        placeholder="Enter Wallet Email....."
+                        defaultValue={user?.email}
                     />
                     {errors.email?.type === 'required' && (
                         <p className="text-red-500 text-xs">Email is required</p>
@@ -196,7 +201,7 @@ const CreateNewWalletForm = () => {
                         <label className="block mb-1 text-gray-700 font-semibold">Select Currency</label>
                         <div
                             onClick={() => setIsOpen(!isOpen)}
-                            className="mx-auto flex w-full items-center justify-between rounded-xl px-3 py-0.5 border border-gray-400 cursor-pointer py-1"
+                            className="mx-auto flex w-full items-center justify-between rounded-xl px-3 border border-gray-400 cursor-pointer py-1"
                         >
                             <h1 className="font-medium text-sm">{currencyValue ? currencyValue : <span className='text-gray-500'>Select</span>}</h1>
                             <svg className={`${isOpen ? '-rotate-180' : 'rotate-0'} duration-300`} width={25} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M7 10L12 15L17 10" stroke="#4B5563" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>{' '}</g></svg>
