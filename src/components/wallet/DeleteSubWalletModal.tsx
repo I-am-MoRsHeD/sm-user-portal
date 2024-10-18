@@ -42,6 +42,7 @@ const DeleteSubWalletModal: React.FC<ModalProps> = ({ isDeleteSubWalletModalOpen
             if (res.status === 200) {
                 toast.success('Wallet deleted successfully');
                 refetch();
+                setDeleteSubWalletModalOpen(false);
             }
         } catch (error: any) {
             if (error) {
@@ -108,7 +109,7 @@ const DeleteSubWalletModal: React.FC<ModalProps> = ({ isDeleteSubWalletModalOpen
                                     type="submit"
                                     className="w-full bg-[#ea5455] text-white p-2 rounded text-[10px]">
 
-                                    {loading ? <LoadingSpinner className='h-4 w-4' /> : 'Confirm'}
+                                    {loading ? <LoadingSpinner className='h-3 w-3' /> : 'Confirm'}
 
                                 </button>
                             </div>

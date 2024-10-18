@@ -66,7 +66,7 @@ const RecipientsCards = () => {
             toast.error(error.message);
         }
         if (isSuccess) {
-            toast.success('Recipient added successfully');
+            toast.success('Recipient selected successfully');
             redirect(`/user/send-money/wallet-payment-confirmation-card?id=${id}`);
         }
     }, [isSuccess, isError, id, error]);
@@ -76,7 +76,7 @@ const RecipientsCards = () => {
 
             {isLoading ? <SkeletonForRecipient /> :
                 recipients?.map((data: any) => (
-                    <div key={data.id} className={`${select[data.recipientId] ? 'bg-[#abd2e9]' : 'bg-white'} px-2 py-2 lg:px-6 lg:py-4 mb-5 rounded-2xl group cursor-pointer ${open[data.id] ? ' shadow-md shadow-neutral-400' : ''}`}>
+                    <div key={data.id} className={`${select[data.id] ? 'bg-[#abd2e9]' : 'bg-white'} px-2 py-2 lg:px-6 lg:py-4 mb-5 rounded-2xl group cursor-pointer ${open[data.id] ? ' shadow-md shadow-neutral-400' : ''}`}>
                         <div className="flex flex-row justify-between items-center w-full">
                             <div onClick={() => toggleCard(data.id)} className="flex flex-row gap-3 lg:gap-4 items-start w-[85%]">
                                 <div className="bg-gray-200 rounded-[50%] w-6 lg:w-9 h-6 lg:h-9 flex justify-center items-center ">
@@ -114,7 +114,9 @@ const RecipientsCards = () => {
             {!isLoading &&
                 (
                     <div className='w-[50%] lg:w-[100%]'>
-                        <button onClick={() => handleAddRecipient()} className="text-sm bg-[#723EEB] text-white w-full p-2.5 rounded-xl font-semibold flex justify-center items-center">{isAddRecipientPending ? <LoadingSpin height='1rem' width='1rem' borderWidth='0.225rem' color='#FFF' /> : 'Next'}</button>
+                        <button onClick={() => handleAddRecipient()} className="text-sm bg-[#723EEB] text-white w-full p-2.5 rounded-xl font-semibold flex justify-center items-center">
+                            {isAddRecipientPending ? <LoadingSpin height='1rem' width='1rem' borderWidth='0.225rem' color='#FFF' /> : 'Next'}
+                        </button>
                     </div>
                 )
             }

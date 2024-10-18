@@ -86,7 +86,7 @@ const SubWalletTable: React.FC<ModalProps> = ({ handleMakeMainWallet, isSubWalle
                     />
                 </Modal>
 
-                <table className="mt-3 w-full">
+                <table className="mt-3 w-full text-sm">
                     {/* head */}
                     <thead>
                         <tr>
@@ -122,7 +122,7 @@ const SubWalletTable: React.FC<ModalProps> = ({ handleMakeMainWallet, isSubWalle
                 </table>
 
                 <Link href={'/user/send-money'} className=''>
-                    <div className='w-[95%] mx-auto text-xs text-white p-1.5 bg-[#723EEB] text-center my-5 rounded'>
+                    <div className='w-[95%] mx-auto text-xs text-white px-1.5 py-2 bg-[#723EEB] text-center my-5 rounded'>
                         Send Now
                     </div>
                 </Link>

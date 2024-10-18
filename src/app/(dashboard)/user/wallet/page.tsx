@@ -10,9 +10,11 @@ import useWalletLog from '@/components/hooks/useWalletLog';
 import Topbar from '@/components/Topbar';
 import ChangePINForm from '@/components/wallet/ChangePINForm';
 import CreateNewWalletForm from '@/components/wallet/CreateNewWalletForm';
+import DepositLogTable from '@/components/wallet/DepositLogTable';
 import DepositModal from '@/components/wallet/DepositModal';
 import MakeMainWalletModal from '@/components/wallet/MakeMainWalletModal';
 import SubWalletTable from '@/components/wallet/SubWalletTable';
+import WithdrawLogTable from '@/components/wallet/WithdrawLogTable';
 import WithdrawModal from '@/components/wallet/WithdrawModal';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -24,7 +26,6 @@ const WalletPage = () => {
     const [subWallets, , isSubWalletPending] = useSubWallets();
     const [walletLog, , isPending] = useWalletLog();
 
-
     const [isChangePINModalOpen, setChangePINModalOpen] = useState(false);
     const [isForgetPINModalOpen, setForgetPINModalOpen] = useState(false);
     const [isMakeMaintWalletModalOpen, setMakeMaintWalletModalOpen] = useState(false);
@@ -32,6 +33,7 @@ const WalletPage = () => {
     const [copyId, setCopyId] = useState(false)
     const [subWalletData, setSubWalletData] = useState({});
     const [isWalletLoading, setWalletLoading] = useState(false);
+    const [open, setOpen] = useState<Record<string, boolean>>({});
 
     const handleChangePIN = () => {
         setChangePINModalOpen(true);
@@ -69,7 +71,6 @@ const WalletPage = () => {
         setForgetPINModalOpen(false);
     }
 
-
     const handleCopy = (e: any) => {
         e.preventDefault()
         navigator.clipboard.writeText(mainWallet?.walletId as string)
@@ -79,6 +80,13 @@ const WalletPage = () => {
             setCopyId(false)
         }, 2000)
     }
+
+    const toggleDepositCard = (id: string) => {
+        setOpen((prevState) => ({
+            ...prevState,
+            [id]: !prevState[id],
+        }));
+    };
 
     return (
         <div className='min-h-[calc(100vh-100px)]'>
@@ -188,10 +196,11 @@ const WalletPage = () => {
                                     {
                                         (
                                             walletLog?.deposits?.slice(0, 2)?.map((data: any) => (
-                                                <div key={data.id} className="bg-white px-2 lg:px-6 py-2 lg:py-4 mb-5 rounded-2xl cursor-pointer group">
-                                                    <div className="flex flex-row justify-between items-center">
+                                                <div key={data.id} className={`bg-white px-2 lg:px-6 py-2 lg:py-4 mb-5 rounded-2xl cursor-pointer group ${open[String(data.id)] ? "shadow-md shadow-neutral-400" : ""
+                                                    }`}>
+                                                    <div onClick={() => toggleDepositCard(String(data.id))} className="flex flex-row justify-between items-center">
                                                         <div className="flex flex-row gap-2 lg:gap-6 items-start">
-                                                            <div className="bg-gray-200 rounded-[50%] p-2 duration-300 group-hover:text-white text-black group-hover:fill-white group-hover:bg-[#723EEB] ">
+                                                            <div className={`bg-gray-200 rounded-[50%] ${open[String(data.id)] ? "rotate-0" : "-rotate-180"} p-2 duration-300 group-hover:text-white text-black group-hover:fill-white group-hover:bg-[#723EEB] `}>
                                                                 <svg width="15" height="15" viewBox="0 0 16 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                                     <path d="M8 0L7.37627 0.59661L0 7.97288L1.24746 9.22034L7.1322 3.33559V20.7458H8.8678V3.33559L14.7525 9.22034L16 7.97288L8.62373 0.59661L8 0Z" fill='currentColor' />
                                                                 </svg>
@@ -219,11 +228,15 @@ const WalletPage = () => {
                                                         </div>
                                                         <div className="font-semibold text-right text-xs lg:text-sm">
                                                             <h3 className="text-green-500">{data?.amount} $</h3>
-                                                            {/* {
-                                                    data.type === 'Deposit' ?
-                                                        <h3 className="text-green-500">{data.amount}</h3> : <h3 className="text-red-500">{data.amount}</h3>
-                                                } */}
                                                             <p className="text-[10px]">Transaction ID : {data?.transactionId}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div
+                                                        className={`grid transition-all duration-500 ease-in-out  ${open[String(data.id)] ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                                                            }`}
+                                                    >
+                                                        <div className="overflow-hidden flex flex-col">
+                                                            <DepositLogTable data={data} />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -233,10 +246,11 @@ const WalletPage = () => {
                                     {
                                         (
                                             walletLog?.withdraw?.slice(0, 2)?.map((data: any) => (
-                                                <div key={data.id} className="bg-white px-2 lg:px-6 py-2 lg:py-4 mb-5 rounded-2xl cursor-pointer group">
-                                                    <div className="flex flex-row justify-between items-center">
+                                                <div key={data.id} className={`bg-white px-2 lg:px-6 py-2 lg:py-4 mb-5 rounded-2xl cursor-pointer group ${open[String(data.id)] ? "shadow-md shadow-neutral-400" : ""
+                                                    }`}>
+                                                    <div onClick={() => toggleDepositCard(String(data.id))} className="flex flex-row justify-between items-center">
                                                         <div className="flex flex-row gap-2 lg:gap-6 items-start">
-                                                            <div className="bg-gray-200 rounded-[50%] p-2 duration-300 group-hover:text-white text-black group-hover:fill-white group-hover:bg-[#723EEB] ">
+                                                            <div className={`bg-gray-200 rounded-[50%] p-2 duration-300 group-hover:text-white text-black group-hover:fill-white group-hover:bg-[#723EEB] ${open[String(data.id)] ? "rotate-0" : "-rotate-180"}`}>
                                                                 <svg width="15" height="15" viewBox="0 0 16 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                                     <path d="M8 0L7.37627 0.59661L0 7.97288L1.24746 9.22034L7.1322 3.33559V20.7458H8.8678V3.33559L14.7525 9.22034L16 7.97288L8.62373 0.59661L8 0Z" fill='currentColor' />
                                                                 </svg>
@@ -244,10 +258,6 @@ const WalletPage = () => {
                                                             <div className="w-36 xxs:w-24 md:w-full">
                                                                 <h3 className="font-semibold xxs:text-sm">
                                                                     <h3 className="text-red-500">Withdraw</h3>
-                                                                    {/* {
-                                                            data.type === 'Deposit' ?
-                                                                <h3 className="text-green-500">{data.type}</h3> : <h3 className="text-red-500">{data.type}</h3>
-                                                        } */}
                                                                 </h3>
 
                                                                 <div className='flex flex-row gap-2'>
@@ -264,11 +274,15 @@ const WalletPage = () => {
                                                         </div>
                                                         <div className="font-semibold text-right text-xs lg:text-sm">
                                                             <h3 className="text-red-500">{data?.amount} $</h3>
-                                                            {/* {
-                                                    data.type === 'Deposit' ?
-                                                        <h3 className="text-green-500">{data.amount}</h3> : <h3 className="text-red-500">{data.amount}</h3>
-                                                } */}
-                                                            <p className="text-[10px]">Transaction ID : {data?.transactionId}</p>
+                                                            <p className="text-[10px]">Account Number : {data?.accountNo}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div
+                                                        className={`grid transition-all duration-500 ease-in-out  ${open[String(data.id)] ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                                                            }`}
+                                                    >
+                                                        <div className="overflow-hidden flex flex-col">
+                                                            <WithdrawLogTable data={data} />
                                                         </div>
                                                     </div>
                                                 </div>
