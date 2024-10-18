@@ -7,6 +7,7 @@ import useAxiosSecure from '../hooks/useAxiosSecure';
 import useCurrency from '../hooks/useCurrency';
 import useMainWallet from '../hooks/useMainWallet';
 import useSubWallets from '../hooks/useSubWallets';
+import { decodedUser } from '../hooks/useUser';
 
 interface FormData {
     walletName: string;
@@ -79,11 +80,12 @@ const securityQuestionOptions = [
 
 const CreateNewWalletForm = () => {
     const [loading, setLoading] = useState(false);
+    const user = decodedUser as any;
     const [isOpen, setIsOpen] = useState(false);
     const [currency] = useCurrency();
     const [securityQuestion, setSecurityQuestion] = useState(securityQuestionOptions[0].value);
     const [currencyValue, setCurrencyValue] = useState();
-    const [mainWallet] = useMainWallet();
+    const [mainWallet, mainWalletRefetch] = useMainWallet();
     const [, refetch] = useSubWallets();
     const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>();
     const [pin, setPin] = useState(false);
@@ -98,7 +100,7 @@ const CreateNewWalletForm = () => {
                 const walletInfo = {
                     currencyId: currencyId[0]?.id,
                     category: 'PRIMARY',
-                    walletEmail: data?.email,
+                    walletEmail: user?.email,
                     walletName: data?.walletName,
                     securityQuestion: securityQuestion,
                     answer: data?.answer,
@@ -106,6 +108,7 @@ const CreateNewWalletForm = () => {
                 };
                 const res = await axiosInstance.post('/wallet/create-wallet', walletInfo)
                 if (res.status === 200) {
+                    mainWalletRefetch();
                     setLoading(false);
                     reset();
                     toast.success('Wallet has been created successfully');
@@ -114,7 +117,7 @@ const CreateNewWalletForm = () => {
                 const walletInfo = {
                     currencyId: currencyId[0]?.id,
                     category: 'SECONDARY',
-                    walletEmail: data?.email,
+                    walletEmail: user?.email,
                     walletName: data?.walletName,
                     securityQuestion: securityQuestion,
                     answer: data?.answer,
@@ -164,9 +167,11 @@ const CreateNewWalletForm = () => {
                         type="email"
                         {...register("email", {
                             required: "Email is required",
+                            disabled: true
                         })}
                         className={`mt-1 w-full px-3 py-1 border border-gray-400 rounded-[10px] focus:outline-none placeholder:text-xs`}
                         placeholder="Enter Wallet Email....."
+                        defaultValue={user?.email}
                     />
                     {errors.email?.type === 'required' && (
                         <p className="text-red-500 text-xs">Email is required</p>

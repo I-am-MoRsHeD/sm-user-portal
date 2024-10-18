@@ -12,6 +12,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { LiaEyeSlashSolid, LiaEyeSolid } from "react-icons/lia";
+import { FaEye, FaEyeSlash } from "react-icons/fa6";
 
 
 
@@ -122,9 +123,9 @@ const LoginForm = () => {
             <button
               type="button"
               onClick={togglePasswordVisibility}
-              className="absolute top-3 right-4 text-xl"
+              className="absolute top-3 right-4 text-lg"
             >
-              {showPassword ? <LiaEyeSolid className='text-base' /> : <LiaEyeSlashSolid className='text-base' />}
+              {showPassword ? <FaEye /> : <FaEyeSlash />}
             </button>
           </div>
 
@@ -149,7 +150,7 @@ const LoginForm = () => {
             className="w-full md:px-4 py-2.5 bg-[#723EEB] text-white text-xs rounded-3xl hover:bg-[#6129e6] duration-500"
           >
             {
-              loading ? <LoadingSpinner className="h-4 w-4" /> : 'Login'
+              loading ? <LoadingSpinner className="h-3 w-3" /> : 'Login'
             }
             {/* Login */}
           </button>
