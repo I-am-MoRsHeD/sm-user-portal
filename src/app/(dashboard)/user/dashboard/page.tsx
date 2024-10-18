@@ -1,10 +1,10 @@
 "use client"
 
-import Topbar from '@/components/Topbar'
+import Topbar from '@/components/Topbar';
 
-import SendMoneyLog from '@/components/dashboard/SendMoneyLog/SendMoneyLog'
-import TotalTransactionsChart from '@/components/dashboard/TotalTransactionsChart/TotalTransactionsChart'
-import Wallet from '@/components/dashboard/Wallet/Wallet'
+import SendMoneyLog from '@/components/dashboard/SendMoneyLog/SendMoneyLog';
+import TotalTransactionsChart from '@/components/dashboard/TotalTransactionsChart/TotalTransactionsChart';
+import Wallet from '@/components/dashboard/Wallet/Wallet';
 
 
 // const Page = () => {

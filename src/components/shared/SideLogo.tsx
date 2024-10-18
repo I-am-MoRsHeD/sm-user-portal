@@ -8,7 +8,7 @@ const SideLogo = () => {
 
     return (
         <div className={`px-5 py-3 lg:w-[90%] w-[100%] ${isNavOpen ? 'hidden md:block' : ''}`}>
-            <Image src={logo} className='w-[100%]' alt='notfound' />
+            <Image src={logo} className='w-[100%]' alt='notfound' priority />
         </div>
     );
 };

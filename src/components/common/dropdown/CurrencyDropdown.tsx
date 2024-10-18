@@ -37,7 +37,7 @@ const CurrencyDropdown: React.FC<CurrencyDropdownProps & { isOpen?: boolean; onT
         <div className="relative w-full text-xs xl:text-sm">
             <label className="block mb-2 font-semibold">{label}</label>
             <div className="border rounded-xl flex">
-                <div className="mx-auto flex w-full items-center px-3 py-1 cursor-pointer bg-gray-200 rounded-l-xl">
+                <div className="mx-auto flex w-full items-center px-3 py-1 cursor-pointer  rounded-l-xl">
                     {Object.keys(selectedValue).length !== 0 && (
                         <div className="relative w-5 h-5 mr-2">
                             <Image
@@ -49,7 +49,7 @@ const CurrencyDropdown: React.FC<CurrencyDropdownProps & { isOpen?: boolean; onT
                             />
                         </div>
                     )}
-                    <h1 className="font-medium text-xs text-gray-600">{Object.keys(selectedValue).length !== 0 ? selectedValue.name : `Choose ${label}`}</h1>
+                    <h1 className="font-medium text-xs text-gray-700">{Object.keys(selectedValue).length !== 0 ? selectedValue.name : <span className='text-gray-400'>{`Choose ${label}`}</span>}</h1>
                 </div>
                 <div
                     onClick={onToggle} // Toggle function passed from the parent

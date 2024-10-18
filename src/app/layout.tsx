@@ -41,7 +41,7 @@ const Layout = ({ children }: LayoutProps) => {
         </head>
         <body>
           <div className='h-screen w-screen bg-gradient-to-tl from-cyan-200 to-pink-200 flex justify-center items-center'>
-            <LoaderWithLottie width={10} />
+            <LoaderWithLottie width={100} />
           </div>
         </body>
       </html>
@@ -49,7 +49,7 @@ const Layout = ({ children }: LayoutProps) => {
   }
 
   return (
-    <html data-theme="light">
+    <html data-theme="light" suppressHydrationWarning={true}>
       <head>
         <link rel="icon" href="/favicon/favicon.ico" sizes="any" />
         <title>Diasporex - User</title>

@@ -1,6 +1,6 @@
-import { AxiosInstance } from './../../../node_modules/axios/index.d';
-import useAxiosSecure from './useAxiosSecure';
 // import axios, { AxiosError } from 'axios';
+
+import useAxiosSecure from "./useAxiosSecure";
 
 // const API_BASE_URL = 'https://diasporex-api.vercel.app/api/v1';
 
@@ -55,11 +55,13 @@ export interface Recipient {
 
 // Create a recipient
 
-export const CreateRecipient = async (recipientData: Recipient): Promise<Recipient> => {
+export const CreateRecipient =  (recipientData: Recipient)=> {
   try {
-     const axiosInstance = useAxiosSecure()
-    const response = await axiosInstance.post('/recipient', recipientData); // Send POST request
-    return response.data;
+    const axiosInstance =  useAxiosSecure();
+    axiosInstance.post('/recipient', recipientData).then((response)=>{
+      return response.data;
+    }); // Send POST request
+    
   } catch (error) {
     
     // if (axios.isAxiosError(error)) {

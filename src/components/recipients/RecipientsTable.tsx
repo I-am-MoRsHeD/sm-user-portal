@@ -11,10 +11,10 @@ interface RecipientsTableProps {
 const RecipientsTable: React.FC<RecipientsTableProps> = ({ data }) => {
 
   const { fullName, email, country, city, phone, bankName, accountNumber } = data;
-  const recipientId = data?.recipientId || 'data'; 
+  const recipientId = data?.recipientId || 'data';
 
   return (
-   
+
     <div className='bg-gray-100 rounded-2xl p-4 mt-10'>
       <div>
         {/* 1st row */}
@@ -166,7 +166,7 @@ const RecipientsTable: React.FC<RecipientsTableProps> = ({ data }) => {
         </div>
       </div>
       <Link href="/send-money">
-        
+
       </Link>
     </div>
   );

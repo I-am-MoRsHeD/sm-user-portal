@@ -46,7 +46,7 @@ const TransactionsPage: React.FC = () => {
 
             <p
               onClick={handlePrevPage}
-              className={`px-3 py-1 border-2 border-[#723EEB] cursor-pointer bg-white text-black ${currentPage > 1 ? 'cursor-pointer' : 'cursor-not-allowed'}`}
+              className={`px-3 py-1 border-2 border-[#723EEB] bg-white text-black ${currentPage > 1 ? 'cursor-pointer' : 'cursor-not-allowed'}`}
             >
               {'<<'}
             </p>
@@ -71,7 +71,7 @@ const TransactionsPage: React.FC = () => {
 
             <p
               onClick={handleNextPage}
-              className={`px-3 py-1 border-2 border-[#723EEB] cursor-pointer bg-white text-black ${currentPage < transactions?.meta?.totalPages ? 'cursor-pointer' : 'cursor-not-allowed'}`}
+              className={`px-3 py-1 border-2 border-[#723EEB] bg-white text-black ${currentPage < transactions?.meta?.totalPages ? 'cursor-pointer' : 'cursor-not-allowed'}`}
             >
               {'>>'}
             </p>

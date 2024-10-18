@@ -195,7 +195,7 @@ const WalletPage = () => {
                                 <div>
                                     {
                                         (
-                                            walletLog?.deposits?.slice(0,2)?.map((data: any) => (
+                                            walletLog?.deposits?.slice(0, 2)?.map((data: any) => (
                                                 <div key={data.id} className={`bg-white px-2 lg:px-6 py-2 lg:py-4 mb-5 rounded-2xl cursor-pointer group ${open[String(data.id)] ? "shadow-md shadow-neutral-400" : ""
                                                     }`}>
                                                     <div onClick={() => toggleDepositCard(String(data.id))} className="flex flex-row justify-between items-center">
@@ -206,8 +206,12 @@ const WalletPage = () => {
                                                                 </svg>
                                                             </div>
                                                             <div className="w-36 xxs:w-24 md:w-full">
-                                                                <h3 className="font-semibold xxs:text-sm">
-                                                                    <h3 className="text-green-500">Deposit</h3>
+                                                                <h3 className="font-semibold xxs:text-sm text-green-500">
+                                                                    Deposit
+                                                                    {/* {
+                                                            data.type === 'Deposit' ?
+                                                                <h3 className="text-green-500">{data.type}</h3> : <h3 className="text-red-500">{data.type}</h3>
+                                                        } */}
                                                                 </h3>
 
                                                                 <div className='flex flex-row gap-2'>
@@ -241,7 +245,7 @@ const WalletPage = () => {
                                     }
                                     {
                                         (
-                                            walletLog?.withdraw?.slice(0,2)?.map((data: any) => (
+                                            walletLog?.withdraw?.slice(0, 2)?.map((data: any) => (
                                                 <div key={data.id} className={`bg-white px-2 lg:px-6 py-2 lg:py-4 mb-5 rounded-2xl cursor-pointer group ${open[String(data.id)] ? "shadow-md shadow-neutral-400" : ""
                                                     }`}>
                                                     <div onClick={() => toggleDepositCard(String(data.id))} className="flex flex-row justify-between items-center">

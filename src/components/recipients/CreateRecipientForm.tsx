@@ -1,11 +1,14 @@
 "use client";
+import { redirect } from "next/navigation";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import Topbar from "../Topbar";
+import LoadingSpinner from "../common/Loading/LoadingSpinner";
 import CardSubTitle from "../common/cardSubTitle/CardSubTitle";
-import { CreateRecipient } from "../hooks/recipientApi";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 import useCurrency from "../hooks/useCurrency";
+
 
 
 interface FormValues {
@@ -22,6 +25,8 @@ const CreateRecipientForm: React.FC = () => {
   const [searchId, setSearchId] = useState<string>("");
   const [submitError, setSubmitError] = useState<string>("");
   const [currency] = useCurrency();
+  const axiosInstance = useAxiosSecure();
+  const [loading, setLoading] = useState<boolean>(false);
 
 
   const {
@@ -34,22 +39,19 @@ const CreateRecipientForm: React.FC = () => {
 
 
   const onSubmit = async (data: FormValues) => {
-
-    try {
-      setSubmitError("");
-      const createdRecipient = await CreateRecipient(data);
-
+    setSubmitError("");
+    setLoading(true);
+    axiosInstance.post('/recipient', data).then((response) => {
       toast.success("Recipient created successfully");
       reset();
-    } catch (error) {
-      if (error instanceof Error && error.message.includes("Token not found")) {
-        toast.error("Authentication failed. Please log in again.");
-        setSubmitError("Authentication failed. Please log in again.");
-      } else {
-        toast.error(error instanceof Error ? error.message : "Failed to create recipient. Please try again.");
-        setSubmitError(error instanceof Error ? error.message : "Failed to create recipient. Please try again.");
-      }
-    }
+      setLoading(false);
+      redirect('/user/recipients');
+    }).then((error: any) => {
+      setLoading(false);
+      setSubmitError("An error occurred. Please try again later");
+      toast.error(error?.response?.data?.message || "An error occurred. Please try again later");
+    });
+    // const createdRecipient = await CreateRecipient(data);
   };
 
 
@@ -180,9 +182,9 @@ const CreateRecipientForm: React.FC = () => {
           </div>
           <button
             type="submit"
-            className="bg-[#723EEB] text-white w-full text-max px-4 py-1 text-xs rounded"
+            className="bg-[#723EEB] text-white w-full text-max px-4 py-[6px] text-xs rounded"
           >
-            Confirm
+            {loading ? <LoadingSpinner className="h-4 w-4" /> : 'Confirm'}
           </button>
           {submitError && <div className="text-red-500 mt-4">{submitError}</div>}
         </form>
