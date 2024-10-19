@@ -172,6 +172,7 @@ const WalletToBankPage: React.FC = () => {
             isLoading={isLoading}
             errorMassage='wallet is required'
             isSubmitted={isSubmitted}
+            loadDataEmptyMassage='*Please Create a Wallet and Deposit money!'
           />
           <CurrencyDropdown
             label="Sending Currency"

@@ -69,7 +69,7 @@ const SubWalletTable: React.FC<ModalProps> = ({ handleMakeMainWallet, isSubWalle
     }
 
     return (
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto overflow-y-auto">
             <div>
                 <Modal
                     isOpen={isSubWalletModalOpen}
@@ -123,7 +123,7 @@ const SubWalletTable: React.FC<ModalProps> = ({ handleMakeMainWallet, isSubWalle
                 </table>
 
                 <Link href={'/user/send-money'}>
-                    <div className='w-[95%] mx-auto pt-5'>
+                    <div className='w-[95%] mx-auto pt-5 pb-2'>
                         <DiasporexButton
                             bgColor='#723EEB'
                             textColor='white'
