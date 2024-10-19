@@ -120,16 +120,16 @@ export default Layout;
 function AuthWatcher() {
   const { data: session, status } = useSession();
 
-  useEffect(() => {
-    if (status === 'authenticated') {
-      const hasShownWelcomeToast = sessionStorage.getItem('hasShownWelcomeToast');
+  if (status === 'authenticated') {
+    const hasShownWelcomeToast = sessionStorage.getItem('hasShownWelcomeToast');
 
-      if (!hasShownWelcomeToast) {
-        toast.success('You have successfully logged in');
-        sessionStorage.setItem('hasShownWelcomeToast', 'true');
-      }
+    if (!hasShownWelcomeToast) {
+      toast.success('You have successfully logged in');
+      sessionStorage.setItem('hasShownWelcomeToast', 'true');
     }
-  }, [status, session]);
+  }
+  // useEffect(() => {
+  // }, [status, session]);
 
   return null;
 }
