@@ -12,6 +12,7 @@ type CurrencyDropdownProps = {
     placeholder?: string;
     errorMassage?: string
     isSubmitted?: boolean;
+    fixedValue?: boolean;
 };
 
 
@@ -25,7 +26,8 @@ const CurrencyDropdown: React.FC<CurrencyDropdownProps & { isOpen?: boolean; onT
     onToggle,
     placeholder,
     errorMassage,
-    isSubmitted
+    isSubmitted,
+    fixedValue
 }) => {
     const [searchTerm, setSearchTerm] = useState('');
 
@@ -56,7 +58,7 @@ const CurrencyDropdown: React.FC<CurrencyDropdownProps & { isOpen?: boolean; onT
                     className="mx-auto flex items-center justify-center px-3 py-2 cursor-pointer bg-[#723EEB] rounded-r-xl text-white w-16 xl:w-24">
                     <h1 className="font-medium">{selectedValue ? selectedValue.code : ''}</h1>
                     <svg
-                        className={`transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
+                        className={`transition-transform duration-300 ${isOpen && !fixedValue ? 'rotate-180' : ''}`}
                         width="20"
                         height="20"
                         viewBox="0 0 24 24"
@@ -69,7 +71,7 @@ const CurrencyDropdown: React.FC<CurrencyDropdownProps & { isOpen?: boolean; onT
             </div>
 
             <div
-                className={`${isOpen ? 'visible top-[3.8rem] bg-white opacity-100' : 'invisible top-0 opacity-0'} absolute z-10 w-full mt-1 bg-white border rounded-l-xl rounded-r-xl shadow-lg duration-300`}
+                className={`${isOpen && !fixedValue ? 'visible top-[3.8rem] bg-white opacity-100' : 'invisible top-0 opacity-0'} absolute z-10 w-full mt-1 bg-white border rounded-l-xl rounded-r-xl shadow-lg duration-300`}
             // className="absolute z-10 w-full mt-1 bg-white border rounded-l-xl rounded-r-xl shadow-lg"
             >
                 <div className="p-2">

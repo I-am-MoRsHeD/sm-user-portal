@@ -279,7 +279,7 @@ const CreateNewWalletForm = () => {
                 </div>
                 {/* Pin Field */}
                 <div className="mb-3">
-                    <label className="text-gray-700 font-semibold">Create New PIN</label>
+                    <label className="text-gray-700 font-semibold ">Create New PIN</label>
                     <div className="relative">
                         <input
                             type={pin ? 'text' : 'password'}

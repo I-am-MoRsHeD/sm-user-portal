@@ -37,7 +37,7 @@ const WalletToBankPage: React.FC = () => {
   const [wallet, setWallet] = useState({} as any);
   const [walletOptions, setWalletOptions] = useState([]);
   const [currencyOptions, setCurrencyOptions] = useState([]);
-  const [sendingCurrency, setSendingCurrency] = useState(wallet?.currency?.id || {} as any);
+  const [sendingCurrency, setSendingCurrency] = useState(wallet?.currency || {} as any);
   const [receivingCurrency, setReceivingCurrency] = useState({} as any);
   const [sendingAmount, setSendingAmount] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -98,6 +98,10 @@ const WalletToBankPage: React.FC = () => {
     })
     setCurrencyOptions(options);
   }, [currencyData]);
+
+  useEffect(() => {
+    setSendingCurrency(wallet?.currency || {} as any);
+  }, [wallet]);
 
 
   // handle form submission
@@ -184,6 +188,7 @@ const WalletToBankPage: React.FC = () => {
             onToggle={() => handleDropdownToggle(2)}
             errorMassage='currency is required'
             isSubmitted={isSubmitted}
+            fixedValue={true}
           />
           <CurrencyDropdown
             label="Receiving Currency"
