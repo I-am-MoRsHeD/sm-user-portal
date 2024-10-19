@@ -8,6 +8,7 @@ import useCurrency from '../hooks/useCurrency';
 import useMainWallet from '../hooks/useMainWallet';
 import useSubWallets from '../hooks/useSubWallets';
 import { decodedUser } from '../hooks/useUser';
+import DiasporexButton from '../ui/button/DiasporexButton';
 
 interface FormData {
     walletName: string;
@@ -197,6 +198,9 @@ const CreateNewWalletForm = () => {
                     )}
                 </div> */}
                 <div className='mb-3'>
+
+                </div>
+                <div className='mb-3'>
                     <div className="relative w-full text-[10px] sm:text-sm">
                         <label className="block mb-1 text-gray-700 font-semibold">Select Currency</label>
                         <div
@@ -299,15 +303,20 @@ const CreateNewWalletForm = () => {
 
                 {/* create now Button */}
                 <div className="w-full mx-auto mt-3 ">
-                    <button
-                        type="submit"
-                        className="mt-1 w-full bg-[#723EEB] text-white cursor-pointer px-1 py-[6px] rounded text-[10px] sm:text-sm"
-                    >
-                        {
-                            loading ? <LoadingSpinner className='h-4 w-4' /> : 'Create Now'
-                        }
+                    <DiasporexButton
+                        bgColor='#723EEB'
+                        textColor='white'
+                        fullWidth={true}
+                        type='submit'
+                        cursorPointer={true}
+                        px='4px'
+                        py='7px'
 
-                    </button>
+                    >
+                        {loading ? <LoadingSpinner className='h-4 w-4' /> : 'Create Now'}
+
+                    </DiasporexButton>
+
                 </div>
             </form>
         </>

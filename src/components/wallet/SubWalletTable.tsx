@@ -4,6 +4,7 @@ import useNavigationContext from '../NavigationContext/useNavigationContext';
 import ForgetPINModal from '../common/ForgetPINModal/ForgetPINModal';
 import Modal from '../common/Modal/Modal';
 import useSubWallets from '../hooks/useSubWallets';
+import DiasporexButton from '../ui/button/DiasporexButton';
 import ChangePINForm from './ChangePINForm';
 import DeleteSubWalletModal from './DeleteSubWalletModal';
 import EditWalletModal from './EditWalletModal';
@@ -121,9 +122,19 @@ const SubWalletTable: React.FC<ModalProps> = ({ handleMakeMainWallet, isSubWalle
                     </tbody>
                 </table>
 
-                <Link href={'/user/send-money'} className=''>
-                    <div className='w-[95%] mx-auto text-xs text-white px-1.5 py-2 bg-[#723EEB] text-center my-5 rounded'>
-                        Send Now
+                <Link href={'/user/send-money'}>
+                    <div className='w-[95%] mx-auto pt-5'>
+                        <DiasporexButton
+                            bgColor='#723EEB'
+                            textColor='white'
+                            fullWidth={true}
+                            cursorPointer={true}
+                            px='4px'
+                            py='7px'
+
+                        >
+                            Send Now
+                        </DiasporexButton>
                     </div>
                 </Link>
             </div>

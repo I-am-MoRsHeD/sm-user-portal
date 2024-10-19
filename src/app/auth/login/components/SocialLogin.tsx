@@ -1,10 +1,9 @@
 "use client";
 import { Minus } from "lucide-react";
-import Link from "next/link";
-import Image from "next/image";
-import React from "react";
-import { usePathname } from "next/navigation";
 import { signIn } from "next-auth/react";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const SocialLogin = () => {
   const route = usePathname();
