@@ -12,6 +12,7 @@ type DropdownProps = {
     isLoading?: boolean;
     errorMassage?: string;
     isSubmitted?: boolean;
+    loadDataEmptyMassage?: string;
 };
 
 const SelectDropdown: React.FC<DropdownProps> = ({
@@ -25,14 +26,15 @@ const SelectDropdown: React.FC<DropdownProps> = ({
     placeholder,
     isLoading,
     errorMassage,
-    isSubmitted
+    isSubmitted,
+    loadDataEmptyMassage
 }) => {
     const selectedOption: { name: string; value: string; } | undefined = options?.find(option => option.value === selectedValue);
 
 
     return (
         <div className="relative w-full text-xs xl:text-sm">
-            <label className="block mb-2 font-semibold">{label}</label>
+            <label className="block mb-1 font-semibold">{label}</label>
             <div
                 onClick={onToggle} // Toggle function passed from the parent
                 className={`mx-auto flex w-full items-center justify-between rounded-xl px-3 ${fixedValue ? 'py-2' : 'py-1'} border cursor-pointer text-xs`}
@@ -62,7 +64,7 @@ const SelectDropdown: React.FC<DropdownProps> = ({
                         </div>
                     ))
                     :
-                    <span className="px-3 text-xs text-red-400">*Please Create a Wallet and Deposit money!</span>
+                    <span className="px-3 text-xs text-red-400">{loadDataEmptyMassage}</span>
                 }
             </div>
             {

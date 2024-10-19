@@ -2,7 +2,7 @@
 import { GoDotFill } from "react-icons/go";
 // import { recipientsData } from "../../utils/data/recipientsData";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { redirect, useSearchParams } from "next/navigation";
+import { redirect, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import LoadingSpin from "../2fa-security/LoadingSpin";
@@ -24,6 +24,7 @@ const RecipientsCards = () => {
     const [recipients, isPending, isLoading] = useRecipients();
     const axiosInstance = useAxiosSecure();
     const queryClient = useQueryClient();
+    const router = useRouter();
 
     const id = useSearchParams().get('id');
     //Add recipient
@@ -70,6 +71,8 @@ const RecipientsCards = () => {
             redirect(`/user/send-money/wallet-payment-confirmation-card?id=${id}`);
         }
     }, [isSuccess, isError, id, error]);
+
+
 
     return (
         <>

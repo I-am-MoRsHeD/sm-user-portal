@@ -14,6 +14,7 @@ const MainLayout = ({ children }: LayoutProps) => {
     const { isNavOpen }: any = useNavigationContext();
     const user = typeof window !== "undefined" ? localStorage.getItem('user') : null;
 
+
     // if (loading) {
     //     return <div className="flex justify-center items-center h-[100vh]">
     //         <Image src={'/loader.gif'} width={40} height={40} alt='Loader' />
@@ -25,6 +26,7 @@ const MainLayout = ({ children }: LayoutProps) => {
     //         <LoaderWithLottie width={300} height={300} />
     //     </div>
     // };
+
 
 
     return (

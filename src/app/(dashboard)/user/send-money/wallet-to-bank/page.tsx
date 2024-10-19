@@ -8,7 +8,7 @@ import SelectDropdown from '@/components/common/dropdown/SelectDropdown';
 import SendMoneyModal from '@/components/common/sendMoneyModal/SendMoneyModal';
 import useAxiosSecure from '@/components/hooks/useAxiosSecure';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { redirect, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
@@ -37,7 +37,7 @@ const WalletToBankPage: React.FC = () => {
   const [wallet, setWallet] = useState({} as any);
   const [walletOptions, setWalletOptions] = useState([]);
   const [currencyOptions, setCurrencyOptions] = useState([]);
-  const [sendingCurrency, setSendingCurrency] = useState(wallet?.currency?.id || {} as any);
+  const [sendingCurrency, setSendingCurrency] = useState(wallet?.currency || {} as any);
   const [receivingCurrency, setReceivingCurrency] = useState({} as any);
   const [sendingAmount, setSendingAmount] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -99,6 +99,10 @@ const WalletToBankPage: React.FC = () => {
     setCurrencyOptions(options);
   }, [currencyData]);
 
+  useEffect(() => {
+    setSendingCurrency(wallet?.currency || {} as any);
+  }, [wallet]);
+
 
   // handle form submission
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -139,11 +143,25 @@ const WalletToBankPage: React.FC = () => {
     }
     if (isTransactionSuccess) {
       toast.success('Transaction Initiated');
-      redirect(`/user/recipients/select-recipients?id=${transactionPostData?.data?.id}`);
+      router.push(`/user/recipients/select-recipients?id=${transactionPostData?.data?.id}`);
       setIsSubmitted(false);
     }
   }, [isUserWalletError, isGetCurrencyError, transactionError, isTransactionSuccess, router, transactionPostData, error]);
 
+
+  useEffect(() => {
+    const handleBackButton = (e: PopStateEvent) => {
+      // You can customize the behavior here, e.g. force back to a specific page
+      e.preventDefault();
+      router.back(); // or router.push('/some-page');
+    };
+
+    window.addEventListener('popstate', handleBackButton);
+
+    return () => {
+      window.removeEventListener('popstate', handleBackButton);
+    };
+  }, [router]);
 
   return (
     <form onSubmit={handleSubmit} className='min-h-screen max-h-auto'>
@@ -172,6 +190,7 @@ const WalletToBankPage: React.FC = () => {
             isLoading={isLoading}
             errorMassage='wallet is required'
             isSubmitted={isSubmitted}
+            loadDataEmptyMassage='*Please Create a Wallet and Deposit money!'
           />
           <CurrencyDropdown
             label="Sending Currency"
@@ -183,6 +202,7 @@ const WalletToBankPage: React.FC = () => {
             onToggle={() => handleDropdownToggle(2)}
             errorMassage='currency is required'
             isSubmitted={isSubmitted}
+            fixedValue={true}
           />
           <CurrencyDropdown
             label="Receiving Currency"

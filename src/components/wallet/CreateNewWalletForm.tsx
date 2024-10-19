@@ -1,13 +1,16 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { FaEye, FaEyeSlash } from 'react-icons/fa6';
 import LoadingSpinner from '../common/Loading/LoadingSpinner';
+import CurrencyDropdown from '../common/dropdown/CurrencyDropdown';
+import SelectDropdown from '../common/dropdown/SelectDropdown';
 import useAxiosSecure from '../hooks/useAxiosSecure';
 import useCurrency from '../hooks/useCurrency';
 import useMainWallet from '../hooks/useMainWallet';
 import useSubWallets from '../hooks/useSubWallets';
 import { decodedUser } from '../hooks/useUser';
+import DiasporexButton from '../ui/button/DiasporexButton';
 
 interface FormData {
     walletName: string;
@@ -82,14 +85,17 @@ const CreateNewWalletForm = () => {
     const [loading, setLoading] = useState(false);
     const user = decodedUser as any;
     const [isOpen, setIsOpen] = useState(false);
-    const [currency] = useCurrency();
+    const [currency, , isPending, currencyLoading] = useCurrency();
     const [securityQuestion, setSecurityQuestion] = useState(securityQuestionOptions[0].value);
     const [currencyValue, setCurrencyValue] = useState();
     const [mainWallet, mainWalletRefetch] = useMainWallet();
     const [, refetch] = useSubWallets();
-    const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>();
+    const { register, handleSubmit, formState: { errors, isSubmitted }, reset } = useForm<FormData>();
     const [pin, setPin] = useState(false);
     const axiosInstance = useAxiosSecure();
+    const [currencyOptions, setCurrencyOptions] = useState([]);
+    const [selectCurrency, setSelectCurrency] = useState({} as any);
+    const [openDropdown, setOpenDropdown] = useState<number | null>(null);
 
 
     const onSubmit = async (data: any) => {
@@ -98,7 +104,7 @@ const CreateNewWalletForm = () => {
         try {
             if (!mainWallet?.userId) {
                 const walletInfo = {
-                    currencyId: currencyId[0]?.id,
+                    currencyId: selectCurrency?.id,
                     category: 'PRIMARY',
                     walletEmail: user?.email,
                     walletName: data?.walletName,
@@ -111,11 +117,12 @@ const CreateNewWalletForm = () => {
                     mainWalletRefetch();
                     setLoading(false);
                     reset();
+                    setSelectCurrency({} as any);
                     toast.success('Wallet has been created successfully');
                 }
             } else {
                 const walletInfo = {
-                    currencyId: currencyId[0]?.id,
+                    currencyId: selectCurrency?.id,
                     category: 'SECONDARY',
                     walletEmail: user?.email,
                     walletName: data?.walletName,
@@ -130,30 +137,48 @@ const CreateNewWalletForm = () => {
                     setLoading(false);
                     refetch();
                     reset();
+                    setSelectCurrency({} as any);
                     toast.success('Sub Wallet has been created successfully');
                 }
             };
         } catch (error: any) {
             if (error) {
-                toast.error("There is something wrong");
+                toast.error(error?.response?.data?.message);
                 setLoading(false);
             }
         }
     }
 
+    useEffect(() => {
+        const options = currency?.map((item: any) => {
+            return {
+                value: {
+                    ...item
+                },
+                name: item?.name
+            }
+        })
+        setCurrencyOptions(options);
+    }, [currency]);
+
+    const handleDropdownToggle = (index: number) => {
+        setOpenDropdown(openDropdown === index ? null : index); // Close if it's already open
+    };
+
+
     return (
         <>
-            <form className='text-[10px] sm:text-sm' onSubmit={handleSubmit(onSubmit)}>
+            <form className='text-[10px] text-xs xl:text-sm' onSubmit={handleSubmit(onSubmit)}>
                 <h3 className="font-semibold pb-3 text-base">Create {mainWallet ? 'New Sub' : 'New'} Wallet</h3>
                 {/* wallet name Field */}
                 <div className="mb-3">
-                    <label className="text-gray-700 font-semibold">Wallet Name</label>
+                    <label className="text-gray-700 font-semibold text-xs xl:text-sm">Wallet Name</label>
                     <input
                         type="text"
                         {...register("walletName", {
                             required: "Wallet Name is required",
                         })}
-                        className={`mt-1 w-full px-3 py-[6px]  border border-gray-400 rounded-xl focus:outline-none text-gray-700 placeholder:text-xs`}
+                        className={`mt-1 w-full px-3 py-[8px] text-xs  border border-gray-400 rounded-xl focus:outline-none text-gray-700 placeholder:text-xs`}
                         placeholder="Enter Wallet Name..."
                     />
                     {errors.walletName?.type === 'required' && (
@@ -162,14 +187,14 @@ const CreateNewWalletForm = () => {
                 </div>
                 {/* Email Field */}
                 <div className="mb-3">
-                    <label className="text-gray-700 font-semibold">Email</label>
+                    <label className="text-gray-700 font-semibold ">Email</label>
                     <input
                         type="email"
                         {...register("email", {
                             required: "Email is required",
                             disabled: true
                         })}
-                        className={`mt-1 w-full px-3 py-1 border border-gray-400 rounded-[10px] focus:outline-none placeholder:text-xs`}
+                        className={`mt-1 w-full px-3 py-[8px] border border-gray-400 rounded-[10px] focus:outline-none placeholder:text-xs text-xs`}
                         placeholder="Enter Wallet Email....."
                         defaultValue={user?.email}
                     />
@@ -197,42 +222,32 @@ const CreateNewWalletForm = () => {
                     )}
                 </div> */}
                 <div className='mb-3'>
-                    <div className="relative w-full text-[10px] sm:text-sm">
-                        <label className="block mb-1 text-gray-700 font-semibold">Select Currency</label>
-                        <div
-                            onClick={() => setIsOpen(!isOpen)}
-                            className="mx-auto flex w-full items-center justify-between rounded-xl px-3 border border-gray-400 cursor-pointer py-1"
-                        >
-                            <h1 className="font-medium text-sm">{currencyValue ? currencyValue : <span className='text-gray-500'>Select</span>}</h1>
-                            <svg className={`${isOpen ? '-rotate-180' : 'rotate-0'} duration-300`} width={25} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M7 10L12 15L17 10" stroke="#4B5563" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>{' '}</g></svg>
-                        </div>
-
-                        <div className={`${isOpen ? 'visible top-12 bg-white opacity-100' : 'invisible -top-4 opacity-0'} absolute mx-auto my-4 w-full z-50 rounded-xl py-4 border duration-300`}>
-                            {currency?.map((data: any) => (
-                                <div
-                                    key={data?.id}
-                                    onClick={() => {
-                                        setCurrencyValue(data?.name);
-                                        setIsOpen(false);
-                                    }}
-                                    className="px-6 py-2 text-xs text-gray-500 hover:bg-gray-100 cursor-pointer"
-                                >
-                                    {data?.name}
-                                </div>
-                            ))}
-                        </div>
-
-                    </div>
+                    <CurrencyDropdown
+                        label="Sending Currency"
+                        options={currencyOptions}
+                        selectedValue={selectCurrency}
+                        setSelectedValue={setSelectCurrency}
+                        isLoading={currencyLoading}
+                        isOpen={openDropdown === 0}
+                        onToggle={() => handleDropdownToggle(0)}
+                        errorMassage='currency is required'
+                        isSubmitted={isSubmitted}
+                    />
                 </div>
                 {/* security question Field */}
-                <div className='mb-2'>
-                    <Dropdown
+                <div className='mb-3'>
+                    <SelectDropdown
                         label="Select a Security Question"
                         options={securityQuestionOptions}
                         selectedValue={securityQuestion}
                         setSelectedValue={setSecurityQuestion}
+                        isOpen={openDropdown === 1}
+                        onToggle={() => handleDropdownToggle(1)}
+                        isSubmitted={isSubmitted}
                     />
                 </div>
+
+
                 {/* <div className="mb-3">
                     <label className="text-gray-600 font-semibold">Enter a Security Question</label>
                     <input
@@ -255,7 +270,7 @@ const CreateNewWalletForm = () => {
                         {...register("answer", {
                             required: "Answer is required",
                         })}
-                        className={`mt-1 w-full px-3 py-[6px] border border-gray-400 rounded-xl focus:outline-none placeholder:text-xs`}
+                        className={`mt-1 w-full px-3 py-[8px] border border-gray-400 rounded-xl focus:outline-none placeholder:text-xs text-xs`}
                         placeholder="Enter Answer....."
                     />
                     {errors.answer?.type === 'required' && (
@@ -264,7 +279,7 @@ const CreateNewWalletForm = () => {
                 </div>
                 {/* Pin Field */}
                 <div className="mb-3">
-                    <label className="text-gray-700 font-semibold">Create New PIN</label>
+                    <label className="text-gray-700 font-semibold ">Create New PIN</label>
                     <div className="relative">
                         <input
                             type={pin ? 'text' : 'password'}
@@ -273,7 +288,7 @@ const CreateNewWalletForm = () => {
                                 minLength: 4,
                                 pattern: /^[0-9]*$/
                             })}
-                            className={`mt-1 w-full px-3 py-[6px] border border-gray-400 rounded-xl focus:outline-none placeholder:text-xs`}
+                            className={`mt-1 w-full px-3 py-[8px] border border-gray-400 rounded-xl focus:outline-none placeholder:text-xs text-xs`}
                             placeholder="Enter PIN...."
                         />
                         <button
@@ -299,15 +314,20 @@ const CreateNewWalletForm = () => {
 
                 {/* create now Button */}
                 <div className="w-full mx-auto mt-3 ">
-                    <button
-                        type="submit"
-                        className="mt-1 w-full bg-[#723EEB] text-white cursor-pointer px-1 py-[6px] rounded text-[10px] sm:text-sm"
-                    >
-                        {
-                            loading ? <LoadingSpinner className='h-4 w-4' /> : 'Create Now'
-                        }
+                    <DiasporexButton
+                        bgColor='#723EEB'
+                        textColor='white'
+                        fullWidth={true}
+                        type='submit'
+                        cursorPointer={true}
+                        px='4px'
+                        py='7px'
 
-                    </button>
+                    >
+                        {loading ? <LoadingSpinner className='h-3 w-3' /> : 'Create Now'}
+
+                    </DiasporexButton>
+
                 </div>
             </form>
         </>
