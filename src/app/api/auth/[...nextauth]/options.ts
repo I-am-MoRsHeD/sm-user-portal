@@ -1,6 +1,7 @@
 import { NextAuthOptions } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import { cookies } from 'next/headers';
+import toast from 'react-hot-toast';
 
 // export const authOptions: NextAuthOptions = ({
 //     providers: [
@@ -102,7 +103,7 @@ export const authOptions: NextAuthOptions = {
             return session;
         },
         async signIn({ user, credentials, account }) {
-            // console.log(user)
+
             try {
                 const response = await fetch('https://diasporex-api.vercel.app/api/v1/auth/social-login', {
                     method: 'POST',
@@ -115,7 +116,6 @@ export const authOptions: NextAuthOptions = {
                 });
 
                 const { data } = await response.json();
-              
                 if (response.ok && data.accessToken && data.refreshToken) {
 
                     user.id = data.user.id
@@ -123,8 +123,9 @@ export const authOptions: NextAuthOptions = {
                     user.refreshToken = data.refreshToken;
                     cookies().set('accessToken', data.accessToken);
                     cookies().set('refreshToken', data.refreshToken);
+                    cookies().set('name', user.name as string, { secure: true, httpOnly: false, sameSite: 'none' })
                     return true;
-                    
+
                 } else {
                     return false;
                 }

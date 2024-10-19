@@ -13,6 +13,8 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { LiaEyeSlashSolid, LiaEyeSolid } from "react-icons/lia";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
+import { GetServerSideProps } from "next";
+import { getSession } from "next-auth/react";
 
 
 
@@ -49,12 +51,14 @@ const LoginForm = () => {
       const res = await axiosInstance.post('/auth/login', userInfo);
 
       if (res.status === 200) {
-        const userData = res?.data?.data?.data;
+        const userData = res?.data?.data?.user;
         setUser(userData);
 
         const { accessToken, refreshToken } = res?.data?.data;
         Cookies.set('accessToken', accessToken);
         Cookies.set('refreshToken', refreshToken);
+        Cookies.set('name', userData?.name, { secure: true, sameSite: 'none' });
+        console.log(userData);
 
         router.push('/user/dashboard');
         toast.success("You have successfully logged in");
