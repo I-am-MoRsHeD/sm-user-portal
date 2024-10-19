@@ -16,6 +16,7 @@ interface LayoutProps {
 const Layout = ({ children }: LayoutProps) => {
   const [initialLoading, setInitialLoading] = useState(true);
 
+
   useEffect(() => {
     const hasVisited = sessionStorage.getItem('hasVisited');
 

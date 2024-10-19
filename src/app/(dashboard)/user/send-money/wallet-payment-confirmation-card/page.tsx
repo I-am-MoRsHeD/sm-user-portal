@@ -4,7 +4,7 @@ import Topbar from '@/components/Topbar';
 import useAxiosSecure from '@/components/hooks/useAxiosSecure';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
-import { redirect, useSearchParams } from 'next/navigation';
+import { redirect, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
@@ -18,6 +18,7 @@ const PaymentConfirmationPage = () => {
     const queryClient = useQueryClient();
     const [pin, setPin] = useState('');
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+    const router = useRouter();
 
     const { data, isError, isLoading, error } = useQuery({
         queryKey: ['preparedTransaction'],
@@ -72,7 +73,19 @@ const PaymentConfirmationPage = () => {
         }
     }, [isError, isSuccess, isPendingTransactionError, pendingTransactionData, error, pendingTransactionError]);
 
-    // 
+    useEffect(() => {
+        const handleBackButton = (e: PopStateEvent) => {
+            // You can customize the behavior here, e.g. force back to a specific page
+            e.preventDefault();
+            router.back(); // or router.push('/some-page');
+        };
+
+        window.addEventListener('popstate', handleBackButton);
+
+        return () => {
+            window.removeEventListener('popstate', handleBackButton);
+        };
+    }, [router]);
     return (
         <>
             <Topbar>Payment Confirmation</Topbar>

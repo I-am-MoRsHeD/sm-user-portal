@@ -12,6 +12,7 @@ type CurrencyDropdownProps = {
     placeholder?: string;
     errorMassage?: string
     isSubmitted?: boolean;
+    fixedValue?: boolean;
 };
 
 
@@ -25,7 +26,8 @@ const CurrencyDropdown: React.FC<CurrencyDropdownProps & { isOpen?: boolean; onT
     onToggle,
     placeholder,
     errorMassage,
-    isSubmitted
+    isSubmitted,
+    fixedValue
 }) => {
     const [searchTerm, setSearchTerm] = useState('');
 
@@ -35,9 +37,9 @@ const CurrencyDropdown: React.FC<CurrencyDropdownProps & { isOpen?: boolean; onT
 
     return (
         <div className="relative w-full text-xs xl:text-sm">
-            <label className="block mb-2 font-semibold">{label}</label>
+            <label className="block mb-1 font-semibold">{label}</label>
             <div className="border rounded-xl flex">
-                <div className="mx-auto flex w-full items-center px-3 py-1 cursor-pointer  rounded-l-xl">
+                <div className="mx-auto flex w-full items-center px-3 py-1 cursor-pointer rounded-l-xl">
                     {Object.keys(selectedValue).length !== 0 && (
                         <div className="relative w-5 h-5 mr-2">
                             <Image
@@ -53,10 +55,10 @@ const CurrencyDropdown: React.FC<CurrencyDropdownProps & { isOpen?: boolean; onT
                 </div>
                 <div
                     onClick={onToggle} // Toggle function passed from the parent
-                    className="mx-auto flex items-center justify-center px-3 py-2 cursor-pointer bg-[#723EEB] rounded-r-xl text-white w-16 xl:w-24">
+                    className={`mx-auto flex items-center justify-center px-3 ${fixedValue && Object.keys(selectedValue).length === 0 ? 'py-4' : ''} py-2 cursor-pointer bg-[#723EEB] rounded-r-xl text-white w-16 xl:w-24`}>
                     <h1 className="font-medium">{selectedValue ? selectedValue.code : ''}</h1>
                     <svg
-                        className={`transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
+                        className={`transition-transform duration-300 ${isOpen && !fixedValue ? 'rotate-180' : fixedValue ? 'hidden' : ''}`}
                         width="20"
                         height="20"
                         viewBox="0 0 24 24"
@@ -69,7 +71,7 @@ const CurrencyDropdown: React.FC<CurrencyDropdownProps & { isOpen?: boolean; onT
             </div>
 
             <div
-                className={`${isOpen ? 'visible top-[3.8rem] bg-white opacity-100' : 'invisible top-0 opacity-0'} absolute z-10 w-full mt-1 bg-white border rounded-l-xl rounded-r-xl shadow-lg duration-300`}
+                className={`${isOpen && !fixedValue ? 'visible top-[3.8rem] bg-white opacity-100' : 'invisible top-0 opacity-0'} absolute z-10 w-full mt-1 bg-white border rounded-l-xl rounded-r-xl shadow-lg duration-300`}
             // className="absolute z-10 w-full mt-1 bg-white border rounded-l-xl rounded-r-xl shadow-lg"
             >
                 <div className="p-2">
