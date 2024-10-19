@@ -10,7 +10,7 @@ const LoaderWithLottie: React.FC<LoaderWithLottieProps> = ({ width, height }) =>
 
     return (
         <>
-            <Image src={spinner} alt='Loader' width={150} height={150} />
+            <Image src={spinner} alt='Loader' width={110} height={110} />
         </>
     );
 };
