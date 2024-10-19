@@ -55,10 +55,10 @@ const CurrencyDropdown: React.FC<CurrencyDropdownProps & { isOpen?: boolean; onT
                 </div>
                 <div
                     onClick={onToggle} // Toggle function passed from the parent
-                    className="mx-auto flex items-center justify-center px-3 py-2 cursor-pointer bg-[#723EEB] rounded-r-xl text-white w-16 xl:w-24">
+                    className={`mx-auto flex items-center justify-center px-3 ${fixedValue && Object.keys(selectedValue).length === 0 ? 'py-4' : ''} py-2 cursor-pointer bg-[#723EEB] rounded-r-xl text-white w-16 xl:w-24`}>
                     <h1 className="font-medium">{selectedValue ? selectedValue.code : ''}</h1>
                     <svg
-                        className={`transition-transform duration-300 ${isOpen && !fixedValue ? 'rotate-180' : ''}`}
+                        className={`transition-transform duration-300 ${isOpen && !fixedValue ? 'rotate-180' : fixedValue ? 'hidden' : ''}`}
                         width="20"
                         height="20"
                         viewBox="0 0 24 24"

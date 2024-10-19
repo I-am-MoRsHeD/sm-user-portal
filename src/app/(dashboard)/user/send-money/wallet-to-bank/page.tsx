@@ -8,7 +8,7 @@ import SelectDropdown from '@/components/common/dropdown/SelectDropdown';
 import SendMoneyModal from '@/components/common/sendMoneyModal/SendMoneyModal';
 import useAxiosSecure from '@/components/hooks/useAxiosSecure';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { redirect, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
@@ -143,11 +143,25 @@ const WalletToBankPage: React.FC = () => {
     }
     if (isTransactionSuccess) {
       toast.success('Transaction Initiated');
-      redirect(`/user/recipients/select-recipients?id=${transactionPostData?.data?.id}`);
+      router.push(`/user/recipients/select-recipients?id=${transactionPostData?.data?.id}`);
       setIsSubmitted(false);
     }
   }, [isUserWalletError, isGetCurrencyError, transactionError, isTransactionSuccess, router, transactionPostData, error]);
 
+
+  useEffect(() => {
+    const handleBackButton = (e: PopStateEvent) => {
+      // You can customize the behavior here, e.g. force back to a specific page
+      e.preventDefault();
+      router.back(); // or router.push('/some-page');
+    };
+
+    window.addEventListener('popstate', handleBackButton);
+
+    return () => {
+      window.removeEventListener('popstate', handleBackButton);
+    };
+  }, [router]);
 
   return (
     <form onSubmit={handleSubmit} className='min-h-screen max-h-auto'>
