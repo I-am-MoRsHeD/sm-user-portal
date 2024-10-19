@@ -9,6 +9,7 @@ import useNavigationContext from './NavigationContext/useNavigationContext';
 import TransactionSearchField from './common/searchField/TransactionSearchField';
 import { BellIcon } from './icons/Icon';
 import RecipientSearchField from './common/searchField/RecipientSearchField';
+import { signOut } from 'next-auth/react';
 
 
 
@@ -52,11 +53,13 @@ const Topbar = ({ children }: { children: string }) => {
       confirmButtonText: "Yes, logged out!"
     }).then((result) => {
       if (result.isConfirmed) {
-
+        signOut()
         router.push('/auth/login');
         typeof window !== "undefined" ? localStorage.clear() : null;
         Cookies.remove('accessToken', { path: '/' });
         Cookies.remove('refreshToken', { path: '/' });
+        Cookies.remove('name', { path: '/' });
+        sessionStorage.removeItem('hasShownWelcomeToast');
 
         Swal.fire({
           title: "Done",

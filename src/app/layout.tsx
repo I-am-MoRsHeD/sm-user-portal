@@ -3,10 +3,12 @@ import AuthContextProvider from '@/components/AuthContext/AuthContext';
 import NavigationContextProvider from '@/components/NavigationContext/NavigationContext';
 import LoaderWithLottie from '@/components/common/loader/LoaderWithLottie';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { SessionProvider } from 'next-auth/react';
+import { SessionProvider, useSession } from 'next-auth/react';
 import { ReactNode, useEffect, useState } from 'react';
-import { Toaster } from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
 import '../styles/globals.css';
+import { decodedUser } from '@/components/hooks/useUser';
+import { useRouter } from 'next/navigation';
 
 const queryClient = new QueryClient();
 
@@ -15,6 +17,8 @@ interface LayoutProps {
 }
 const Layout = ({ children }: LayoutProps) => {
   const [initialLoading, setInitialLoading] = useState(true);
+  const user = decodedUser;
+  const router = useRouter();
 
   useEffect(() => {
     const hasVisited = sessionStorage.getItem('hasVisited');
@@ -30,6 +34,12 @@ const Layout = ({ children }: LayoutProps) => {
       setInitialLoading(false);
     }
   }, []);
+
+  useEffect(() => {
+    if(user){
+      router.push('/user/dashboard')
+    }
+  }, [user, router]);
 
   // If the page is still loading, show a loader
   if (initialLoading) {
@@ -95,6 +105,7 @@ const Layout = ({ children }: LayoutProps) => {
                   }}
                 />
               </QueryClientProvider>
+              <AuthWatcher />
 
             </NavigationContextProvider>
           </AuthContextProvider>
@@ -105,3 +116,20 @@ const Layout = ({ children }: LayoutProps) => {
 };
 
 export default Layout;
+
+function AuthWatcher() {
+  const { data: session, status } = useSession();
+
+  useEffect(() => {
+    if (status === 'authenticated') {
+      const hasShownWelcomeToast = sessionStorage.getItem('hasShownWelcomeToast');
+
+      if (!hasShownWelcomeToast) {
+        toast.success('You have successfully logged in');
+        sessionStorage.setItem('hasShownWelcomeToast', 'true');
+      }
+    }
+  }, [status, session]);
+
+  return null;
+}

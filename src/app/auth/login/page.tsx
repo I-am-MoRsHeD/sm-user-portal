@@ -5,9 +5,15 @@ import LoginForm from './components/LoginForm';
 import useNavigationContext from '@/components/NavigationContext/useNavigationContext';
 import ForgetPassword from '@/components/forgetPassword/ForgetPassword';
 import Link from 'next/link';
+import { useEffect } from 'react';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 const LoginPage = () => {
   const { message, setMessage }: any = useNavigationContext();
+  const { data: session, status } = useSession();
+  const router = useRouter();
+  
 
   return (
     <div className='bg-gradient-to-r from-pink-200 to-blue-200 min-h-screen w-full flex items-center justify-center'>
