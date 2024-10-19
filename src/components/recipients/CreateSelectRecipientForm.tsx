@@ -1,14 +1,13 @@
 "use client";
+import { useRouter, useSearchParams } from "next/navigation";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import Topbar from "../Topbar";
-import CardSubTitle from "../common/cardSubTitle/CardSubTitle";
-import { CreateRecipient } from "../hooks/recipientApi";
-import useCurrency from "../hooks/useCurrency";
 import LoadingSpinner from "../common/Loading/LoadingSpinner";
-import { useRouter } from "next/navigation";
+import CardSubTitle from "../common/cardSubTitle/CardSubTitle";
 import useAxiosSecure from "../hooks/useAxiosSecure";
+import useCurrency from "../hooks/useCurrency";
 
 
 
@@ -29,6 +28,7 @@ const CreateSelectRecipientForm: React.FC = () => {
   const [currency] = useCurrency();
   const axiosInstance = useAxiosSecure();
   const router = useRouter();
+  const id = useSearchParams().get('id');
 
 
   const {
@@ -48,7 +48,7 @@ const CreateSelectRecipientForm: React.FC = () => {
       // const res = await CreateRecipient(data);
       const res = await axiosInstance.post('/recipient', data);
       if (res.status === 200) {
-        router.push('/user/recipients/select-recipients');
+        router.push(`/user/recipients/select-recipients?id=${id}`);
         toast.success("Recipient created successfully");
         reset();
       }
